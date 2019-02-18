@@ -1,18 +1,26 @@
-name := """play-scala-forms-example"""
+name := "Risk"
+ 
+version := "1.0" 
+      
+lazy val `risk` = (project in file(".")).enablePlugins(PlayScala)
 
-version := "2.7.x"
+resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
+      
+resolvers += "Akka Snapshot Repository" at "http://repo.akka.io/snapshots/"
+      
+scalaVersion := "2.12.2"
+val scalatraVersion = "2.5.4"
 
-scalaVersion := "2.12.8"
-
-crossScalaVersions := Seq("2.11.12", "2.12.7")
-
-lazy val root = (project in file(".")).enablePlugins(PlayScala)
-
-libraryDependencies += guice
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.1" % Test
-
-scalacOptions ++= Seq(
-    "-feature",
-    "-deprecation",
-    "-Xfatal-warnings"
+libraryDependencies ++= Seq(
+  jdbc,
+  ehcache,
+  ws,
+  specs2 % Test,
+  guice,
+  "org.scalatra" %% "scalatra" % scalatraVersion,
+  "org.scalatra" %% "scalatra-scalatest" % scalatraVersion % "test"
 )
+
+unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )  
+
+      
