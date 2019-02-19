@@ -1,7 +1,8 @@
 package controllers
 
 import javax.inject._
-import models.Player
+import models.{Player, JsonConverter}
+import play.api.libs.json.{JsObject, JsValue, Json}
 import play.api.mvc._
 import play.api.libs.json.Json._
 
@@ -33,5 +34,29 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
   def addPlayer = Action(parse.json) { implicit request =>
     val np = Player((request.body \ "id").as[Int], (request.body \ "name").as[String], null)
     Ok(toJson(Map("id" -> np.getId())))
+  }
+
+  class CC[T] { def unapply(a:Any):Option[T] = Some(a.asInstanceOf[T]) }
+
+  object M extends CC[Map[String, Any]]
+  object L extends CC[List[Any]]
+  object S extends CC[String]
+  object I extends CC[Int]
+  object B extends CC[Boolean]
+  object P extends CC[Player]
+  object J extends CC[JsValue]
+
+  def gameInitiator = Action(parse.json) { implicit request =>
+    val players = for {
+      J(player_data) <- ((request.body) \ "data").as[List[JsValue]]
+      I(id) = (player_data \ "id").as[Int]
+      S(name) = (player_data \ "name").as[String]
+      S(email) = (player_data \ "email").as[String]
+      P(player) = Player(id, name, email)
+    } yield {
+      Map[String, Any]("id" -> player.getId(), "name" -> player.getName(), "email" -> player.getEmail())
+    }
+    val final_data = JsonConverter.toJson(Map("data" -> players))
+    Ok(final_data)
   }
 }

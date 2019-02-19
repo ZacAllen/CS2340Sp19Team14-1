@@ -13,6 +13,7 @@ val scalatraVersion = "2.5.4"
 val httpVersion = "4.5.7"
 val gsonVersion = "1.7.1"
 val liftVersion = "2.0"
+val jacksonVersion = "2.9.8"
 
 libraryDependencies ++= Seq(
   jdbc,
@@ -24,7 +25,8 @@ libraryDependencies ++= Seq(
   "org.scalatra" %% "scalatra-scalatest" % scalatraVersion % "test",
   "org.apache.httpcomponents" % "httpclient" % httpVersion,
   "com.google.code.gson" % "gson" % gsonVersion,
-  "net.liftweb" % "lift-json" % liftVersion
+  "net.liftweb" % "lift-json" % liftVersion,
+  "com.fasterxml.jackson.module" %% "jackson-module-scala" % jacksonVersion
 )
 
 unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )  
