@@ -20,8 +20,6 @@ class Player(id: Int, name: String, email: String) {
 }
 
 object Player {
-  def addPlayer(id: Int, name: String, email: String) = {
-    val newPlayer: Player = new Player(id, name, email)
-    newPlayer
-  }
+
+  def apply(id: Int, name: String, email: String) = new Player(id, name, email)
 }
