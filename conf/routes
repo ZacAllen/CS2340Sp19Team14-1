@@ -15,4 +15,7 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 
 # Game initiated screen
 GET     /game/initiate              controllers.HomeController.game_initiate
+
+# Testing POST request
+POST    /player/add                 controllers.HomeController.addPlayer
       

@@ -1,7 +1,9 @@
 package controllers
 
 import javax.inject._
+import models.Player
 import play.api.mvc._
+import play.api.libs.json.Json._
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -28,4 +30,8 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     Ok("Game Initiated")
   }
 
+  def addPlayer = Action(parse.json) { implicit request =>
+    val np = Player((request.body \ "id").as[Int], (request.body \ "name").as[String], null)
+    Ok(toJson(Map("id" -> np.getId())))
+  }
 }
