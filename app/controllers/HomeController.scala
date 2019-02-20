@@ -1,7 +1,7 @@
-package controllers
+package controllera
 
 import javax.inject._
-import models.{Player, JsonConverter}
+import models.{JsonConverter, Player, Territory}
 import play.api.libs.json.{JsObject, JsValue, Json}
 import play.api.mvc._
 import play.api.libs.json.Json._
@@ -59,4 +59,15 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     val final_data = JsonConverter.toJson(Map("data" -> players))
     Ok(final_data)
   }
+
+  def initArmiesUnits(playerList: List[Player]): Int = {
+    if (playerList.length == 3) {
+      35
+    } else if (playerList.length == 4) {
+      30
+    } else if (playerList.length == 5) {
+      25
+    } else 20
+  }
+
 }
