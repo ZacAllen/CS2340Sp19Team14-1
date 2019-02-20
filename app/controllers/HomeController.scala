@@ -32,7 +32,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
   }
 
   def addPlayer = Action(parse.json) { implicit request =>
-    val np = Player((request.body \ "id").as[Int], (request.body \ "name").as[String], null)
+    val np = Player((request.body \ "id").as[Int], (request.body \ "name").as[String], null, null, null, null)
     Ok(toJson(Map("id" -> np.getId())))
   }
 
@@ -47,14 +47,21 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
   object J extends CC[JsValue]
 
   def gameInitiator = Action(parse.json) { implicit request =>
-    val players = for {
-      J(player_data) <- ((request.body) \ "data").as[List[JsValue]]
-      I(id) = (player_data \ "id").as[Int]
-      S(name) = (player_data \ "name").as[String]
-      S(email) = (player_data \ "email").as[String]
-      P(player) = Player(id, name, email)
-    } yield {
-      Map[String, Any]("id" -> player.getId(), "name" -> player.getName(), "email" -> player.getEmail())
+    val turnOrder: List[Int] = List(1, 2, 3)
+    val players: List[Map[String, Any]] = null
+    var num: Int = 0
+    var input: List[JsValue] = ((request.body) \ "data").as[List[JsValue]]
+    var num_armies: Int = initArmiesUnits(input.length)
+    for (player_data <- input) {
+      val id = (player_data \ "id").as[Int]
+      val name = (player_data \ "name").as[String]
+      val email = (player_data \ "email").as[String]
+      val color = (player_data \ "color").as[Int]
+      val turn = turnOrder(num)
+      val player = Player(id, name, email, turn, color, num_armies)
+      num = num + 1
+      val player_map = Map[String, Any]("id" -> player.getId(), "name" -> player.getName(), "email" -> player.getEmail())
+      player_map :: players
     }
     val final_data = JsonConverter.toJson(Map("data" -> players))
     Ok(final_data)
@@ -69,5 +76,4 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
       25
     } else 20
   }
-
 }
