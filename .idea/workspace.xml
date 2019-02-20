@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fa2530cf-5b38-40ae-a079-448637dfca37" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/controllers/HomeController.scala" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/HomeController.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/Player.scala" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/Player.scala" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/project/project/target/" />
@@ -33,8 +33,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/HomeController.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="758">
-              <caret line="69" lean-forward="true" selection-start-line="69" selection-end-line="69" />
+            <state relative-caret-position="695">
+              <caret line="79" lean-forward="true" selection-start-line="79" selection-end-line="79" />
               <folding>
                 <element signature="e#21#42#0" expanded="true" />
               </folding>
@@ -285,7 +285,7 @@
       <workItem from="1550386885763" duration="5793000" />
       <workItem from="1550522870864" duration="5416000" />
       <workItem from="1550538536431" duration="10364000" />
-      <workItem from="1550589901475" duration="7099000" />
+      <workItem from="1550589901475" duration="7537000" />
     </task>
     <task id="LOCAL-00001" summary="Player and Territory Class Initial Template">
       <created>1550534440293</created>
@@ -329,11 +329,18 @@
       <option name="project" value="LOCAL" />
       <updated>1550593354547</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Initialize Armies Set">
+      <created>1550630905210</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1550630905210</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="34885000" />
+    <option name="totallyTimeSpent" value="35323000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -386,7 +393,8 @@
     <MESSAGE value=".gitignore Mini Update - .idea No Longer Uploaded" />
     <MESSAGE value="Basic Player Creation Endpoint Set" />
     <MESSAGE value="Multi-Player Creation Endpoint Set" />
-    <option name="LAST_COMMIT_MESSAGE" value="Multi-Player Creation Endpoint Set" />
+    <MESSAGE value="Initialize Armies Set" />
+    <option name="LAST_COMMIT_MESSAGE" value="Initialize Armies Set" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/app/Module.scala">
@@ -464,8 +472,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/HomeController.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="758">
-          <caret line="69" lean-forward="true" selection-start-line="69" selection-end-line="69" />
+        <state relative-caret-position="695">
+          <caret line="79" lean-forward="true" selection-start-line="79" selection-end-line="79" />
           <folding>
             <element signature="e#21#42#0" expanded="true" />
           </folding>

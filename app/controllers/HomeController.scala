@@ -48,7 +48,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
 
   def gameInitiator = Action(parse.json) { implicit request =>
     val turnOrder: List[Int] = List(1, 2, 3)
-    val players: List[Map[String, Any]] = null
+    var players: List[Map[String, Any]] = Nil
     var num: Int = 0
     var input: List[JsValue] = ((request.body) \ "data").as[List[JsValue]]
     var num_armies: Int = initArmiesUnits(input.length)
@@ -61,7 +61,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
       val player = Player(id, name, email, turn, color, num_armies)
       num = num + 1
       val player_map = Map[String, Any]("id" -> player.getId(), "name" -> player.getName(), "email" -> player.getEmail())
-      player_map :: players
+      players = player_map :: players
     }
     val final_data = JsonConverter.toJson(Map("data" -> players))
     Ok(final_data)
