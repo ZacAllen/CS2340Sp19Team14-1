@@ -1,10 +1,15 @@
 package models
 
-class Player(id: Int, name: String, email: String) {
+import play.api.mvc.Action
+import play.api.libs.functional.syntax._
+import play.api.libs.json.Reads._
+import play.api.libs.json._
+import net.liftweb.json._
+import org.scalatra.{BadRequest, Created}
+import play.api.libs.json.Json._
 
-  def this(id: Int, name: String) = {
-    this(id, name, null)
-  }
+
+class Player(id: Int, name: String, email: String) {
 
   def getName() = {
     this.name
@@ -20,8 +25,6 @@ class Player(id: Int, name: String, email: String) {
 }
 
 object Player {
-  def addPlayer(id: Int, name: String, email: String) = {
-    val newPlayer: Player = new Player(id, name, email)
-    newPlayer
-  }
+
+  def apply(id: Int, name: String, email: String) = new Player(id, name, email)
 }

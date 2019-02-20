@@ -13,4 +13,10 @@ GET     /message                    controllers.AsyncController.message
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
+# Game initiated screen
+GET     /game/initiate              controllers.HomeController.game_initiate
+
+# Testing POST request
+POST    /player/add                 controllers.HomeController.addPlayer
+POST    /player/multi-add           controllers.HomeController.gameInitiator
       
