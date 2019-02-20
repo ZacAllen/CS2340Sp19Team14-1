@@ -22,6 +22,7 @@ class Player(id: Int, name: String, email: String) {
   def getEmail() = {
     this.email
   }
+
 }
 
 object Player {

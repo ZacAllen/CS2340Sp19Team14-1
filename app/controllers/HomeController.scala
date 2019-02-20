@@ -36,6 +36,19 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     Ok(toJson(Map("id" -> np.getId())))
   }
 
+  def randomizeTurns (playerCount: Int): List[Int] = {
+    var turnList: List[Int] = Nil
+    var num = 1
+    //add 1 - player # to list
+    for (a <- 1 to playerCount) {
+      turnList = num :: turnList
+      num += 1
+    }
+    //shuffle
+    turnList = util.Random.shuffle(turnList)
+    return turnList
+  }
+
   class CC[T] { def unapply(a:Any):Option[T] = Some(a.asInstanceOf[T]) }
 
   object M extends CC[Map[String, Any]]
