@@ -9,23 +9,22 @@ import org.scalatra.{BadRequest, Created}
 import play.api.libs.json.Json._
 
 
-class Player(id: Int, name: String, email: String) {
+class Player(id: Int, name: String, email: String, turn: Int, color: Int, numArmies: Int) {
 
-  def getName() = {
-    this.name
-  }
+  def getName() = this.name
 
-  def getId() = {
-    this.id
-  }
+  def getId() = this.id
 
-  def getEmail() = {
-    this.email
-  }
+  def getEmail() = this.email
 
+  def getTurn() = this.turn
+
+  def getColor() = this.color
+
+  def getNumArmies() = this.numArmies
 }
 
 object Player {
 
-  def apply(id: Int, name: String, email: String) = new Player(id, name, email)
+  def apply(id: Int, name: String, email: String, turn: Int, color: Int, numArmies: Int) = new Player(id, name, email, turn, color, numArmies)
 }
