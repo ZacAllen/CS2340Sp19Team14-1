@@ -67,12 +67,12 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     Ok(final_data)
   }
 
-  def initArmiesUnits(playerList: List[Player]): Int = {
-    if (playerList.length == 3) {
+  def initArmiesUnits(numPlayers: Int): Int = {
+    if (numPlayers == 3) {
       35
-    } else if (playerList.length == 4) {
+    } else if (numPlayers == 4) {
       30
-    } else if (playerList.length == 5) {
+    } else if (numPlayers == 5) {
       25
     } else 20
   }
