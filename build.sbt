@@ -2,7 +2,7 @@ name := "Risk"
  
 version := "1.0" 
       
-lazy val `risk` = (project in file(".")).enablePlugins(PlayScala)
+lazy val `Risk` = (project in file(".")).enablePlugins(PlayScala)
 
 resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
       
