@@ -2,19 +2,19 @@ package models
 
 class Game(players: List[Player], territories: List[Territory]) {
 
-  def getPlayerList() = {
-    val player_list: List[Player] = null
+  def getPlayerList(): List[Player] = {
+    val player_list: List[Player] = Nil
     players.foreach {_.getName() :: player_list}
     player_list
   }
 
-  def getTerritoryList() = {
-    val territory_list: List[Territory] = null
+  def getTerritoryList(): List[Territory] = {
+    val territory_list: List[Territory] = Nil
     territories.foreach {_.getName() :: territory_list}
     territory_list
   }
 }
 
 object Game {
-  def apply(players: List[Player], territories: List[Territory]) = new Game(players, territories)
+  def apply(players: List[Player], territories: List[Territory]) : Any = new Game(players, territories)
 }

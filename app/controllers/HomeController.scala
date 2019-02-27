@@ -27,12 +27,12 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     *
     * @return
     */
-  def game_initiate: Action[AnyContent] = Action {
+  def gameInitiate: Action[AnyContent] = Action {
     Ok("Game Initiated")
   }
 
   def addPlayer: Action[JsValue] = Action(parse.json) { implicit request =>
-    val np = Player((request.body \ "id").as[Int], (request.body \ "name").as[String], null, 0, 0, 0)
+    val np = Player((request.body \ "id").as[Int], (request.body \ "name").as[String], "", 0, 0, 0)
     Ok(toJson(Map("id" -> np.getId())))
   }
 
@@ -59,12 +59,18 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
 
   def initArmiesUnits(numPlayers: Int): Int = {
     if (numPlayers == 3) {
-      35
+      val armies: Int = 35
+      armies
     } else if (numPlayers == 4) {
-      30
+      val armies: Int = 30
+      armies
     } else if (numPlayers == 5) {
-      25
-    } else 20
+      val armies: Int = 25
+      armies
+    } else {
+      val armies: Int = 20
+      armies
+    }
   }
 
   def randomizeTurns (playerCount: Int): List[Int] = {
