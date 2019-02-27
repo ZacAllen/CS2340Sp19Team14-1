@@ -5,6 +5,9 @@ class Territory(id: Int, name: String, owner: Player, num_units: Int) {
   def getId() = this.id
 
   def getName() = this.name
+
+  def getOwner() = this.owner
+
 }
 
 object Territory {
