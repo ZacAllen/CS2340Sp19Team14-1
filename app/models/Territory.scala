@@ -1,16 +1,17 @@
 package models
 
-class Territory(id: Int, name: String, owner: Player, num_units: Int) {
+class Territory(id: Int, name: String, owner: Player, numUnits: Int) {
 
-  def getId() = this.id
+  def getId: Int = this.id
 
-  def getName() = this.name
+  def getOwner(): Player = this.owner
 
-  def getOwner() = this.owner
+  def getName: String = this.name
 
+  def getUnits: Int = this.numUnits
 }
 
 object Territory {
 
-  def apply(id: Int, name: String, owner: Player, num_units: Int) = new Territory(id, name, owner, num_units)
+  def apply(id: Int, name: String, owner: Player, numUnits: Int) = new Territory(id, name, owner, numUnits)
 }
