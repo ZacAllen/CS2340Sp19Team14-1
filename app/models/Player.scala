@@ -3,20 +3,20 @@ package models
 
 class Player(id: Int, name: String, email: String, turn: Int, color: Int, numArmies: Int) {
 
-  def getName() = this.name
+  def getName() : String = this.name
 
-  def getId() = this.id
+  def getId() : Int = this.id
 
-  def getEmail() = this.email
+  def getEmail(): String = this.email
 
-  def getTurn() = this.turn
+  def getTurn(): Int = this.turn
 
-  def getColor() = this.color
+  def getColor(): Int = this.color
 
-  def getNumArmies() = this.numArmies
+  def getNumArmies(): Int = this.numArmies
 }
 
 object Player {
 
-  def apply(id: Int, name: String, email: String, turn: Int, color: Int, numArmies: Int) = new Player(id, name, email, turn, color, numArmies)
+  def apply(id: Int, name: String, email: String, turn: Int, color: Int, numArmies: Int) : Player = new Player(id, name, email, turn, color, numArmies)
 }

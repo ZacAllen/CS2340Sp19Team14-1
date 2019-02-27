@@ -13,5 +13,5 @@ class Territory(id: Int, name: String, owner: Player, numUnits: Int) {
 
 object Territory {
 
-  def apply(id: Int, name: String, owner: Player, numUnits: Int) = new Territory(id, name, owner, numUnits)
+  def apply(id: Int, name: String, owner: Player, numUnits: Int) : Territory = new Territory(id, name, owner, numUnits)
 }

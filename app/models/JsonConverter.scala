@@ -32,14 +32,14 @@ object JsonConverter {
             case _ => ;
           }
         }
-        return "[" + list.mkString(",") + "]"
+        "[" + list.mkString(",") + "]"
       }
       case _ => ;
     }
-    return "{" + json.mkString(",") + "}"
+    "{" + json.mkString(",") + "}"
   }
 
   private def escape(s: String) : String = {
-    return s.replaceAll("\"" , "\\\\\"");
+    s.replaceAll("\"" , "\\\\\"");
   }
 }
