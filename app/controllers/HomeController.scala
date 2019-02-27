@@ -1,4 +1,4 @@
-package controllera
+package controllers
 
 import javax.inject._
 import models.{JsonConverter, Player, Territory}
