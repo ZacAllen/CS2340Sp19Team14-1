@@ -1,0 +1,24 @@
+@import helper._
+
+@(userForm: Form[RegistrationForm])(implicit messages: Messages)
+
+@main("Initialization Screen") {
+    <h1>Please provide details to proceed.</h1>
+
+    @form(action = routes.HomeController.initFormPost()) {
+        @inputText(userForm("name1"))
+        @inputText(userForm("name2"))
+        @inputText(userForm("name3"))
+        @inputText(userForm("name4"))
+        @inputText(userForm("name5"))
+        @inputText(userForm("name6"))
+        @inputText(userForm("email1"))
+        @inputText(userForm("email2"))
+        @inputText(userForm("email3"))
+        @inputText(userForm("email4"))
+        @inputText(userForm("email5"))
+        @inputText(userForm("email6"))
+
+        <input type="submit" value="Start Game">
+    }
+}

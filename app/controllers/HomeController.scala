@@ -1,7 +1,7 @@
 package controllers
 
 import javax.inject._
-import models.{JsonConverter, Player}
+import models.{JsonConverter, Player, RegistrationForm}
 import play.api.libs.json.JsValue
 import play.api.mvc._
 import play.api.libs.json.Json._
@@ -73,8 +73,8 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     }
   }
 
-  def initDataForm() = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.initForm(BasicForm.form))
+  def initDataForm(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
+    Ok(views.html.RiskHome(RegistrationForm.form))
   }
 
   def randomizeTurns (playerCount: Int): List[Int] = {
