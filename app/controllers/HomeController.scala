@@ -73,6 +73,10 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     }
   }
 
+  def initDataForm() = Action { implicit request: Request[AnyContent] =>
+    Ok(views.html.initForm(BasicForm.form))
+  }
+
   def randomizeTurns (playerCount: Int): List[Int] = {
     var turnList: List[Int] = Nil
     var num = 1
