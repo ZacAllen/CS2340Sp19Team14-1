@@ -6,6 +6,8 @@ import scala.collection.mutable.ListBuffer
 object JsonConverter {
   def toJson(o: Any) : String = {
     var json = new ListBuffer[String]()
+    var retCheck: Boolean = true
+    var retString: String = ""
     o match {
       case m: Map[_,_] => {
         for ( (k,v) <- m ) {
@@ -32,11 +34,15 @@ object JsonConverter {
             case _ => ;
           }
         }
-        "[" + list.mkString(",") + "]"
+        retString = "[" + list.mkString(",") + "]"
+        retCheck = false
       }
       case _ => ;
     }
-    "{" + json.mkString(",") + "}"
+    if (retCheck) {
+      retString = "{" + json.mkString(",") + "}"
+    }
+    retString
   }
 
   private def escape(s: String) : String = {

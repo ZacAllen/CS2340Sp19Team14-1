@@ -4,7 +4,7 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET     /                           controllers.HomeController.initDataForm
+GET     /                           controllers.HomeController.index
 # An example controller showing how to use dependency injection
 GET     /count                      controllers.CountController.count
 # An example controller showing how to write asynchronous code
@@ -14,9 +14,9 @@ GET     /message                    controllers.AsyncController.message
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
 # Game initiated screen
-GET     /game/initiate              controllers.HomeController.game_initiate
+GET     /game/initiate              controllers.HomeController.gameInitiate
 
 # Testing POST request
 POST    /player/add                 controllers.HomeController.addPlayer
 POST    /player/multi-add           controllers.HomeController.gameInitiator
-GET     /init/form/post             controllers.HomeController.initFormPost
+      
