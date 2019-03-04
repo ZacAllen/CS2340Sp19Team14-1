@@ -7,6 +7,8 @@ class Territory(id: Int, name: String, owner: Player, numUnits: Int) {
   def getName: String = this.name
 
   def getUnits: Int = this.numUnits
+
+  def getOwner: Player = this.owner
 }
 
 object Territory {
