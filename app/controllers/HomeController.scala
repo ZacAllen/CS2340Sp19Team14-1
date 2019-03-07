@@ -1,4 +1,4 @@
-package controllera
+package controllers
 
 import javax.inject._
 import models.{JsonConverter, Player, Territory}
@@ -32,7 +32,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
   }
 
   def addPlayer = Action(parse.json) { implicit request =>
-    val np = Player((request.body \ "id").as[Int], (request.body \ "name").as[String], null, null, null, null)
+    val np = Player((request.body \ "id").as[Int], (request.body \ "name").as[String], "", 0, 0, 0)
     Ok(toJson(Map("id" -> np.getId())))
   }
 
