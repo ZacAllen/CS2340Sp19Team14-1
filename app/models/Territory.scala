@@ -7,6 +7,12 @@ class Territory(id: Int, name: String, owner: Player, numUnits: Int) {
   def getName: String = this.name
 
   def getUnits: Int = this.numUnits
+
+  //Adds units and returns new total # of units in the territory
+  def addUnits(newUnits: Int): Int = {
+    numUnits += newUnits
+    numUnits
+  }
 }
 
 object Territory {
