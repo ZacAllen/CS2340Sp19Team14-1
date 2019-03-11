@@ -1,7 +1,7 @@
 package controllers
 
 import javax.inject._
-import models.{JsonConverter, Player}
+import models._
 import play.api.libs.json.JsValue
 import play.api.mvc._
 import play.api.libs.json.Json._
@@ -85,5 +85,12 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     //shuffle
     turnList = util.Random.shuffle(turnList)
     turnList
+  }
+
+  def setPlayerTurn(players: List[Player], turnList: List[Int]) {
+    if (players != Nil && turnList != Nil) {
+      players.head.setTurn(turnList.head)
+      setPlayerTurn(players.tail, turnList.tail)
+    }
   }
 }
