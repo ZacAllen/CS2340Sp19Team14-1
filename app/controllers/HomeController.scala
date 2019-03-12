@@ -1,17 +1,21 @@
 package controllers
 
 import javax.inject._
-import models.{JsonConverter, Player}
+import models.{JsonConverter, Player, GameData}
 import play.api.libs.json.JsValue
 import play.api.mvc._
 import play.api.libs.json.Json._
+import play.api.data._
+import play.api.data.Forms._
+import play.api.data.validation.Constraints._
+
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
  * application's home page.
  */
 @Singleton
-class HomeController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
+class HomeController @Inject()(cc: ControllerComponents) extends AbstractController(cc) with play.api.i18n.I18nSupport {
 
   /**
    * Create an Action to render an HTML page with a welcome message.
@@ -19,16 +23,77 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
    * will be called when the application receives a `GET` request with
    * a path of `/`.
    */
-  def index: Action[AnyContent] = Action {
-    Ok(views.html.index("Your new application is ready."))
+
+  val gForm = Form(
+    mapping(
+      "name1" -> nonEmptyText,
+      "email1" -> nonEmptyText,
+      "name2" -> nonEmptyText,
+      "email2" -> nonEmptyText,
+      "name3" -> nonEmptyText,
+      "email3" -> nonEmptyText,
+      "name4" -> text,
+      "email4" -> text,
+      "name5" -> text,
+      "email5" -> text,
+      "name6" -> text,
+      "email6" -> text
+    ) (GameData.apply)(GameData.unapply)
+  )
+
+  def index: Action[AnyContent] = Action { implicit request =>
+    Ok(views.html.start_game(gForm))
   }
 
+  def showForm: Action[JsValue] = Action(parse.json) { implicit request =>
+
+    val userData = gForm.bindFromRequest.fold(
+      formWithErrors => {
+        print("Not Processed")
+        "np"
+      },
+
+      gameData => {
+        print("Check")
+        "ch"
+      }
+    )
+    Ok("Processed")
+  }
   /**
     *
     * @return
     */
-  def gameInitiate: Action[AnyContent] = Action {
-    Ok("Game Initiated")
+  def gameInitiate: Action[AnyContent] = Action { implicit request =>
+    gForm.bindFromRequest.fold(
+      formWithErrors => {
+        print("Not Processed")
+        Ok(formWithErrors.toString)
+      },
+
+      gameData => {
+        var list: List[Map[String, Any]] = Nil
+        var playerData: Map[String, Any] = Map("id" -> 1, "name" -> gameData.name1, "email" -> gameData.email1)
+        list = playerData :: list
+        playerData = Map("id" -> 2, "name" -> gameData.name2, "email" -> gameData.email2)
+        list = playerData :: list
+        playerData = Map("id" -> 3, "name" -> gameData.name3, "email" -> gameData.email3)
+        list = playerData :: list
+        if (gameData.name4 != "") {
+          playerData = Map("id" -> 4, "name" -> gameData.name4, "email" -> gameData.email4)
+          list = playerData :: list
+          if (gameData.name5 != "") {
+            playerData = Map("id" -> 5, "name" -> gameData.name5, "email" -> gameData.email5)
+            list = playerData :: list
+            if (gameData.name6 != "") {
+              playerData = Map("id" -> 6, "name" -> gameData.name6, "email" -> gameData.email6)
+              list = playerData :: list
+            }
+          }
+        }
+        Ok(gameInitiator(list))
+      }
+    )
   }
 
   def addPlayer: Action[JsValue] = Action(parse.json) { implicit request =>
@@ -36,17 +101,16 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     Ok(toJson(Map("id" -> np.getId)))
   }
 
-  def gameInitiator: Action[JsValue] = Action(parse.json) { implicit request =>
-    val input: List[JsValue] = (request.body \ "data").as[List[JsValue]]
+  def gameInitiator(input: List[Map[String, Any]]) = {
     val turnOrder: List[Int] = randomizeTurns(input.length)
     var players: List[Map[String, Any]] = Nil
     var num: Int = 0
     val num_armies: Int = initArmiesUnits(input.length)
     for (player_data <- input) {
-      val id = (player_data \ "id").as[Int]
-      val name = (player_data \ "name").as[String]
-      val email = (player_data \ "email").as[String]
-      val color = (player_data \ "color").as[Int]
+      val id = player_data("id").asInstanceOf[Int]
+      val name = player_data("name").asInstanceOf[String]
+      val email = player_data("email").asInstanceOf[String]
+      val color = turnOrder(num)
       val turn = turnOrder(num)
       val player = Player(id, name, email, turn, color, num_armies)
       num = num + 1
@@ -55,7 +119,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
       players = player_map :: players
     }
     val final_data = JsonConverter.toJson(Map("data" -> players, "status" -> 1))
-    Ok(final_data)
+    final_data
   }
 
   def initArmiesUnits(numPlayers: Int): Int = {
@@ -86,4 +150,5 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     turnList = util.Random.shuffle(turnList)
     turnList
   }
+
 }
