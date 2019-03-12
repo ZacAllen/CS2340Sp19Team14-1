@@ -1,7 +1,7 @@
 package controllers
 
 import javax.inject._
-import models.{JsonConverter, Player, GameData}
+import models.{JsonConverter, Player, GameData, Territory}
 import play.api.libs.json.JsValue
 import play.api.mvc._
 import play.api.libs.json.Json._
@@ -9,11 +9,12 @@ import play.api.data._
 import play.api.data.Forms._
 import play.api.data.validation.Constraints._
 
+import scala.util.Random
 
 /**
- * This controller creates an `Action` to handle HTTP requests to the
- * application's home page.
- */
+  * This controller creates an `Action` to handle HTTP requests to the
+  * application's home page.
+  */
 @Singleton
 class HomeController @Inject()(cc: ControllerComponents) extends AbstractController(cc) with play.api.i18n.I18nSupport {
 
@@ -151,4 +152,50 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     turnList
   }
 
+  //Creates a map that contains all the territory ID's as keys, and the player ID's as values
+  //Ex: territoryID: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], playerID: [1, 2]
+  //Returns [3: 2, 6: 1, 10: 2, 9: 1, 8: 2, 1: 1, 4: 2, ...]
+  def randomizeTerritories(territoryID: List[Int], playerID: List[Int]): Map[Int, Int] = {
+    util.Random.shuffle(territoryID)
+    util.Random.shuffle(playerID)
+
+    var map:Map[Int,Int] = Map()
+    var i = 0
+    for (a <- territoryID.indices) {
+      map += territoryID(a) -> playerID(i % playerID.length)
+      i += 1
+    }
+    map
+  }
+
+  //Returns the # of armies the player is allowed to place at the start of their turn
+  def newArmies(playerID: Int, territories: Map[Int, Int]): Int = {
+    //Based on the Rules on the Google doc, the # of new armies is the # of territories / 3. If < 3 territories they
+    //Get 1 army
+    var numTerritories = 0
+    for ((key, value) <- territories) {
+      if (value == playerID) numTerritories += 1
+    }
+    if (numTerritories < 3) 1
+    else numTerritories / 3
+  }
+
+  def placeSingleArmy(territory: Territory): Unit = {
+    territory.addUnits(1)
+  }
+
+  //Randomizes a player's territories based on the # of armies to add
+  def randomizeArmies(territories: List[Territory], numArmies: Int): Unit = {
+    var random = new Random
+    for (a <- 1 to numArmies) {
+      territories(random.nextInt(territories.length)).addUnits(1)
+    }
+  }
+
+  def setPlayerTurn(players: List[Player], turnList: List[Int]) {
+    if (players != Nil && turnList != Nil) {
+      players.head.setTurn(turnList.head)
+      setPlayerTurn(players.tail, turnList.tail)
+    }
+  }
 }
