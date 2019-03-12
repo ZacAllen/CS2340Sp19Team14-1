@@ -15,7 +15,6 @@ class Player(id: Int, name: String, email: String, var turn: Int, color: Int, nu
 
   def getNumArmies: Int = this.numArmies
 
-
   def setTurn(turn: Int){this.turn = turn}
 }
 

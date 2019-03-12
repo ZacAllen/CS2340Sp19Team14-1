@@ -7,7 +7,6 @@ import play.api.mvc._
 import play.api.libs.json.Json._
 import play.api.data._
 import play.api.data.Forms._
-import play.api.data.validation.Constraints._
 
 import scala.util.Random
 
@@ -46,21 +45,6 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     Ok(views.html.start_game(gForm))
   }
 
-  def showForm: Action[JsValue] = Action(parse.json) { implicit request =>
-
-    val userData = gForm.bindFromRequest.fold(
-      formWithErrors => {
-        print("Not Processed")
-        "np"
-      },
-
-      gameData => {
-        print("Check")
-        "ch"
-      }
-    )
-    Ok("Processed")
-  }
   /**
     *
     * @return
@@ -92,7 +76,8 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
             }
           }
         }
-        Ok(gameInitiator(list))
+        gameInitiator(list)
+        Ok(views.html.game())
       }
     )
   }
@@ -102,7 +87,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     Ok(toJson(Map("id" -> np.getId)))
   }
 
-  def gameInitiator(input: List[Map[String, Any]]) = {
+  def gameInitiator(input: List[Map[String, Any]]): String = {
     val turnOrder: List[Int] = randomizeTurns(input.length)
     var players: List[Map[String, Any]] = Nil
     var num: Int = 0
@@ -173,11 +158,14 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     //Based on the Rules on the Google doc, the # of new armies is the # of territories / 3. If < 3 territories they
     //Get 1 army
     var numTerritories = 0
-    for ((key, value) <- territories) {
+    for ((_, value) <- territories) {
       if (value == playerID) numTerritories += 1
     }
-    if (numTerritories < 3) 1
-    else numTerritories / 3
+    if (numTerritories < 3) {
+      1
+    } else {
+      numTerritories / 3
+    }
   }
 
   def placeSingleArmy(territory: Territory): Unit = {
@@ -186,8 +174,8 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
 
   //Randomizes a player's territories based on the # of armies to add
   def randomizeArmies(territories: List[Territory], numArmies: Int): Unit = {
-    var random = new Random
-    for (a <- 1 to numArmies) {
+    val random = new Random
+    for (_ <- 1 to numArmies) {
       territories(random.nextInt(territories.length)).addUnits(1)
     }
   }

@@ -1,126 +1,137 @@
 @defining(play.core.PlayVersion.current) { version =>
 
-<html lang="en">
+    <html lang="en">
 
-<head>
+        <head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <meta name="description" content="">
+            <meta name="author" content="">
 
-    <title>Risk At GT</title>
+            <title>RiskGT</title>
 
+                <!-- Bootstrap Core CSS -->
+            <link href="@routes.Assets.versioned("static/main/vendor/bootstrap/css/bootstrap.min.css")" rel="stylesheet">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
+                <!-- MetisMenu CSS -->
+            <link href="@routes.Assets.versioned("static/main/vendor/metisMenu/metisMenu.min.css")" rel="stylesheet">
+
+                <!-- Custom CSS -->
+            <link href="@routes.Assets.versioned("static/main/dist/css/sb-admin-2.css")" rel="stylesheet">
+
+                <!-- Custom Fonts -->
+            <link href="@routes.Assets.versioned("static/main/vendor/font-awesome/css/font-awesome.min.css")" rel="stylesheet" type="text/css">
+
+                <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-</head>
+        </head>
 
-<body>
+        <body>
 
-    <div id="wrapper">
-        <!-- Page Content -->
-        <div id="page-wrapper">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> Players Active :
+            <div id="wrapper">
+                    <!-- Page Content -->
+                <div id="page-wrapper">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <i class="fa fa-bar-chart-o fa-fw"></i> Players Active :
+                                </div>
+                                    <!-- /.panel-heading -->
+                                <div class="panel-body">
+                                    <img class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Turn</th>
+                                            <th scope="col">Color</th>
+                                            <th scope="col">Number of Armies</th>
+                                        </tr>
+                                    </thead>
+                                    <p>
+                                        <img src="@routes.Assets.versioned("images/map.png")" alt="Game Map" height = "500" width = "700">
+                                        <map name = "Territories">
+                                            <area name = "1" shape = "poly" coords="268, 62, 321, 61,321, 80,296, 83, 296 156,264, 110, 268, 62">
+                                            <area name = "2" shape = "poly" coords="324, 61, 324, 81, 365, 81, 348, 60, 324, 61">
+                                            <area name = "3" shape = "poly" coords="302,88, 345, 88, 345, 110, 301, 110, 302, 88">
+                                            <area name = "4" shape = "poly" coords="351, 87,367, 87, 388, 109, 352, 109, 351, 87">
+                                            <area name = "5" shape = "poly" coords="301, 116, 345, 116, 345, 136, 300, 136, 301, 116">
+                                            <area name = "6" shape = "poly" coords="300, 142, 343, 141, 344, 179, 323, 178, 323, 167, 302, 166, 300, 142">
+                                            <area name = "7" shape = "poly" coords="349, 115, 349, 177, 394, 177, 420, 144, 391, 115, 349, 115">
+                                            <area name = "8" shape = "poly" coords="353, 40, 382, 39, 294, 60, 398, 83, 372, 83, 353, 62, 353, 40">
+                                            <area name = "9" shape = "poly" coords="401, 27, 455, 27, 455, 93, 434, 110, 410, 110, 403, 116, 373, 88, 402, 88, 401, 27">
+                                            <area name = "10" shape = "poly" coords="402, 120, 414, 114, 455, 114, 457, 142, 424, 144, 402, 110">
+                                            <area name = "11" shape = "poly" coords="459, 61, 475, 61, 475, 149, 460, 146, 459, 61">
+                                            <area name = "12" shape = "poly" coords="480, 61, 512, 61, 514, 85, 480, 85, 480, 61">
+                                            <area name = "13" shape = "poly" coords="483, 90, 513, 90, 513, 148, 482, 149, 483, 90">
+                                            <area name = "14" shape = "poly" coords="530, 5, 530, 55, 556, 56, 554, 5, 530, 5">
+                                            <area name = "15" shape = "poly" coords="561, 2,560, 56, 599, 57,599, 23, 589, 16, 587, 1, 561, 2">
+                                            <area name = "16" shape = "poly" coords="519, 61, 618, 61, 618, 188,570, 170, 551, 152, 551, 126, 545, 112, 517, 112, 519, 61">
+                                            <area name = "17" shape = "poly" coords="515, 116, 545, 116, 551, 127, 550, 153, 515, 150, 515, 116">
+                                            <area name = "18" shape = "poly" coords="624, 60, 680, 60, 685, 188, 663, 188, 663, 153, 624, 151, 624, 60">
+                                            <area name = "19" shape = "poly" coords="624, 157, 658, 157, 658, 187, 624, 188, 624, 157">
+                                            <area name = "20" shape = "poly" coords="624, 192, 658, 192, 661, 233, 625, 216, 624, 192">
+                                            <area name = "21" shape = "poly" coords="664, 193, 685, 194, 692, 230, 668, 230, 664, 193">
+                                            <area name = "22" shape = "poly" coords="300, 169, 319, 172, 319, 182, 392, 182, 392, 265, 385, 274, 299, 197, 300, 169">
+                                            <area name = "23" shape = "poly" coords="280, 219, 293, 207, 318, 230, 296, 252, 280, 219">
+                                            <area name = "24" shape = "poly" coords="299, 255, 319, 237, 356, 269, 246, 285, 299, 255">
+                                            <area name = "25" shape = "poly" coords="351, 286, 362, 272, 378, 282, 371, 295, 351, 286">
+                                            <area name = "26" shape = "poly" coords="383, 283, 444, 301, 416, 320, 378, 296, 383, 283">
+                                            <area name = "27" shape = "poly" coords="283, 336, 294, 324, 349, 342, 400, 347, 438, 367, 407, 380, 352, 379, 283, 336">
+                                            <area name = "28" shape = "poly" coords="423, 323, 452, 302, 475, 306, 478, 349, 456, 358, 423, 323">
+                                            <area name = "29" shape = "poly" coords="481, 305, 526, 318, 545, 344, 483, 346, 482, 303">
+                                            <area name = "30" shape = "poly" coords="397, 178, 425, 150, 440, 146, 474, 164, 470, 167, 470, 207, 476, 212, 436, 216, 420, 186, 397, 178">
+                                            <area name = "31" shape = "poly" coords="397, 180, 419, 190, 437, 218, 437, 225, 454, 249, 402, 250, 391, 238, 397, 180">
+                                            <area name = "32" shape = "poly" coords="401, 251, 476, 258, 475, 291, 521, 303, 476, 297, 390, 275, 393, 258, 401, 251">
+                                            <area name = "33" shape = "poly" coords="477, 153, 510, 154, 510, 234, 479, 256, 457, 249, 438, 219, 452, 213, 477, 213, 477, 153">
+                                            <area name = "34" shape = "poly" coords="513, 238, 478, 260, 479, 288, 525, 301, 544, 318, 572, 318, 570, 276, 513, 273, 513, 238">
+                                            <area name = "35" shape = "poly" coords="515, 154, 515, 234, 541, 245, 580, 229, 606, 217, 620, 215, 618, 191, 584, 192, 563, 168, 543, 153, 515, 154">
+                                            <area name = "36" shape = "poly" coords="514, 240, 530, 241, 538, 248, 534, 255, 533, 271, 514, 271, 514, 240">
+                                            <area name = "37" shape = "poly" coords="537, 269, 542, 249, 570, 239, 602, 222, 606, 231, 594, 236, 594, 251, 601, 272, 585, 274, 586, 298, 576, 298, 566, 271, 537, 269">
+                                            <area name = "38" shape = "poly" coords="607, 221, 641, 225, 661, 246, 662, 274, 604, 272, 607, 221">
+                                            <area name = "39" shape = "poly" coords="590, 277, 660, 278, 661, 349, 638, 349, 638, 369, 599, 369, 576, 344, 559, 347, 544, 323, 576, 323, 575, 308, 590, 298, 590, 277">
+                                            <area name = "40" shape = "poly" coords="667, 233, 693, 234, 699, 275, 6657, 273, 667, 233">
+                                            <area name = "41" shape = "poly" coords="666, 279, 695, 280, 695, 346, 666, 346, 666, 279">
+                                            <area name = "42" shape = "poly" coords="663, 353, 698, 353, 697, 430, 668, 431, 663, 421, 663, 353">
+                                        </map>
+                                    </p>
+                                    </table>
+                                </div>
+                                    <!-- /.panel-body -->
+                            </div>
+                                <!-- /.panel -->
                         </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <img class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">ID</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Email</th>
-                                        <th scope="col">Turn</th>
-                                        <th scope="col">Color</th>
-                                        <th scope="col">Number of Armies</th>
-                                    </tr>
-                                </thead>
-                            <p>
-                                <img src="@routes.Assets.versioned("images/map.png")" alt="Game Map" height = "500" width = "700">
-                                    <map name = "Territories">
-                                        <area name = "1" shape = "poly" coords="268, 62, 321, 61,321, 80,296, 83, 296 156,264, 110, 268, 62">
-                                        <area name = "2" shape = "poly" coords="324, 61, 324, 81, 365, 81, 348, 60, 324, 61">
-                                        <area name = "3" shape = "poly" coords="302,88, 345, 88, 345, 110, 301, 110, 302, 88">
-                                        <area name = "4" shape = "poly" coords="351, 87,367, 87, 388, 109, 352, 109, 351, 87">
-                                        <area name = "5" shape = "poly" coords="301, 116, 345, 116, 345, 136, 300, 136, 301, 116">
-                                        <area name = "6" shape = "poly" coords="300, 142, 343, 141, 344, 179, 323, 178, 323, 167, 302, 166, 300, 142">
-                                        <area name = "7" shape = "poly" coords="349, 115, 349, 177, 394, 177, 420, 144, 391, 115, 349, 115">
-                                        <area name = "8" shape = "poly" coords="353, 40, 382, 39, 294, 60, 398, 83, 372, 83, 353, 62, 353, 40">
-                                        <area name = "9" shape = "poly" coords="401, 27, 455, 27, 455, 93, 434, 110, 410, 110, 403, 116, 373, 88, 402, 88, 401, 27">
-                                        <area name = "10" shape = "poly" coords="402, 120, 414, 114, 455, 114, 457, 142, 424, 144, 402, 110">
-                                        <area name = "11" shape = "poly" coords="459, 61, 475, 61, 475, 149, 460, 146, 459, 61">
-                                        <area name = "12" shape = "poly" coords="480, 61, 512, 61, 514, 85, 480, 85, 480, 61">
-                                        <area name = "13" shape = "poly" coords="483, 90, 513, 90, 513, 148, 482, 149, 483, 90">
-                                        <area name = "14" shape = "poly" coords="530, 5, 530, 55, 556, 56, 554, 5, 530, 5">
-                                        <area name = "15" shape = "poly" coords="561, 2,560, 56, 599, 57,599, 23, 589, 16, 587, 1, 561, 2">
-                                        <area name = "16" shape = "poly" coords="519, 61, 618, 61, 618, 188,570, 170, 551, 152, 551, 126, 545, 112, 517, 112, 519, 61">
-                                        <area name = "17" shape = "poly" coords="515, 116, 545, 116, 551, 127, 550, 153, 515, 150, 515, 116">
-                                        <area name = "18" shape = "poly" coords="624, 60, 680, 60, 685, 188, 663, 188, 663, 153, 624, 151, 624, 60">
-                                        <area name = "19" shape = "poly" coords="624, 157, 658, 157, 658, 187, 624, 188, 624, 157">
-                                        <area name = "20" shape = "poly" coords="624, 192, 658, 192, 661, 233, 625, 216, 624, 192">
-                                        <area name = "21" shape = "poly" coords="664, 193, 685, 194, 692, 230, 668, 230, 664, 193">
-                                        <area name = "22" shape = "poly" coords="300, 169, 319, 172, 319, 182, 392, 182, 392, 265, 385, 274, 299, 197, 300, 169">
-                                        <area name = "23" shape = "poly" coords="280, 219, 293, 207, 318, 230, 296, 252, 280, 219">
-                                        <area name = "24" shape = "poly" coords="299, 255, 319, 237, 356, 269, 246, 285, 299, 255">
-                                        <area name = "25" shape = "poly" coords="351, 286, 362, 272, 378, 282, 371, 295, 351, 286">
-                                        <area name = "26" shape = "poly" coords="383, 283, 444, 301, 416, 320, 378, 296, 383, 283">
-                                        <area name = "27" shape = "poly" coords="283, 336, 294, 324, 349, 342, 400, 347, 438, 367, 407, 380, 352, 379, 283, 336">
-                                        <area name = "28" shape = "poly" coords="423, 323, 452, 302, 475, 306, 478, 349, 456, 358, 423, 323">
-                                        <area name = "29" shape = "poly" coords="481, 305, 526, 318, 545, 344, 483, 346, 482, 303">
-                                        <area name = "30" shape = "poly" coords="397, 178, 425, 150, 440, 146, 474, 164, 470, 167, 470, 207, 476, 212, 436, 216, 420, 186, 397, 178">
-                                        <area name = "31" shape = "poly" coords="397, 180, 419, 190, 437, 218, 437, 225, 454, 249, 402, 250, 391, 238, 397, 180">
-                                        <area name = "32" shape = "poly" coords="401, 251, 476, 258, 475, 291, 521, 303, 476, 297, 390, 275, 393, 258, 401, 251">
-                                        <area name = "33" shape = "poly" coords="477, 153, 510, 154, 510, 234, 479, 256, 457, 249, 438, 219, 452, 213, 477, 213, 477, 153">
-                                        <area name = "34" shape = "poly" coords="513, 238, 478, 260, 479, 288, 525, 301, 544, 318, 572, 318, 570, 276, 513, 273, 513, 238">
-                                        <area name = "35" shape = "poly" coords="515, 154, 515, 234, 541, 245, 580, 229, 606, 217, 620, 215, 618, 191, 584, 192, 563, 168, 543, 153, 515, 154">
-                                        <area name = "36" shape = "poly" coords="514, 240, 530, 241, 538, 248, 534, 255, 533, 271, 514, 271, 514, 240">
-                                        <area name = "37" shape = "poly" coords="537, 269, 542, 249, 570, 239, 602, 222, 606, 231, 594, 236, 594, 251, 601, 272, 585, 274, 586, 298, 576, 298, 566, 271, 537, 269">
-                                        <area name = "38" shape = "poly" coords="607, 221, 641, 225, 661, 246, 662, 274, 604, 272, 607, 221">
-                                        <area name = "39" shape = "poly" coords="590, 277, 660, 278, 661, 349, 638, 349, 638, 369, 599, 369, 576, 344, 559, 347, 544, 323, 576, 323, 575, 308, 590, 298, 590, 277">
-                                        <area name = "40" shape = "poly" coords="667, 233, 693, 234, 699, 275, 6657, 273, 667, 233">
-                                        <area name = "41" shape = "poly" coords="666, 279, 695, 280, 695, 346, 666, 346, 666, 279">
-                                        <area name = "42" shape = "poly" coords="663, 353, 698, 353, 697, 430, 668, 431, 663, 421, 663, 353">
-                                    </map>
-                            </p>
-                            </table>
-                        </div>
-                        <!-- /.panel-body -->
+                            <!-- /.col-lg-8 -->
                     </div>
-                    <!-- /.panel -->
+                        <!-- /.row -->
                 </div>
-                <!-- /.col-lg-8 -->
+                    <!-- /#page-wrapper -->
+
             </div>
-            <!-- /.row -->
-        </div>
-        <!-- /#page-wrapper -->
+                <!-- /#wrapper -->
 
-    </div>
-    <!-- /#wrapper -->
+                <!-- jQuery -->
+            <script src="static/main/vendor/jquery/jquery.min.js"></script>
 
-    <!-- jQuery -->
-    <script src="static/main/vendor/jquery/jquery.min.js"></script>
+                <!-- Bootstrap Core JavaScript -->
+            <script src="static/main/vendor/bootstrap/js/bootstrap.min.js"></script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="static/main/vendor/bootstrap/js/bootstrap.min.js"></script>
+                <!-- Metis Menu Plugin JavaScript -->
+            <script src="static/main/vendor/metisMenu/metisMenu.min.js"></script>
 
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="static/main/vendor/metisMenu/metisMenu.min.js"></script>
+                <!-- Custom Theme JavaScript -->
+            <script src="static/main/dist/js/sb-admin-2.js"></script>
 
-    <!-- Custom Theme JavaScript -->
-    <script src="static/main/dist/js/sb-admin-2.js"></script>
+        </body>
 
-</body>
-
-</html>
+    </html>
 }
