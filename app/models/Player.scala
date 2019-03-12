@@ -22,5 +22,6 @@ class Player(id: Int, name: String, email: String, var turn: Int, color: Int, nu
 
 object Player {
 
-  def apply(id: Int, name: String, email: String, turn: Int, color: Int, numArmies: Int): Player = new Player(id, name, email, turn, color, numArmies)
+  def apply(id: Int, name: String, email: String, turn: Int, color: Int, numArmies: Int, armyList: List[Soldier]):
+   Player = new Player(id, name, email, turn, color, numArmies, armyList)
 }
