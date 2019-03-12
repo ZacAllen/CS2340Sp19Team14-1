@@ -31,6 +31,10 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     Ok("Game Initiated")
   }
 
+
+  def addPlayer = Action(parse.json) { implicit request =>
+    val np = Player((request.body \ "id").as[Int], (request.body \ "name").as[String], "", 0, 0, 0)
+    Ok(toJson(Map("id" -> np.getId)))
   def addPlayer: Action[JsValue] = Action(parse.json) { implicit request =>
     val np = Player((request.body \ "id").as[Int], (request.body \ "name").as[String], "", 0, 0, 0)
     Ok(toJson(Map("id" -> np.getId)))
