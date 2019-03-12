@@ -8,6 +8,9 @@ class Territory(id: Int, name: String, var owner: Player, var numUnits: Int, dis
 
   def getUnits: Int = this.numUnits
 
+  def getOwner: Player = this.owner
+}
+
   def getOwner = this.owner
 
   def getDistrict = this.district
