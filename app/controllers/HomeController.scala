@@ -76,8 +76,9 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
             }
           }
         }
+
         gameInitiator(list)
-        Ok(views.html.game())
+        Ok(views.html.game(players))
       }
     )
   }
@@ -86,10 +87,11 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     val np = Player((request.body \ "id").as[Int], (request.body \ "name").as[String], "", 0, 0, 0)
     Ok(toJson(Map("id" -> np.getId)))
   }
+  var players: List[Map[String, Any]] = Nil
 
   def gameInitiator(input: List[Map[String, Any]]): String = {
     val turnOrder: List[Int] = randomizeTurns(input.length)
-    var players: List[Map[String, Any]] = Nil
+
     var num: Int = 0
     val num_armies: Int = initArmiesUnits(input.length)
     for (player_data <- input) {
@@ -136,6 +138,38 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     turnList = util.Random.shuffle(turnList)
     turnList
   }
+
+  /*
+  Creates a list of Territory objects, with ID's 1 to 42, and Names "1" to "42"
+   */
+  def createTerritories(): List[Territory] = {
+    var territoryList: List[Territory] = Nil;
+    var inc = 0;
+    var name = "1"
+    for (inc <- 1 to 42 ) {
+      var territory: Territory = new Territory(inc, name, null, 0, null, true)
+      territoryList = territory :: territoryList
+      var nameTemp = name.toInt
+      nameTemp = 1 + nameTemp
+      name = nameTemp.toString
+    }
+    territoryList
+  }
+
+  def randomizeTerritories2(territories: List[Territory], playerList: List[Map[String, Any]]):
+      List[Map[String, Any]] = {
+    util.Random.shuffle(territories)
+    util.Random.shuffle(players)
+
+    playerList(1)
+    var i = 0
+    for (a <- territories.indices) {
+      map += territories(a) -> playerID(i % playerID.length)
+      i += 1
+    }
+    map
+  }
+
 
   //Creates a map that contains all the territory ID's as keys, and the player ID's as values
   //Ex: territoryID: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], playerID: [1, 2]
