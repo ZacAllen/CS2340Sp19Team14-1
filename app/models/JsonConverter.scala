@@ -11,7 +11,7 @@ object JsonConverter {
     o match {
       case m: Map[_,_] => {
         for ( (k,v) <- m ) {
-          var key = escape(k.asInstanceOf[String])
+          var key = escape(k.toString)
           v match {
             case a: Map[_,_] => json += "\"" + key + "\":" + toJson(a)
             case a: List[_] => json += "\"" + key + "\":" + toJson(a)

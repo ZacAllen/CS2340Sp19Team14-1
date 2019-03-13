@@ -15,13 +15,13 @@ class Territory(id: Int, name: String, var owner: Player, var numUnits: Int, dis
   }
   def getOwner: Player = this.owner
 
-  def getDistrict = this.district
+  def getDistrict: District = this.district
 
-  def getCanAttack = this.canAttack
+  def getCanAttack: Boolean = this.canAttack
 
   def setCanAttack(canAttack: Boolean) {this.canAttack = canAttack}
 
   def setOwner(player: Player) {this.owner = player}
 
-  def ArmyChange(num: Int) {this.numUnits += num}
+  def armyChange(num: Int) {this.numUnits += num}
 }

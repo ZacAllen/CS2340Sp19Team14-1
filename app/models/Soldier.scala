@@ -1,17 +1,17 @@
 package models
 
 abstract class Soldier(id: Int, name: String, territory: Territory, price: Int, mobility: Int, var canMove: Boolean) {
-  def getName = this.name
+  def getName: String = this.name
 
-  def getId = this.id
+  def getId: Int = this.id
 
-  def getLocation = this.territory
+  def getLocation: Territory = this.territory
 
-  def getPrice = this.price
+  def getPrice: Int = this.price
 
-  def getMobility = this.mobility
+  def getMobility: Int = this.mobility
 
-  def getCanMove = this.canMove
+  def getCanMove: Boolean = this.canMove
 
   def setCanMove(boolean: Boolean){this.canMove = boolean}
 }
