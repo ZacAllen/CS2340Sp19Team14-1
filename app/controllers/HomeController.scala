@@ -166,13 +166,13 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
   //Ex: territoryID: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], playerID: [1, 2]
   //Returns [3: 2, 6: 1, 10: 2, 9: 1, 8: 2, 1: 1, 4: 2, ...]
   def randomizeTerritories(territoryID: List[Int], playerID: List[Int]): Map[Int, Int] = {
-    util.Random.shuffle(territoryID)
-    util.Random.shuffle(playerID)
+    val territories = util.Random.shuffle(territoryID)
+    val players = util.Random.shuffle(playerID)
 
     var map:Map[Int,Int] = Map()
     var i = 0
-    for (a <- territoryID.indices) {
-      map += territoryID(a) -> playerID(i % playerID.length)
+    for (a <- territories.indices) {
+      map += territories(a) -> players(i % players.length)
       i += 1
     }
     map
