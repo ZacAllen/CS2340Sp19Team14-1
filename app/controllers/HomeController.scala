@@ -148,9 +148,9 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
   We may or may not use the Territory class in the future. We could perhaps modify
   the randomizeTerritories method to map these territories' int ids to each player's
    */
+/*
   def createTerritories(): List[Territory] = {
-    var territoryList: List[Territory] = Nil;
-    var inc = 0;
+    var territoryList: List[Territory] = Nil
     var name = "1"
     for (inc <- 1 to 42 ) {
       var territory: Territory = new Territory(inc, name, null, 0, null, true)
@@ -161,6 +161,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     }
     territoryList
   }
+*/
 
   //Creates a map that contains all the territory ID's as keys, and the player ID's as values
   //Ex: territoryID: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], playerID: [1, 2]
