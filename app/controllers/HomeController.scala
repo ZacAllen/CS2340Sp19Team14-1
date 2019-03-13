@@ -1,7 +1,7 @@
 package controllers
 
 import javax.inject._
-import models.{JsonConverter, Player, GameData, Territory}
+import models.{GameData, JsonConverter, Player, Territory}
 import play.api.libs.json.JsValue
 import play.api.mvc._
 import play.api.libs.json.Json._
@@ -76,8 +76,12 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
             }
           }
         }
-        gameInitiator(list)
-        Ok(views.html.game())
+        val playerInitData = gameInitiator(list)
+        val territoryInitData = randomizeTerritories(1 to 42 toList, 1 to list.length toList)
+        Ok(views.html.game()).withSession(
+          "player_data" -> JsonConverter.toJson(playerInitData),
+          "territory_data" -> JsonConverter.toJson(territoryInitData)
+        )
       }
     )
   }
@@ -87,7 +91,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     Ok(toJson(Map("id" -> np.getId)))
   }
 
-  def gameInitiator(input: List[Map[String, Any]]): String = {
+  def gameInitiator(input: List[Map[String, Any]]): List[Map[String, Any]] = {
     val turnOrder: List[Int] = randomizeTurns(input.length)
     var players: List[Map[String, Any]] = Nil
     var num: Int = 0
@@ -104,8 +108,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
         "color" -> player.getColor, "turn" -> player.getTurn, "numArmies" -> player.getNumArmies)
       players = player_map :: players
     }
-    val final_data = JsonConverter.toJson(Map("data" -> players, "status" -> 1))
-    final_data
+    players
   }
 
   def initArmiesUnits(numPlayers: Int): Int = {

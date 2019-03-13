@@ -2,11 +2,11 @@ package models
 
 // Like continents in the original Risk game.
 class District(id: Int, name: String, territories: List[Territory]) {
-  def getId() = id
+  def getId: Int = id
 
-  def getName() = name
+  def getName: String = name
 
-  def getTerritories() = territories
+  def getTerritories: List[Territory] = territories
 }
 
 object District {
