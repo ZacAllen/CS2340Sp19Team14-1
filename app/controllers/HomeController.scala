@@ -76,6 +76,8 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
             }
           }
         }
+
+        gameInitiator(list)
         val playerInitData = gameInitiator(list)
         val territoryInitData = randomizeTerritories(1 to 42 toList, 1 to list.length toList)
         Ok(views.html.game(territoryInitData, playerInitData)).withSession(
@@ -90,6 +92,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     val np = Player((request.body \ "id").as[Int], (request.body \ "name").as[String], "", 0, 0, 0)
     Ok(toJson(Map("id" -> np.getId)))
   }
+
 
   def gameInitiator(input: List[Map[String, Any]]): List[Map[String, Any]] = {
     val turnOrder: List[Int] = randomizeTurns(input.length)
@@ -138,6 +141,25 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     //shuffle
     turnList = util.Random.shuffle(turnList)
     turnList
+  }
+
+  /*
+  Creates a list of Territory objects, with ID's 1 to 42, and Names "1" to "42"
+  We may or may not use the Territory class in the future. We could perhaps modify
+  the randomizeTerritories method to map these territories' int ids to each player's
+   */
+  def createTerritories(): List[Territory] = {
+    var territoryList: List[Territory] = Nil;
+    var inc = 0;
+    var name = "1"
+    for (inc <- 1 to 42 ) {
+      var territory: Territory = new Territory(inc, name, null, 0, null, true)
+      territoryList = territory :: territoryList
+      var nameTemp = name.toInt
+      nameTemp = 1 + nameTemp
+      name = nameTemp.toString
+    }
+    territoryList
   }
 
   //Creates a map that contains all the territory ID's as keys, and the player ID's as values
