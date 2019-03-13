@@ -78,7 +78,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
         }
         val playerInitData = gameInitiator(list)
         val territoryInitData = randomizeTerritories(1 to 42 toList, 1 to list.length toList)
-        Ok(views.html.game()).withSession(
+        Ok(views.html.game(territoryInitData, playerInitData)).withSession(
           "player_data" -> JsonConverter.toJson(playerInitData),
           "territory_data" -> JsonConverter.toJson(territoryInitData)
         )
