@@ -1,7 +1,7 @@
 package controllers
 
 import javax.inject._
-import models.{GameData, JsonConverter, Player, Territory}
+import models._
 import play.api.libs.json.JsValue
 import play.api.mvc._
 import play.api.libs.json.Json._
@@ -206,10 +206,25 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     }
   }
 
+  //Set the turns for players using the random list generated and the player list
   def setPlayerTurn(players: List[Player], turnList: List[Int]) {
     if (players != Nil && turnList != Nil) {
       players.head.setTurn(turnList.head)
       setPlayerTurn(players.tail, turnList.tail)
     }
+  }
+
+  //Give players additional army units at the beginning of their turns
+  def addArmies(player: Player) {
+    if (player.getTerritories.length <= 2) player.addArmyUnits(1) else player.addArmyUnits(player.
+      getTerritories.length/3)
+  }
+
+  //Add a new Soldier to a territory and return the number of armies on that territory
+  def placeNewArmies(player: Player, soldier: Soldier, territory: Territory): Int = {
+      territory.addSoldier(soldier)
+      territory.setSoldiers(territory.getSoldiers.sorted)
+      soldier.setTerritory(territory)
+      player.addArmyUnits(-soldier.getPrice)
   }
 }

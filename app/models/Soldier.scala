@@ -1,6 +1,9 @@
 package models
 
-abstract class Soldier(id: Int, name: String, territory: Territory, price: Int, mobility: Int, var canMove: Boolean) {
+abstract class Soldier(id: Int, name: String, var territory: Territory, price: Int, mobility: Int, var canMove: Boolean) extends Ordered[Soldier] {
+
+  def compare(that: Soldier): Int = this.price - that.getPrice
+
   def getName: String = this.name
 
   def getId: Int = this.id
@@ -14,16 +17,20 @@ abstract class Soldier(id: Int, name: String, territory: Territory, price: Int, 
   def getCanMove: Boolean = this.canMove
 
   def setCanMove(boolean: Boolean){this.canMove = boolean}
+
+  def setTerritory(territory: Territory) {this.territory = territory}
 }
 
-class Students(id: Int, territory: Territory) extends Soldier(id, "Student", territory,
+
+
+case class Student(id: Int, override var territory: Territory) extends Soldier(id, "Student", territory,
   1, 1, true) {
 }
 
-class  TA(id: Int, territory: Territory) extends Soldier(id, "TA", territory,
+case class  TA(id: Int, override var territory: Territory) extends Soldier(id, "TA", territory,
   2, 2, true) {
 }
 
-class Professors(id: Int, territory: Territory) extends Soldier(id, "Professor", territory,
+case class Professor(id: Int, override var territory: Territory) extends Soldier(id, "Professor", territory,
   3, 1, true) {
 }

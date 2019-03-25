@@ -1,6 +1,6 @@
 package models
 
-class Territory(id: Int, name: String, var owner: Player, var numUnits: Int, district: District, var canAttack: Boolean) {
+class Territory(id: Int, name: String, var owner: Player, var numUnits: Int, var soldiers: List[Soldier], district: District, var canAttack: Boolean) {
 
   def getId: Int = this.id
 
@@ -13,6 +13,19 @@ class Territory(id: Int, name: String, var owner: Player, var numUnits: Int, dis
     numUnits += newUnits
     numUnits
   }
+
+  def getSoldiers: List[Soldier] = this.soldiers
+
+  def setSoldiers(newSoldiers: List[Soldier]): Unit = this.soldiers = newSoldiers
+
+  def addSoldier(soldier: Soldier): List[Soldier] = soldier::soldiers
+
+  def eliminateSoldier: Soldier = {
+    val eliminated = soldiers.head
+    soldiers = soldiers.tail
+    eliminated
+  }
+
   def getOwner: Player = this.owner
 
   def getDistrict: District = this.district
