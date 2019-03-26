@@ -89,7 +89,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
   }
 
   def addPlayer: Action[JsValue] = Action(parse.json) { implicit request =>
-    val np = Player((request.body \ "id").as[Int], (request.body \ "name").as[String], "", 0, 0, 0)
+    val np = Player((request.body \ "id").as[Int], (request.body \ "name").as[String], "", 0, 0, 0,List())
     Ok(toJson(Map("id" -> np.getId)))
   }
 
@@ -105,7 +105,8 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
       val email = player_data("email").asInstanceOf[String]
       val color = turnOrder(num)
       val turn = turnOrder(num)
-      val player = Player(id, name, email, turn, color, num_armies)
+      val territories = List()
+      val player = Player(id, name, email, turn, color, num_armies, territories)
       num = num + 1
       val player_map = Map[String, Any]("id" -> player.getId, "name" -> player.getName, "email" -> player.getEmail,
         "color" -> player.getColor, "turn" -> player.getTurn, "numArmies" -> player.getNumArmies)
@@ -214,17 +215,43 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     }
   }
 
+  //Bonus for occupying the whole district
+  val REDBONUS = 5
+  val BROWNBONUS = 5
+  val BLUEBONUS = 5
+  val GREENBONUS = 5
+  val ORANGEBONUS = 5
+  val YELLOWBONUS = 5
+
   //Give players additional army units at the beginning of their turns
   def addArmies(player: Player) {
-    if (player.getTerritories.length <= 2) player.addArmyUnits(1) else player.addArmyUnits(player.
-      getTerritories.length/3)
+    if (player.getTerritories.length <= 2) {
+      player.addArmyUnits(1)
+    }  else {
+      player.addArmyUnits(player.getTerritories.length/3)
+      if (player.getTerritories.count(_.getId <= 7) == 7) {
+        player.addArmyUnits(REDBONUS)
+      } else if (player.getTerritories.count(x => x.getId >= 8 && x.getId <= 13) == 6) {
+        player.addArmyUnits(BROWNBONUS)
+      } else if (player.getTerritories.count(x => x.getId >= 14 && x.getId <= 21) == 8) {
+        player.addArmyUnits(BLUEBONUS)
+      } else if (player.getTerritories.count(x => x.getId >= 22 && x.getId <= 29) == 8) {
+        player.addArmyUnits(GREENBONUS)
+      } else if (player.getTerritories.count(x => x.getId >= 30 && x.getId <= 36) == 7) {
+        player.addArmyUnits(ORANGEBONUS)
+      } else if (player.getTerritories.count(x => x.getId >= 37 && x.getId <= 42) == 6) {
+        player.addArmyUnits(YELLOWBONUS)
+      }
+    }
   }
 
-  //Add a new Soldier to a territory and return the number of armies on that territory
-  def placeNewArmies(player: Player, soldier: Soldier, territory: Territory): Int = {
-      territory.addSoldier(soldier)
-      territory.setSoldiers(territory.getSoldiers.sorted)
-      soldier.setTerritory(territory)
-      player.addArmyUnits(-soldier.getPrice)
+  //Add a new Soldier to a territory.
+  def placeNewArmies(player: Player, soldier: Soldier, territory: Territory, numArmies: Int): Unit = {
+      for (i <- 1 to numArmies) {
+        territory.addSoldier(soldier)
+        territory.setSoldiers(territory.getSoldiers.sorted)
+        soldier.setTerritory(territory)
+        player.addArmyUnits(-soldier.getPrice)
+      }
   }
 }

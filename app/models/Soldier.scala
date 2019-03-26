@@ -23,14 +23,14 @@ abstract class Soldier(id: Int, name: String, var territory: Territory, price: I
 
 
 
-case class Student(id: Int, override var territory: Territory) extends Soldier(id, "Student", territory,
+case class Student(id: Int, var territoryS: Territory) extends Soldier(id, "Student", territoryS,
   1, 1, true) {
 }
 
-case class  TA(id: Int, override var territory: Territory) extends Soldier(id, "TA", territory,
+case class  TA(id: Int, var territoryT: Territory) extends Soldier(id, "TA", territoryT,
   2, 2, true) {
 }
 
-case class Professor(id: Int, override var territory: Territory) extends Soldier(id, "Professor", territory,
+case class Professor(id: Int, territoryP: Territory) extends Soldier(id, "Professor", territoryP,
   3, 1, true) {
 }
