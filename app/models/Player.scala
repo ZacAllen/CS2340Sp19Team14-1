@@ -1,7 +1,7 @@
 package models
 
 
-class Player(id: Int, name: String, email: String, var turn: Int, color: Int, numArmies: Int) {
+class Player(id: Int, name: String, email: String, var turn: Int, color: Int, numArmies: Int) extends AnyRef{
 
   def getName: String = this.name
 

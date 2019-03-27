@@ -1,4 +1,4 @@
-@(territoryData: Map[Int, Int], playerData: List[Map[String, Any]])
+@(territoryData: Map[Int, Territory], playerData: List[Map[String, Any]])
 @defining(play.core.PlayVersion.current) { version =>
 
     <html lang="en">
@@ -278,171 +278,213 @@
                         var owner = document.getElementById("owner");
                         switch (num) {
                             case 1: {
-                                owner.innerText = "Player ID " + "@territoryData(1)";
+                                owner.innerText = "@territoryData(1).getOwnerName, ID: @territoryData(1).getOwnerID";
+                                na.innerText = @territoryData(1).getUnits;
                                 break;
                             }
                             case 2: {
-                                owner.innerText = "Player ID " + "@territoryData(1)";
+                                owner.innerText = "@territoryData(2).getOwnerName, ID: @territoryData(2).getOwnerID";
+                                na.innerText = @territoryData(2).getUnits;
                                 break;
                             }
                             case 3: {
-                                owner.innerText = "Player ID " + "@territoryData(3)";
+                                owner.innerText = "@territoryData(3).getOwnerName, ID: @territoryData(3).getOwnerID";
+                                na.innerText = @territoryData(3).getUnits;
                                 break;
                             }
                             case 4: {
-                                owner.innerText = "Player ID " + "@territoryData(4)";
+                                owner.innerText = "@territoryData(4).getOwnerName, ID: @territoryData(4).getOwnerID";
+                                na.innerText = @territoryData(4).getUnits;
                                 break;
                             }
                             case 5: {
-                                owner.innerText = "Player ID " + "@territoryData(5)";
+                                owner.innerText = "@territoryData(5).getOwnerName, ID: @territoryData(5).getOwnerID";
+                                na.innerText = @territoryData(5).getUnits;
                                 break;
                             }
                             case 6: {
-                                owner.innerText = "Player ID " + "@territoryData(6)";
+                                owner.innerText = "@territoryData(6).getOwnerName, ID: @territoryData(6).getOwnerID";
+                                na.innerText = @territoryData(6).getUnits;
                                 break;
                             }
                             case 7: {
-                                owner.innerText = "Player ID " + "@territoryData(7)";
+                                owner.innerText = "@territoryData(7).getOwnerName, ID: @territoryData(7).getOwnerID";
+                                na.innerText = @territoryData(7).getUnits;
                                 break;
                             }
                             case 8: {
-                                owner.innerText = "Player ID " + "@territoryData(8)";
+                                owner.innerText = "@territoryData(8).getOwnerName, ID: @territoryData(8).getOwnerID";
+                                na.innerText = @territoryData(8).getUnits;
                                 break;
                             }
                             case 9: {
-                                owner.innerText = "Player ID " + "@territoryData(9)";
+                                owner.innerText = "@territoryData(9).getOwnerName, ID: @territoryData(9).getOwnerID";
+                                na.innerText = @territoryData(9).getUnits;
                                 break;
                             }
                             case 10: {
-                                owner.innerText = "Player ID " + "@territoryData(10)";
+                                owner.innerText = "@territoryData(10).getOwnerName, ID: @territoryData(10).getOwnerID";
+                                na.innerText = @territoryData(10).getUnits;
                                 break;
                             }
                             case 11: {
-                                owner.innerText = "Player ID " + "@territoryData(11)";
+                                owner.innerText = "@territoryData(11).getOwnerName, ID: @territoryData(11).getOwnerID";
+                                na.innerText = @territoryData(11).getUnits;
                                 break;
                             }
                             case 12: {
-                                owner.innerText = "Player ID " + "@territoryData(12)";
+                                owner.innerText = "@territoryData(12).getOwnerName, ID: @territoryData(12).getOwnerID";
+                                na.innerText = @territoryData(12).getUnits;
                                 break;
                             }
                             case 13: {
-                                owner.innerText = "Player ID " + "@territoryData(13)";
+                                owner.innerText = "@territoryData(13).getOwnerName, ID: @territoryData(13).getOwnerID";
+                                na.innerText = @territoryData(13).getUnits;
                                 break;
                             }
                             case 14: {
-                                owner.innerText = "Player ID " + "@territoryData(14)";
+                                owner.innerText = "@territoryData(14).getOwnerName, ID: @territoryData(14).getOwnerID";
+                                na.innerText = @territoryData(14).getUnits;
                                 break;
                             }
                             case 15: {
-                                owner.innerText = "Player ID " + "@territoryData(15)";
+                                owner.innerText = "@territoryData(15).getOwnerName, ID: @territoryData(15).getOwnerID";
+                                na.innerText = @territoryData(15).getUnits;
                                 break;
                             }
                             case 16: {
-                                owner.innerText = "Player ID " + "@territoryData(16)";
+                                owner.innerText = "@territoryData(16).getOwnerName, ID: @territoryData(16).getOwnerID";
+                                na.innerText = @territoryData(16).getUnits;
                                 break;
                             }
                             case 17: {
-                                owner.innerText = "Player ID " + "@territoryData(17)";
+                                owner.innerText = "@territoryData(17).getOwnerName, ID: @territoryData(17).getOwnerID";
+                                na.innerText = @territoryData(17).getUnits;
                                 break;
                             }
                             case 18: {
-                                owner.innerText = "Player ID " + "@territoryData(18)";
+                                owner.innerText = "@territoryData(18).getOwnerName, ID: @territoryData(18).getOwnerID";
+                                na.innerText = @territoryData(18).getUnits;
                                 break;
                             }
                             case 19: {
-                                owner.innerText = "Player ID " + "@territoryData(19)";
+                                owner.innerText = "@territoryData(19).getOwnerName, ID: @territoryData(19).getOwnerID";
+                                na.innerText = @territoryData(19).getUnits;
                                 break;
                             }
                             case 20: {
-                                owner.innerText = "Player ID " + "@territoryData(20)";
+                                owner.innerText = "@territoryData(20).getOwnerName, ID: @territoryData(20).getOwnerID";
+                                na.innerText = @territoryData(20).getUnits;
                                 break;
                             }
                             case 21: {
-                                owner.innerText = "Player ID " + "@territoryData(21)";
+                                owner.innerText = "@territoryData(21).getOwnerName, ID: @territoryData(21).getOwnerID";
+                                na.innerText = @territoryData(21).getUnits;
                                 break;
                             }
                             case 22: {
-                                owner.innerText = "Player ID " + "@territoryData(22)";
+                                owner.innerText = "@territoryData(22).getOwnerName, ID: @territoryData(22).getOwnerID";
+                                na.innerText = @territoryData(22).getUnits;
                                 break;
                             }
                             case 23: {
-                                owner.innerText = "Player ID " + "@territoryData(23)";
+                                owner.innerText = "@territoryData(23).getOwnerName, ID: @territoryData(23).getOwnerID";
+                                na.innerText = @territoryData(23).getUnits;
                                 break;
                             }
                             case 24: {
-                                owner.innerText = "Player ID " + "@territoryData(24)";
+                                owner.innerText = "@territoryData(24).getOwnerName, ID: @territoryData(24).getOwnerID";
+                                na.innerText = @territoryData(24).getUnits;
                                 break;
                             }
                             case 25: {
-                                owner.innerText = "Player ID " + "@territoryData(25)";
+                                owner.innerText = "@territoryData(25).getOwnerName, ID: @territoryData(25).getOwnerID";
+                                na.innerText = @territoryData(25).getUnits;
                                 break;
                             }
                             case 26: {
-                                owner.innerText = "Player ID " + "@territoryData(26)";
+                                owner.innerText = "@territoryData(26).getOwnerName, ID: @territoryData(26).getOwnerID";
+                                na.innerText = @territoryData(26).getUnits;
                                 break;
                             }
                             case 27: {
-                                owner.innerText = "Player ID " + "@territoryData(27)";
+                                owner.innerText = "@territoryData(27).getOwnerName, ID: @territoryData(27).getOwnerID";
+                                na.innerText = @territoryData(27).getUnits;
                                 break;
                             }
                             case 28: {
-                                owner.innerText = "Player ID " + "@territoryData(28)";
+                                owner.innerText = "@territoryData(28).getOwnerName, ID: @territoryData(28).getOwnerID";
+                                na.innerText = @territoryData(28).getUnits;
                                 break;
                             }
                             case 29: {
-                                owner.innerText = "Player ID " + "@territoryData(29)";
+                                owner.innerText = "@territoryData(29).getOwnerName, ID: @territoryData(29).getOwnerID";
+                                na.innerText = @territoryData(29).getUnits;
                                 break;
                             }
                             case 30: {
-                                owner.innerText = "Player ID " + "@territoryData(30)";
+                                owner.innerText = "@territoryData(30).getOwnerName, ID: @territoryData(30).getOwnerID";
+                                na.innerText = @territoryData(30).getUnits;
                                 break;
                             }
                             case 31: {
-                                owner.innerText = "Player ID " + "@territoryData(31)";
+                                owner.innerText = "@territoryData(31).getOwnerName, ID: @territoryData(31).getOwnerID";
+                                na.innerText = @territoryData(31).getUnits;
                                 break;
                             }
                             case 32: {
-                                owner.innerText = "Player ID " + "@territoryData(32)";
+                                owner.innerText = "@territoryData(32).getOwnerName, ID: @territoryData(32).getOwnerID";
+                                na.innerText = @territoryData(32).getUnits;
                                 break;
                             }
                             case 33: {
-                                owner.innerText = "Player ID " + "@territoryData(33)";
+                                owner.innerText = "@territoryData(33).getOwnerName, ID: @territoryData(33).getOwnerID";
+                                na.innerText = @territoryData(33).getUnits;
                                 break;
                             }
                             case 34: {
-                                owner.innerText = "Player ID " + "@territoryData(34)";
+                                owner.innerText = "@territoryData(34).getOwnerName, ID: @territoryData(34).getOwnerID";
+                                na.innerText = @territoryData(34).getUnits;
                                 break;
                             }
                             case 35: {
-                                owner.innerText = "Player ID " + "@territoryData(35)";
+                                owner.innerText = "@territoryData(35).getOwnerName, ID: @territoryData(35).getOwnerID";
+                                na.innerText = @territoryData(35).getUnits;
                                 break;
                             }
                             case 36: {
-                                owner.innerText = "Player ID " + "@territoryData(36)";
+                                owner.innerText = "@territoryData(36).getOwnerName, ID: @territoryData(36).getOwnerID";
+                                na.innerText = @territoryData(36).getUnits;
                                 break;
                             }
                             case 37: {
-                                owner.innerText = "Player ID " + "@territoryData(37)";
+                                owner.innerText = "@territoryData(37).getOwnerName, ID: @territoryData(37).getOwnerID";
+                                na.innerText = @territoryData(37).getUnits;
                                 break;
                             }
                             case 38: {
-                                owner.innerText = "Player ID " + "@territoryData(38)";
+                                owner.innerText = "@territoryData(38).getOwnerName, ID: @territoryData(38).getOwnerID";
+                                na.innerText = @territoryData(38).getUnits;
                                 break;
                             }
                             case 39: {
-                                owner.innerText = "Player ID " + "@territoryData(39)";
+                                owner.innerText = "@territoryData(39).getOwnerName, ID: @territoryData(39).getOwnerID";
+                                na.innerText = @territoryData(39).getUnits;
                                 break;
                             }
                             case 40: {
-                                owner.innerText = "Player ID " + "@territoryData(40)";
+                                owner.innerText = "@territoryData(40).getOwnerName, ID: @territoryData(40).getOwnerID";
+                                na.innerText = @territoryData(40).getUnits;
                                 break;
                             }
                             case 41: {
-                                owner.innerText = "Player ID " + "@territoryData(41)";
+                                owner.innerText = "@territoryData(41).getOwnerName, ID: @territoryData(41).getOwnerID";
+                                na.innerText = @territoryData(41).getUnits;
                                 break;
                             }
                             case 42: {
-                                owner.innerText = "Player ID " + "@territoryData(42)";
+                                owner.innerText = "@territoryData(42).getOwnerName, ID: @territoryData(42).getOwnerID";
+                                na.innerText = @territoryData(42).getUnits;
                                 break;
                             }
                             default:
