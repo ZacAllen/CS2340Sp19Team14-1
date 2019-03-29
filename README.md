@@ -18,7 +18,7 @@ meaning that Player 4 must exist for Player 5 / Player 6 to exist and Player 5 m
 
 ## Design Documentation
 
-The design documentation is located at _____.
+The design documentation is located at DesignDocumentation.docx
 
 ## Checking Initial Assignments
 Checking initial assignments of the territory is easy.
