@@ -883,6 +883,18 @@
                             alert("The selected territory does not belong to the current player.");
                         }
                     } else {
+                        if (territoryMap.get(territoryID)[1] == playerMap.get(currTurn % playerMap.size)[2]) {
+                            territoryMap.get(territoryID)[0] += numArmy;
+                            playerMap.get(currTurn % playerMap.size)[1] -= numArmy;
+                            subTurn++;
+                            if (playerMap.get(currTurn % playerMap.size)[1] == 0) {
+                                document.getElementById("end-turn").style.display = "block";
+                            }
+                            getData(territoryID);
+                            updateDispArmies();
+                        } else {
+                            alert("The selected territory does not belong to the current player.");
+                        }
 
                     }
                 }
@@ -907,19 +919,20 @@
                         }
                     ]);
 
-                    for(var i in territoryMap) {
+                    for(var i = 1; i <= 42; i++) {
                         summaryMap.get(turnMap.get(territoryMap.get(i)[1]) - 1)[0] += 1;
                     }
 
-                    for(var i in summaryMap) {
-                        playerMap.get(i)[1] = (summaryMap.get(i)[0] <= 2) ? summaryMap.get(i)[0] / 3 : 1;
+                    for(var i = 0; i < playerMap.size; i++) {
+                        playerMap.get(i)[1] = (summaryMap.get(i)[0] > 2) ? Math.floor(summaryMap.get(i)[0] / 3) : 1;
                     }
                     updateDispArmies();
                 }
 
                 function endTurn() {
-                    if (currTurn % playerMap.size == 0) {
+                    if ((currTurn + 1) % playerMap.size == 0) {
                         addNewArmies();
+                        alert("New Armies Granted to Each Player");
                     }
                     currTurn++;
                     dispTurn();
