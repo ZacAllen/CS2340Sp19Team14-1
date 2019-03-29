@@ -125,7 +125,7 @@
                                         onclick="getData(6)">
                                         <area name = "7" shape = "poly" coords="349, 115, 349, 177, 394, 177, 420, 144, 391, 115, 349, 115"
                                         onclick="getData(7)">
-                                        <area name = "8" shape = "poly" coords="353, 40, 382, 39, 294, 60, 398, 83, 372, 83, 353, 62, 353, 40"
+                                        <area name = "8" shape = "poly" coords="353, 40, 382, 40, 394, 60, 398, 83, 372, 83, 353, 62, 353, 40"
                                         onclick="getData(8)">
                                         <area name = "9" shape = "poly" coords="401, 27, 455, 27, 455, 93, 434, 110, 410, 110, 403, 116, 373, 88, 402, 88, 401, 27"
                                         onclick="getData(9)">
@@ -762,6 +762,13 @@
                                     <div class="list-group">
                                         <a href="#" class="list-group-item">
                                             <i class="fa fa-calendar-check-o fa-fw"></i>
+                                            Territory #
+                                            <span class="pull-right text-muted small"><em id="territory_num">
+                                                N/A</em>
+                                            </span>
+                                        </a>
+                                        <a href="#" class="list-group-item">
+                                            <i class="fa fa-calendar-check-o fa-fw"></i>
                                             Number of Armies
                                             <span class="pull-right text-muted small"><em id="num_armies">
                                                 N/A</em>
@@ -771,6 +778,18 @@
                                             <i class="fa fa-male fa-fw"></i> Owner
                                             <span class="pull-right text-muted small"><em id="owner">
                                                 GT</em>
+                                            </span>
+                                        </a>
+                                        <a href="#" class="list-group-item" onclick ="addUnit(1, 'territory_num')">
+                                            <i class="fa fa-male fa-fw"></i> Add Unit
+                                            <span class="pull-right text-muted small"><em id="addunit">
+                                                </em>
+                                            </span>
+                                        </a>
+                                        <a href="#" class="list-group-item" onclick ="">
+                                            <i class="fa fa-male fa-fw"></i> End Turn
+                                            <span class="pull-right text-muted small"><em id="addunit">
+                                            </em>
                                             </span>
                                         </a>
                                     </div>
@@ -804,6 +823,8 @@
             <script>
                     function getData(num) {
                         var na = document.getElementById("num_armies");
+                        var id = document.getElementById("territory_num")
+                        id.innerHTML = num;
                         na.innerHTML = 1;
                         var owner = document.getElementById("owner");
                         switch (num) {
@@ -1020,6 +1041,10 @@
                             default:
                                 owner.innerText = "GT";
                         }
+                    }
+                    function addUnit(num, territoryNum) {
+                        var na = document.getElementById("num_armies");
+                        var id = document.getElementById("territory_num")
                     }
             </script>
         </body>

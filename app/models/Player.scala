@@ -1,7 +1,7 @@
 package models
 
 
-class Player(id: Int, name: String, email: String, var turn: Int, color: Int, numArmies: Int) extends AnyRef{
+class Player(id: Int, name: String, email: String, var turn: Int, color: String, numArmies: Int) extends AnyRef{
 
   def getName: String = this.name
 
@@ -11,7 +11,7 @@ class Player(id: Int, name: String, email: String, var turn: Int, color: Int, nu
 
   def getTurn: Int = this.turn
 
-  def getColor: Int = this.color
+  def getColor: String = this.color
 
   def getNumArmies: Int = this.numArmies
 
@@ -20,6 +20,6 @@ class Player(id: Int, name: String, email: String, var turn: Int, color: Int, nu
 
 object Player {
 
-  def apply(id: Int, name: String, email: String, turn: Int, color: Int, numArmies: Int):
+  def apply(id: Int, name: String, email: String, turn: Int, color: String, numArmies: Int):
    Player = new Player(id, name, email, turn, color, numArmies)
 }
