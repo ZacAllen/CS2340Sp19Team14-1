@@ -77,7 +77,6 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
           }
         }
 
-        gameInitiator(list)
         val playerInitData = gameInitiator(list)
         val sortedPlayers = sortPlayersByTurn(playerInitData)
         val territoryInitData = randomizeTerritories(createTerritories(), sortedPlayers)
@@ -107,10 +106,10 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     val colors: List[String] = List("Red", "Blue", "Green", "Yellow", "Brown", "Orange")
     val num_armies: Int = initArmiesUnits(input.length)
     for (player_data <- input) {
-      val id = player_data("id").asInstanceOf[Int]
+      val id = turnOrder(num)
       val name = player_data("name").asInstanceOf[String]
       val email = player_data("email").asInstanceOf[String]
-      val color = colors(num)
+      val color = colors(turnOrder(num) - 1)
       val turn = turnOrder(num)
       val territories = List()
       val player = Player(id, name, email, turn, color, num_armies, territories)
@@ -184,7 +183,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
       map += a -> territories(a - 1)
       val p = players(i % players.length)
       territories(a - 1).setOwnerID(p.get("id"))
-      println(p.get("id").toString + "OOOOOO")
+      //println(p.get("id").toString + "OOOOOO")
       territories(a - 1).setOwnerName(p.get("name"))
       territories(a - 1).addUnits(1)
       i += 1
