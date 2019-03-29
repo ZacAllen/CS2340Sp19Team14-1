@@ -79,17 +79,24 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
 
         gameInitiator(list)
         val playerInitData = gameInitiator(list)
-        val territoryInitData = randomizeTerritories(createTerritories(), playerInitData)
-        Ok(views.html.game(territoryInitData, playerInitData)).withSession(
-          "player_data" -> JsonConverter.toJson(playerInitData),
+        val sortedPlayers = sortPlayersByTurn(playerInitData)
+        val territoryInitData = randomizeTerritories(createTerritories(), sortedPlayers)
+        Ok(views.html.game(territoryInitData, sortedPlayers)).withSession(
+          "player_data" -> JsonConverter.toJson(sortedPlayers),
           "territory_data" -> JsonConverter.toJson(territoryInitData)
         )
       }
     )
   }
 
+  def sortPlayersByTurn(players: List[Map[String, Any]]): List[Map[String, Any]] = {
+    var sortedPlayers: List[Map[String, Any]] = Nil
+    sortedPlayers = players.sortBy(_("turn").toString)
+    sortedPlayers
+  }
+
   def addPlayer: Action[JsValue] = Action(parse.json) { implicit request =>
-    val np = Player((request.body \ "id").as[Int], (request.body \ "name").as[String], "", 0, 0, 0,List())
+    val np = Player((request.body \ "id").as[Int], (request.body \ "name").as[String], "", 0, "", 0)
     Ok(toJson(Map("id" -> np.getId)))
   }
 
@@ -97,12 +104,13 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     val turnOrder: List[Int] = randomizeTurns(input.length)
     var players: List[Map[String, Any]] = Nil
     var num: Int = 0
+    var colors: List[String] = List("Green", "Blue", "Red", "Yellow", "Brown", "Orange")
     val num_armies: Int = initArmiesUnits(input.length)
     for (player_data <- input) {
       val id = player_data("id").asInstanceOf[Int]
       val name = player_data("name").asInstanceOf[String]
       val email = player_data("email").asInstanceOf[String]
-      val color = turnOrder(num)
+      val color = colors(num)
       val turn = turnOrder(num)
       val territories = List()
       val player = Player(id, name, email, turn, color, num_armies, territories)
