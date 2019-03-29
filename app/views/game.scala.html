@@ -1,4 +1,4 @@
-@(territoryData: Map[Int, Int], playerData: List[Map[String, Any]])
+@(territoryData: Map[Int, Territory], playerData: List[Map[String, Any]])
 @defining(play.core.PlayVersion.current) { version =>
 
     <html lang="en">
@@ -107,7 +107,9 @@
                                 </div>
                                     <!-- /.panel-heading -->
                                 <div class="panel-body">
-                                    <img src="@routes.Assets.versioned("images/map.png")" alt="Game Map" height = "500" width = "700" usemap="#Territories" style="position: relative; right: 120px">
+                                    <div id = "MapImage">
+                                    <img src="@routes.Assets.versioned("images/map.png")" alt="Game Map" height = "500" width = "700" usemap="#Territories" style="position: relative; right: 120px"
+                                        class = "Map">
                                     <map name = "Territories">
                                         <area name = "1" shape = "poly" coords="268, 62, 321, 61,321, 80,296, 83, 296 156,264, 110, 268, 62"
                                         onclick="getData(1)">
@@ -187,13 +189,541 @@
                                         onclick="getData(38)">
                                         <area name = "39" shape = "poly" coords="590, 277, 660, 278, 661, 349, 638, 349, 638, 369, 599, 369, 576, 344, 559, 347, 544, 323, 576, 323, 575, 308, 590, 298, 590, 277"
                                         onclick="getData(39)">
-                                        <area name = "40" shape = "poly" coords="667, 233, 693, 234, 699, 275, 6657, 273, 667, 233"
+                                        <area name = "40" shape = "poly" coords="667, 233, 693, 234, 699, 275, 657, 273, 667, 233"
                                         onclick="getData(40)">
                                         <area name = "41" shape = "poly" coords="666, 279, 695, 280, 695, 346, 666, 346, 666, 279"
                                         onclick="getData(41)">
                                         <area name = "42" shape = "poly" coords="663, 353, 698, 353, 697, 430, 668, 431, 663, 421, 663, 353"
                                         onclick="getData(42)">
                                     </map>
+                                        <div id ="T1"></div> <div id ="T2"></div> <div id ="T3"></div> <div id ="T4"></div> <div id ="T5"></div>
+                                        <div id ="T6"></div> <div id ="T7"></div> <div id ="T8"></div> <div id ="T9"></div> <div id ="T10"></div>
+                                        <div id ="T11"></div> <div id ="T12"></div> <div id ="T13"></div> <div id ="T14"></div> <div id ="T15"></div>
+                                        <div id ="T16"></div> <div id ="T17"></div> <div id ="T18"></div> <div id ="T19"></div> <div id ="T20"></div>
+                                        <div id ="T21"></div> <div id ="T22"></div> <div id ="T23"></div> <div id ="T24"></div> <div id ="T25"></div>
+                                        <div id ="T26"></div> <div id ="T27"></div> <div id ="T28"></div> <div id ="T29"></div> <div id ="T30"></div>
+                                        <div id ="T31"></div> <div id ="T32"></div> <div id ="T33"></div> <div id ="T34"></div> <div id ="T35"></div>
+                                        <div id ="T36"></div> <div id ="T37"></div> <div id ="T38"></div> <div id ="T39"></div> <div id ="T40"></div>
+                                        <div id ="T41"></div> <div id ="T42"></div>
+
+                                    </div>
+                                    <script>
+                                            @for( i <- 1 to territoryData.size) {
+                                                @if(territoryData(i).getOwnerID.toString == "Some(1)") {
+                                                    var num = @i;
+                                                    var playerCol = '--player' + num.toString() + 'Color';
+                                                    document.documentElement.style.setProperty(playerCol, '#DF0000');
+                                                } @if(territoryData(i).getOwnerID.toString == "Some(2)") {
+                                                    var num = @i;
+                                                    var playerCol = '--player' + num.toString() + 'Color';
+                                                    document.documentElement.style.setProperty(playerCol, '#0000FF');
+                                                } @if(territoryData(i).getOwnerID.toString == "Some(3)") {
+                                                    var num = @i;
+                                                    var playerCol = '--player' + num.toString() + 'Color';
+                                                    document.documentElement.style.setProperty(playerCol, '#008000');
+                                                } @if(territoryData(i).getOwnerID.toString == "Some(4)") {
+                                                    var num = @i;
+                                                    var playerCol = '--player' + num.toString() + 'Color';
+                                                    document.documentElement.style.setProperty(playerCol, '#FFCC00');
+                                                } @if(territoryData(i).getOwnerID.toString == "Some(5)") {
+                                                    var num = @i;
+                                                    var playerCol = '--player' + num.toString() + 'Color';
+                                                    document.documentElement.style.setProperty(playerCol, '#502d16');
+                                                } @if(territoryData(i).getOwnerID.toString == "Some(6)") {
+                                                    var num = @i;
+                                                    var playerCol = '--player' + num.toString() + 'Color';
+                                                    document.documentElement.style.setProperty(playerCol, '#FF6600');
+                                                }
+                                        }
+
+                                    </script>
+                                    <style>
+                                        :root {
+                                            --player1Color: green; --player2Color: green;  --player3Color: green;
+                                            --player4Color: green; --player5Color: green; --player6Color: green;  --player7Color: green;
+                                            --player8Color: green; --player9Color: green; --player10Color: green;  --player11Color: green;
+                                            --player12Color: green; --player13Color: green; --player14Color: green;  --player15Color: green;
+                                            --player16Color: green; --player17Color: green; --player18Color: green;  --player19Color: green;
+                                            --player20Color: green; --player21Color: green; --player22Color: green;  --player23Color: green;
+                                            --player24Color: green; --player25Color: green; --player26Color: green;  --player27Color: green;
+                                            --player28Color: green; --player29Color: green; --player30Color: green;  --player31Color: green;
+                                            --player32Color: green; --player33Color: green; --player34Color: green;  --player35Color: green;
+                                            --player36Color: green; --player37Color: green; --player38Color: green;  --player39Color: green;
+                                            --player40Color: green; --player41Color: green; --player42Color: green;
+                                        }
+
+                                        #MapImage {
+                                            position: relative;
+                                            height: 500px;
+                                            width: 700px;
+                                        }
+                                            #T1 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 155px;
+                                                top: 70px;
+                                                background-color: var(--player1Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T2 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 215px;
+                                                top: 65px;
+                                                background: var(--player2Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T3 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 195px;
+                                                top: 92px;
+                                                background: var(--player3Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T4 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 237px;
+                                                top: 91px;
+                                                background: var(--player4Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T5 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 188px;
+                                                top: 117px;
+                                                background: var(--player5Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T6 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 199px;
+                                                top: 149px;
+                                                background: var(--player6Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T7 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 255px;
+                                                top: 130px;
+                                                background: var(--player7Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T8 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 241px;
+                                                top: 47px;
+                                                background: var(--player8Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T9 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 285px;
+                                                top: 30px;
+                                                background: var(--player9Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T10 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 309px;
+                                                top: 114px;
+                                                background: var(--player10Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T11 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 343px;
+                                                top: 70px;
+                                                background: var(--player11Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T12 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 370px;
+                                                top: 65px;
+                                                background: var(--player12Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T13 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 372px;
+                                                top: 120px;
+                                                background: var(--player13Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T14 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 416px;
+                                                top: 38px;
+                                                background: var(--player14Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T15 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 452px;
+                                                top: 38px;
+                                                background: var(--player15Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T16 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 423px;
+                                                top: 82px;
+                                                background: var(--player16Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            }  #T17 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 404px;
+                                                top: 128px;
+                                                background: var(--player17Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T18 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 526px;
+                                                top: 84px;
+                                                background: var(--player18Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T19 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 517px;
+                                                top: 168px;
+                                                background: var(--player19Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T20 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 511px;
+                                                top: 199px;
+                                                background: var(--player20Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T21 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 551px;
+                                                top: 214px;
+                                                background: var(--player21Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T22 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 228px;
+                                                top: 206px;
+                                                background: var(--player22Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T23 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 170px;
+                                                top: 224px;
+                                                background: var(--player23Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T24 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 203px;
+                                                top: 256px;
+                                                background: var(--player24Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T25 {
+                                                width: 8px;
+                                                height: 8px;
+                                                position: absolute;
+                                                left: 240px;
+                                                top: 279px;
+                                                background: var(--player25Color);
+                                                -webkit-border-radius: 4px;
+                                                -moz-border-radius: 4px;
+                                                border-radius: 4px;
+                                                border: 1px solid black;
+                                            } #T26 {
+                                                width: 10px;
+                                                height: 10px;
+                                                position: absolute;
+                                                left: 286px;
+                                                top: 298px;
+                                                background: var(--player26Color);
+                                                -webkit-border-radius: 5px;
+                                                -moz-border-radius: 5px;
+                                                border-radius: 5px;
+                                                border: 1px solid black;
+                                            } #T27 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 246px;
+                                                top: 355px;
+                                                background: var(--player27Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T28 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 330px;
+                                                top: 326px;
+                                                background: var(--player28Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T29 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 383px;
+                                                top: 325px;
+                                                background: var(--player29Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T30 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 296px;
+                                                top: 160px;
+                                                background: var(--player30Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T31 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 287px;
+                                                top: 228px;
+                                                background: var(--player31Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T32 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 325px;
+                                                top: 265px;
+                                                background: var(--player32Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T33 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 370px;
+                                                top: 206px;
+                                                background: var(--player33Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T34 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 402px;
+                                                top: 282px;
+                                                background: var(--player34Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T35 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 433px;
+                                                top: 204px;
+                                                background: var(--player35Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T36 {
+                                                width: 8px;
+                                                height: 8px;
+                                                position: absolute;
+                                                left: 400px;
+                                                top: 255px;
+                                                background: var(--player36Color);
+                                                -webkit-border-radius: 4px;
+                                                -moz-border-radius: 4px;
+                                                border-radius: 4px;
+                                                border: 1px solid black;
+                                            } #T37 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 459px;
+                                                top: 255px;
+                                                background: var(--player37Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T38 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 502px;
+                                                top: 248px;
+                                                background: var(--player38Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T39 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 496px;
+                                                top: 318px;
+                                                background: var(--player39Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T40 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 556px;
+                                                top: 254px;
+                                                background: var(--player40Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T41 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 556px;
+                                                top: 310px;
+                                                background: var(--player41Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T42 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 556px;
+                                                top: 387px;
+                                                background: var(--player42Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            }
+
+
+
+                                    </style>
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
@@ -278,171 +808,213 @@
                         var owner = document.getElementById("owner");
                         switch (num) {
                             case 1: {
-                                owner.innerText = "Player ID " + "@territoryData(1)";
+                                owner.innerText = "@territoryData(1).getOwnerName, ID: @territoryData(1).getOwnerID";
+                                na.innerText = @territoryData(1).getUnits;
                                 break;
                             }
                             case 2: {
-                                owner.innerText = "Player ID " + "@territoryData(1)";
+                                owner.innerText = "@territoryData(2).getOwnerName, ID: @territoryData(2).getOwnerID";
+                                na.innerText = @territoryData(2).getUnits;
                                 break;
                             }
                             case 3: {
-                                owner.innerText = "Player ID " + "@territoryData(3)";
+                                owner.innerText = "@territoryData(3).getOwnerName, ID: @territoryData(3).getOwnerID";
+                                na.innerText = @territoryData(3).getUnits;
                                 break;
                             }
                             case 4: {
-                                owner.innerText = "Player ID " + "@territoryData(4)";
+                                owner.innerText = "@territoryData(4).getOwnerName, ID: @territoryData(4).getOwnerID";
+                                na.innerText = @territoryData(4).getUnits;
                                 break;
                             }
                             case 5: {
-                                owner.innerText = "Player ID " + "@territoryData(5)";
+                                owner.innerText = "@territoryData(5).getOwnerName, ID: @territoryData(5).getOwnerID";
+                                na.innerText = @territoryData(5).getUnits;
                                 break;
                             }
                             case 6: {
-                                owner.innerText = "Player ID " + "@territoryData(6)";
+                                owner.innerText = "@territoryData(6).getOwnerName, ID: @territoryData(6).getOwnerID";
+                                na.innerText = @territoryData(6).getUnits;
                                 break;
                             }
                             case 7: {
-                                owner.innerText = "Player ID " + "@territoryData(7)";
+                                owner.innerText = "@territoryData(7).getOwnerName, ID: @territoryData(7).getOwnerID";
+                                na.innerText = @territoryData(7).getUnits;
                                 break;
                             }
                             case 8: {
-                                owner.innerText = "Player ID " + "@territoryData(8)";
+                                owner.innerText = "@territoryData(8).getOwnerName, ID: @territoryData(8).getOwnerID";
+                                na.innerText = @territoryData(8).getUnits;
                                 break;
                             }
                             case 9: {
-                                owner.innerText = "Player ID " + "@territoryData(9)";
+                                owner.innerText = "@territoryData(9).getOwnerName, ID: @territoryData(9).getOwnerID";
+                                na.innerText = @territoryData(9).getUnits;
                                 break;
                             }
                             case 10: {
-                                owner.innerText = "Player ID " + "@territoryData(10)";
+                                owner.innerText = "@territoryData(10).getOwnerName, ID: @territoryData(10).getOwnerID";
+                                na.innerText = @territoryData(10).getUnits;
                                 break;
                             }
                             case 11: {
-                                owner.innerText = "Player ID " + "@territoryData(11)";
+                                owner.innerText = "@territoryData(11).getOwnerName, ID: @territoryData(11).getOwnerID";
+                                na.innerText = @territoryData(11).getUnits;
                                 break;
                             }
                             case 12: {
-                                owner.innerText = "Player ID " + "@territoryData(12)";
+                                owner.innerText = "@territoryData(12).getOwnerName, ID: @territoryData(12).getOwnerID";
+                                na.innerText = @territoryData(12).getUnits;
                                 break;
                             }
                             case 13: {
-                                owner.innerText = "Player ID " + "@territoryData(13)";
+                                owner.innerText = "@territoryData(13).getOwnerName, ID: @territoryData(13).getOwnerID";
+                                na.innerText = @territoryData(13).getUnits;
                                 break;
                             }
                             case 14: {
-                                owner.innerText = "Player ID " + "@territoryData(14)";
+                                owner.innerText = "@territoryData(14).getOwnerName, ID: @territoryData(14).getOwnerID";
+                                na.innerText = @territoryData(14).getUnits;
                                 break;
                             }
                             case 15: {
-                                owner.innerText = "Player ID " + "@territoryData(15)";
+                                owner.innerText = "@territoryData(15).getOwnerName, ID: @territoryData(15).getOwnerID";
+                                na.innerText = @territoryData(15).getUnits;
                                 break;
                             }
                             case 16: {
-                                owner.innerText = "Player ID " + "@territoryData(16)";
+                                owner.innerText = "@territoryData(16).getOwnerName, ID: @territoryData(16).getOwnerID";
+                                na.innerText = @territoryData(16).getUnits;
                                 break;
                             }
                             case 17: {
-                                owner.innerText = "Player ID " + "@territoryData(17)";
+                                owner.innerText = "@territoryData(17).getOwnerName, ID: @territoryData(17).getOwnerID";
+                                na.innerText = @territoryData(17).getUnits;
                                 break;
                             }
                             case 18: {
-                                owner.innerText = "Player ID " + "@territoryData(18)";
+                                owner.innerText = "@territoryData(18).getOwnerName, ID: @territoryData(18).getOwnerID";
+                                na.innerText = @territoryData(18).getUnits;
                                 break;
                             }
                             case 19: {
-                                owner.innerText = "Player ID " + "@territoryData(19)";
+                                owner.innerText = "@territoryData(19).getOwnerName, ID: @territoryData(19).getOwnerID";
+                                na.innerText = @territoryData(19).getUnits;
                                 break;
                             }
                             case 20: {
-                                owner.innerText = "Player ID " + "@territoryData(20)";
+                                owner.innerText = "@territoryData(20).getOwnerName, ID: @territoryData(20).getOwnerID";
+                                na.innerText = @territoryData(20).getUnits;
                                 break;
                             }
                             case 21: {
-                                owner.innerText = "Player ID " + "@territoryData(21)";
+                                owner.innerText = "@territoryData(21).getOwnerName, ID: @territoryData(21).getOwnerID";
+                                na.innerText = @territoryData(21).getUnits;
                                 break;
                             }
                             case 22: {
-                                owner.innerText = "Player ID " + "@territoryData(22)";
+                                owner.innerText = "@territoryData(22).getOwnerName, ID: @territoryData(22).getOwnerID";
+                                na.innerText = @territoryData(22).getUnits;
                                 break;
                             }
                             case 23: {
-                                owner.innerText = "Player ID " + "@territoryData(23)";
+                                owner.innerText = "@territoryData(23).getOwnerName, ID: @territoryData(23).getOwnerID";
+                                na.innerText = @territoryData(23).getUnits;
                                 break;
                             }
                             case 24: {
-                                owner.innerText = "Player ID " + "@territoryData(24)";
+                                owner.innerText = "@territoryData(24).getOwnerName, ID: @territoryData(24).getOwnerID";
+                                na.innerText = @territoryData(24).getUnits;
                                 break;
                             }
                             case 25: {
-                                owner.innerText = "Player ID " + "@territoryData(25)";
+                                owner.innerText = "@territoryData(25).getOwnerName, ID: @territoryData(25).getOwnerID";
+                                na.innerText = @territoryData(25).getUnits;
                                 break;
                             }
                             case 26: {
-                                owner.innerText = "Player ID " + "@territoryData(26)";
+                                owner.innerText = "@territoryData(26).getOwnerName, ID: @territoryData(26).getOwnerID";
+                                na.innerText = @territoryData(26).getUnits;
                                 break;
                             }
                             case 27: {
-                                owner.innerText = "Player ID " + "@territoryData(27)";
+                                owner.innerText = "@territoryData(27).getOwnerName, ID: @territoryData(27).getOwnerID";
+                                na.innerText = @territoryData(27).getUnits;
                                 break;
                             }
                             case 28: {
-                                owner.innerText = "Player ID " + "@territoryData(28)";
+                                owner.innerText = "@territoryData(28).getOwnerName, ID: @territoryData(28).getOwnerID";
+                                na.innerText = @territoryData(28).getUnits;
                                 break;
                             }
                             case 29: {
-                                owner.innerText = "Player ID " + "@territoryData(29)";
+                                owner.innerText = "@territoryData(29).getOwnerName, ID: @territoryData(29).getOwnerID";
+                                na.innerText = @territoryData(29).getUnits;
                                 break;
                             }
                             case 30: {
-                                owner.innerText = "Player ID " + "@territoryData(30)";
+                                owner.innerText = "@territoryData(30).getOwnerName, ID: @territoryData(30).getOwnerID";
+                                na.innerText = @territoryData(30).getUnits;
                                 break;
                             }
                             case 31: {
-                                owner.innerText = "Player ID " + "@territoryData(31)";
+                                owner.innerText = "@territoryData(31).getOwnerName, ID: @territoryData(31).getOwnerID";
+                                na.innerText = @territoryData(31).getUnits;
                                 break;
                             }
                             case 32: {
-                                owner.innerText = "Player ID " + "@territoryData(32)";
+                                owner.innerText = "@territoryData(32).getOwnerName, ID: @territoryData(32).getOwnerID";
+                                na.innerText = @territoryData(32).getUnits;
                                 break;
                             }
                             case 33: {
-                                owner.innerText = "Player ID " + "@territoryData(33)";
+                                owner.innerText = "@territoryData(33).getOwnerName, ID: @territoryData(33).getOwnerID";
+                                na.innerText = @territoryData(33).getUnits;
                                 break;
                             }
                             case 34: {
-                                owner.innerText = "Player ID " + "@territoryData(34)";
+                                owner.innerText = "@territoryData(34).getOwnerName, ID: @territoryData(34).getOwnerID";
+                                na.innerText = @territoryData(34).getUnits;
                                 break;
                             }
                             case 35: {
-                                owner.innerText = "Player ID " + "@territoryData(35)";
+                                owner.innerText = "@territoryData(35).getOwnerName, ID: @territoryData(35).getOwnerID";
+                                na.innerText = @territoryData(35).getUnits;
                                 break;
                             }
                             case 36: {
-                                owner.innerText = "Player ID " + "@territoryData(36)";
+                                owner.innerText = "@territoryData(36).getOwnerName, ID: @territoryData(36).getOwnerID";
+                                na.innerText = @territoryData(36).getUnits;
                                 break;
                             }
                             case 37: {
-                                owner.innerText = "Player ID " + "@territoryData(37)";
+                                owner.innerText = "@territoryData(37).getOwnerName, ID: @territoryData(37).getOwnerID";
+                                na.innerText = @territoryData(37).getUnits;
                                 break;
                             }
                             case 38: {
-                                owner.innerText = "Player ID " + "@territoryData(38)";
+                                owner.innerText = "@territoryData(38).getOwnerName, ID: @territoryData(38).getOwnerID";
+                                na.innerText = @territoryData(38).getUnits;
                                 break;
                             }
                             case 39: {
-                                owner.innerText = "Player ID " + "@territoryData(39)";
+                                owner.innerText = "@territoryData(39).getOwnerName, ID: @territoryData(39).getOwnerID";
+                                na.innerText = @territoryData(39).getUnits;
                                 break;
                             }
                             case 40: {
-                                owner.innerText = "Player ID " + "@territoryData(40)";
+                                owner.innerText = "@territoryData(40).getOwnerName, ID: @territoryData(40).getOwnerID";
+                                na.innerText = @territoryData(40).getUnits;
                                 break;
                             }
                             case 41: {
-                                owner.innerText = "Player ID " + "@territoryData(41)";
+                                owner.innerText = "@territoryData(41).getOwnerName, ID: @territoryData(41).getOwnerID";
+                                na.innerText = @territoryData(41).getUnits;
                                 break;
                             }
                             case 42: {
-                                owner.innerText = "Player ID " + "@territoryData(42)";
+                                owner.innerText = "@territoryData(42).getOwnerName, ID: @territoryData(42).getOwnerID";
+                                na.innerText = @territoryData(42).getUnits;
                                 break;
                             }
                             default:
