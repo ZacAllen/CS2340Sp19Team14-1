@@ -96,7 +96,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
   }
 
   def addPlayer: Action[JsValue] = Action(parse.json) { implicit request =>
-    val np = Player((request.body \ "id").as[Int], (request.body \ "name").as[String], "", 0, "", 0)
+    val np = Player((request.body \ "id").as[Int], (request.body \ "name").as[String], "", 0, "", 0, List())
     Ok(toJson(Map("id" -> np.getId)))
   }
 
@@ -235,7 +235,6 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
   val ORANGEBONUS = 5
   val YELLOWBONUS = 5
 
-  //Give players additional army units at the beginning of their turns
   def addArmies(player: Player) {
     if (player.getTerritories.length <= 2) {
       player.addArmyUnits(1)
@@ -255,15 +254,5 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
         player.addArmyUnits(YELLOWBONUS)
       }
     }
-  }
-
-  //Add a new Soldier to a territory.
-  def placeNewArmies(player: Player, soldier: Soldier, territory: Territory, numArmies: Int): Unit = {
-      for (i <- 1 to numArmies) {
-        territory.addSoldier(soldier)
-        territory.setSoldiers(territory.getSoldiers.sorted)
-        soldier.setTerritory(territory)
-        player.addArmyUnits(-soldier.getPrice)
-      }
   }
 }

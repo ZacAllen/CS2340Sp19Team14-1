@@ -16,18 +16,6 @@ class Territory(id: Int, var ownerName: Any, var owner: Player, var ownerID: Any
     numUnits
   }
 
-  def getSoldiers: List[Soldier] = this.soldiers
-
-  def setSoldiers(newSoldiers: List[Soldier]): Unit = this.soldiers = newSoldiers
-
-  def addSoldier(soldier: Soldier): List[Soldier] = soldier::soldiers
-
-  def eliminateSoldier: Soldier = {
-    val eliminated = soldiers.head
-    soldiers = soldiers.tail
-    eliminated
-  }
-
   def getOwner: Player = this.owner
 
   def getDistrict: District = this.district

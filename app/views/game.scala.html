@@ -112,20 +112,20 @@
                                         class = "Map">
                                     <map name = "Territories">
                                         <area name = "1" shape = "poly" coords="268, 62, 321, 61,321, 80,296, 83, 296 156,264, 110, 268, 62"
-                                        onclick="getData(1)">
+                                        onclick="getData(1);addArmies(1, 1)">
                                         <area name = "2" shape = "poly" coords="324, 61, 324, 81, 365, 81, 348, 60, 324, 61"
-                                        onclick="getData(2)">
+                                        onclick="getData(2);addArmies(1, 2)">
                                         <area name = "3" shape = "poly" coords="302,88, 345, 88, 345, 110, 301, 110, 302, 88"
-                                        onclick="getData(3)">
+                                        onclick="getData(3);addArmies(1, 3)">
                                         <area name = "4" shape = "poly" coords="351, 87,367, 87, 388, 109, 352, 109, 351, 87"
-                                        onclick="getData(4)">
+                                        onclick="getData(4);addArmies(1, 4)">
                                         <area name = "5" shape = "poly" coords="301, 116, 345, 116, 345, 136, 300, 136, 301, 116"
-                                        onclick="getData(5)">
+                                        onclick="getData(5);addArmies(1, 5)">
                                         <area name = "6" shape = "poly" coords="300, 142, 343, 141, 344, 179, 323, 178, 323, 167, 302, 166, 300, 142"
-                                        onclick="getData(6)">
+                                        onclick="getData(6);addArmies(1, 6)">
                                         <area name = "7" shape = "poly" coords="349, 115, 349, 177, 394, 177, 420, 144, 391, 115, 349, 115"
-                                        onclick="getData(7)">
-                                        <area name = "8" shape = "poly" coords="353, 40, 382, 40, 394, 60, 398, 83, 372, 83, 353, 62, 353, 40"
+                                        onclick="getData(7);addArmies(1, 7)">
+                                        <area name = "8" shape = "poly" coords="353, 40, 382, 39, 294, 60, 398, 83, 372, 83, 353, 62, 353, 40"
                                         onclick="getData(8)">
                                         <area name = "9" shape = "poly" coords="401, 27, 455, 27, 455, 93, 434, 110, 410, 110, 403, 116, 373, 88, 402, 88, 401, 27"
                                         onclick="getData(9)">
@@ -762,9 +762,9 @@
                                     <div class="list-group">
                                         <a href="#" class="list-group-item">
                                             <i class="fa fa-calendar-check-o fa-fw"></i>
-                                            Territory #
-                                            <span class="pull-right text-muted small"><em id="territory_num">
-                                                N/A</em>
+                                            Current Turn:
+                                            <span class="pull-right text-muted small"><em id="turn">
+                                                Player ID 1</em>
                                             </span>
                                         </a>
                                         <a href="#" class="list-group-item">
@@ -780,31 +780,12 @@
                                                 GT</em>
                                             </span>
                                         </a>
-                                        <a href="#" class="list-group-item" onclick ="addUnit(1, 'territory_num')">
-                                            <i class="fa fa-male fa-fw"></i> Add Unit
-                                            <span class="pull-right text-muted small"><em id="addunit">
-                                                </em>
-                                            </span>
-                                        </a>
-                                        <a href="#" class="list-group-item" onclick ="">
-                                            <i class="fa fa-male fa-fw"></i> End Turn
-                                            <span class="pull-right text-muted small"><em id="addunit">
-                                            </em>
-                                            </span>
-                                        </a>
                                     </div>
                                         <!-- /.list-group -->
                                 </div>
                                     <!-- /.panel-body -->
                             </div>
                                 <!-- /.panel -->
-                            <div class="panel-heading">
-                                <div class="panel-body">
-                                    <div class="list-group">
-                                        <h1 class="list-group-item">Player Turn Placeholder</h1>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -828,230 +809,56 @@
             <script src="@routes.Assets.versioned("static/main/dist/js/sb-admin-2.js")"></script>
 
             <script>
-                    function getData(num) {
-                        var na = document.getElementById("num_armies");
-                        id.innerHTML = num;
-                        na.innerHTML = 1;
-                        var owner = document.getElementById("owner");
-                        switch (num) {
-                            case 1: {
-                                owner.innerText = "@territoryData(1).getOwnerName, ID: @territoryData(1).getOwnerID";
-                                na.innerText = @territoryData(1).getUnits;
-                                break;
-                            }
-                            case 2: {
-                                owner.innerText = "@territoryData(2).getOwnerName, ID: @territoryData(2).getOwnerID";
-                                na.innerText = @territoryData(2).getUnits;
-                                break;
-                            }
-                            case 3: {
-                                owner.innerText = "@territoryData(3).getOwnerName, ID: @territoryData(3).getOwnerID";
-                                na.innerText = @territoryData(3).getUnits;
-                                break;
-                            }
-                            case 4: {
-                                owner.innerText = "@territoryData(4).getOwnerName, ID: @territoryData(4).getOwnerID";
-                                na.innerText = @territoryData(4).getUnits;
-                                break;
-                            }
-                            case 5: {
-                                owner.innerText = "@territoryData(5).getOwnerName, ID: @territoryData(5).getOwnerID";
-                                na.innerText = @territoryData(5).getUnits;
-                                break;
-                            }
-                            case 6: {
-                                owner.innerText = "@territoryData(6).getOwnerName, ID: @territoryData(6).getOwnerID";
-                                na.innerText = @territoryData(6).getUnits;
-                                break;
-                            }
-                            case 7: {
-                                owner.innerText = "@territoryData(7).getOwnerName, ID: @territoryData(7).getOwnerID";
-                                na.innerText = @territoryData(7).getUnits;
-                                break;
-                            }
-                            case 8: {
-                                owner.innerText = "@territoryData(8).getOwnerName, ID: @territoryData(8).getOwnerID";
-                                na.innerText = @territoryData(8).getUnits;
-                                break;
-                            }
-                            case 9: {
-                                owner.innerText = "@territoryData(9).getOwnerName, ID: @territoryData(9).getOwnerID";
-                                na.innerText = @territoryData(9).getUnits;
-                                break;
-                            }
-                            case 10: {
-                                owner.innerText = "@territoryData(10).getOwnerName, ID: @territoryData(10).getOwnerID";
-                                na.innerText = @territoryData(10).getUnits;
-                                break;
-                            }
-                            case 11: {
-                                owner.innerText = "@territoryData(11).getOwnerName, ID: @territoryData(11).getOwnerID";
-                                na.innerText = @territoryData(11).getUnits;
-                                break;
-                            }
-                            case 12: {
-                                owner.innerText = "@territoryData(12).getOwnerName, ID: @territoryData(12).getOwnerID";
-                                na.innerText = @territoryData(12).getUnits;
-                                break;
-                            }
-                            case 13: {
-                                owner.innerText = "@territoryData(13).getOwnerName, ID: @territoryData(13).getOwnerID";
-                                na.innerText = @territoryData(13).getUnits;
-                                break;
-                            }
-                            case 14: {
-                                owner.innerText = "@territoryData(14).getOwnerName, ID: @territoryData(14).getOwnerID";
-                                na.innerText = @territoryData(14).getUnits;
-                                break;
-                            }
-                            case 15: {
-                                owner.innerText = "@territoryData(15).getOwnerName, ID: @territoryData(15).getOwnerID";
-                                na.innerText = @territoryData(15).getUnits;
-                                break;
-                            }
-                            case 16: {
-                                owner.innerText = "@territoryData(16).getOwnerName, ID: @territoryData(16).getOwnerID";
-                                na.innerText = @territoryData(16).getUnits;
-                                break;
-                            }
-                            case 17: {
-                                owner.innerText = "@territoryData(17).getOwnerName, ID: @territoryData(17).getOwnerID";
-                                na.innerText = @territoryData(17).getUnits;
-                                break;
-                            }
-                            case 18: {
-                                owner.innerText = "@territoryData(18).getOwnerName, ID: @territoryData(18).getOwnerID";
-                                na.innerText = @territoryData(18).getUnits;
-                                break;
-                            }
-                            case 19: {
-                                owner.innerText = "@territoryData(19).getOwnerName, ID: @territoryData(19).getOwnerID";
-                                na.innerText = @territoryData(19).getUnits;
-                                break;
-                            }
-                            case 20: {
-                                owner.innerText = "@territoryData(20).getOwnerName, ID: @territoryData(20).getOwnerID";
-                                na.innerText = @territoryData(20).getUnits;
-                                break;
-                            }
-                            case 21: {
-                                owner.innerText = "@territoryData(21).getOwnerName, ID: @territoryData(21).getOwnerID";
-                                na.innerText = @territoryData(21).getUnits;
-                                break;
-                            }
-                            case 22: {
-                                owner.innerText = "@territoryData(22).getOwnerName, ID: @territoryData(22).getOwnerID";
-                                na.innerText = @territoryData(22).getUnits;
-                                break;
-                            }
-                            case 23: {
-                                owner.innerText = "@territoryData(23).getOwnerName, ID: @territoryData(23).getOwnerID";
-                                na.innerText = @territoryData(23).getUnits;
-                                break;
-                            }
-                            case 24: {
-                                owner.innerText = "@territoryData(24).getOwnerName, ID: @territoryData(24).getOwnerID";
-                                na.innerText = @territoryData(24).getUnits;
-                                break;
-                            }
-                            case 25: {
-                                owner.innerText = "@territoryData(25).getOwnerName, ID: @territoryData(25).getOwnerID";
-                                na.innerText = @territoryData(25).getUnits;
-                                break;
-                            }
-                            case 26: {
-                                owner.innerText = "@territoryData(26).getOwnerName, ID: @territoryData(26).getOwnerID";
-                                na.innerText = @territoryData(26).getUnits;
-                                break;
-                            }
-                            case 27: {
-                                owner.innerText = "@territoryData(27).getOwnerName, ID: @territoryData(27).getOwnerID";
-                                na.innerText = @territoryData(27).getUnits;
-                                break;
-                            }
-                            case 28: {
-                                owner.innerText = "@territoryData(28).getOwnerName, ID: @territoryData(28).getOwnerID";
-                                na.innerText = @territoryData(28).getUnits;
-                                break;
-                            }
-                            case 29: {
-                                owner.innerText = "@territoryData(29).getOwnerName, ID: @territoryData(29).getOwnerID";
-                                na.innerText = @territoryData(29).getUnits;
-                                break;
-                            }
-                            case 30: {
-                                owner.innerText = "@territoryData(30).getOwnerName, ID: @territoryData(30).getOwnerID";
-                                na.innerText = @territoryData(30).getUnits;
-                                break;
-                            }
-                            case 31: {
-                                owner.innerText = "@territoryData(31).getOwnerName, ID: @territoryData(31).getOwnerID";
-                                na.innerText = @territoryData(31).getUnits;
-                                break;
-                            }
-                            case 32: {
-                                owner.innerText = "@territoryData(32).getOwnerName, ID: @territoryData(32).getOwnerID";
-                                na.innerText = @territoryData(32).getUnits;
-                                break;
-                            }
-                            case 33: {
-                                owner.innerText = "@territoryData(33).getOwnerName, ID: @territoryData(33).getOwnerID";
-                                na.innerText = @territoryData(33).getUnits;
-                                break;
-                            }
-                            case 34: {
-                                owner.innerText = "@territoryData(34).getOwnerName, ID: @territoryData(34).getOwnerID";
-                                na.innerText = @territoryData(34).getUnits;
-                                break;
-                            }
-                            case 35: {
-                                owner.innerText = "@territoryData(35).getOwnerName, ID: @territoryData(35).getOwnerID";
-                                na.innerText = @territoryData(35).getUnits;
-                                break;
-                            }
-                            case 36: {
-                                owner.innerText = "@territoryData(36).getOwnerName, ID: @territoryData(36).getOwnerID";
-                                na.innerText = @territoryData(36).getUnits;
-                                break;
-                            }
-                            case 37: {
-                                owner.innerText = "@territoryData(37).getOwnerName, ID: @territoryData(37).getOwnerID";
-                                na.innerText = @territoryData(37).getUnits;
-                                break;
-                            }
-                            case 38: {
-                                owner.innerText = "@territoryData(38).getOwnerName, ID: @territoryData(38).getOwnerID";
-                                na.innerText = @territoryData(38).getUnits;
-                                break;
-                            }
-                            case 39: {
-                                owner.innerText = "@territoryData(39).getOwnerName, ID: @territoryData(39).getOwnerID";
-                                na.innerText = @territoryData(39).getUnits;
-                                break;
-                            }
-                            case 40: {
-                                owner.innerText = "@territoryData(40).getOwnerName, ID: @territoryData(40).getOwnerID";
-                                na.innerText = @territoryData(40).getUnits;
-                                break;
-                            }
-                            case 41: {
-                                owner.innerText = "@territoryData(41).getOwnerName, ID: @territoryData(41).getOwnerID";
-                                na.innerText = @territoryData(41).getUnits;
-                                break;
-                            }
-                            case 42: {
-                                owner.innerText = "@territoryData(42).getOwnerName, ID: @territoryData(42).getOwnerID";
-                                na.innerText = @territoryData(42).getUnits;
-                                break;
-                            }
-                            default:
-                                owner.innerText = "GT";
+                var territoryMap = new Map([
+                    @for(i <- 1 to 42) {
+                        [@i, [@territoryData(i).getUnits, @territoryData(i).getOwnerID, "@territoryData(i).getOwnerName"]],
+                    }
+                ]);
+
+                var playerMap = new Map([
+                    @for(i <- playerData.indices) {
+                        [@i, [@playerData(i)("turn"), @playerData(i)("numArmies"), @playerData(i)("id"), "@playerData(i)("name")"]],
+                    }
+                ]);
+
+                var initGame = false;
+
+                var currTurn = 0;
+                var subTurn = 0;
+
+                function getData(num) {
+                    var na = document.getElementById("num_armies");
+                    var owner = document.getElementById("owner");
+                    switch (num) {
+                        @for(i <- 1 to 42) {
+                        case @i: {
+                            owner.innerText = territoryMap.get(@i)[2] + ", ID: " + territoryMap.get(@i)[1];
+                            na.innerText = territoryMap.get(@i)[0];
+                            break;
                         }
+                            }
+                        default:
+                            owner.innerText = "GT";
                     }
-                    function addUnit(num, territoryNum) {
-                        var na = document.getElementById("num_armies");
-                        var id = document.getElementById("territory_num")
+                }
+
+                function dispTurn() {
+                    var playerName = playerMap.get(currTurn % playerMap.size)[3];
+                    document.getElementById("turn").innerText = playerName;
+                }
+
+                function addArmies(numArmy, territoryID) {
+                    territoryMap.get(territoryID)[0] += numArmy;
+                    subTurn++;
+                    if (subTurn == 3) {
+                        currTurn++;
+                        dispTurn();
+                        subTurn = 0;
                     }
+                    getData(territoryID);
+                }
+
+                window.onload = dispTurn;
             </script>
         </body>
     </html>
