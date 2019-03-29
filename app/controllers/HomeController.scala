@@ -104,7 +104,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     val turnOrder: List[Int] = randomizeTurns(input.length)
     var players: List[Map[String, Any]] = Nil
     var num: Int = 0
-    var colors: List[String] = List("Red", "Blue", "Green", "Yellow", "Brown", "Orange")
+    val colors: List[String] = List("Red", "Blue", "Green", "Yellow", "Brown", "Orange")
     val num_armies: Int = initArmiesUnits(input.length)
     for (player_data <- input) {
       val id = player_data("id").asInstanceOf[Int]
