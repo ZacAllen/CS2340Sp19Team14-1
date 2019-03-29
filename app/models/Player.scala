@@ -15,6 +15,13 @@ class Player(id: Int, name: String, email: String, var turn: Int, color: String,
 
   def getNumArmies: Int = this.numArmies
 
+  def addArmyUnits(num: Int): Int = {
+    this.numArmies += num
+    numArmies
+  }
+
+  def getTerritories: List[Territory] = this.territories
+
   def setTurn(turn: Int){this.turn = turn}
 }
 
