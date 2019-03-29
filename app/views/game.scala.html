@@ -724,7 +724,7 @@
 
 
                                     </style>
-                                    <table class="table table-hover">
+                                    <table id="player-data" class="table table-hover">
                                         <thead>
                                             <tr>
                                                 <th scope="col">ID</th>
@@ -823,6 +823,8 @@
 
                 var initGame = false;
 
+                var initComplete = 0;
+
                 var currTurn = 0;
                 var subTurn = 0;
 
@@ -848,14 +850,34 @@
                 }
 
                 function addArmies(numArmy, territoryID) {
-                    territoryMap.get(territoryID)[0] += numArmy;
-                    subTurn++;
-                    if (subTurn == 3) {
-                        currTurn++;
-                        dispTurn();
-                        subTurn = 0;
+                    if (territoryMap.get(territoryID)[1] == playerMap.get(currTurn % playerMap.size)[2]) {
+                        territoryMap.get(territoryID)[0] += numArmy;
+                        playerMap.get(currTurn % playerMap.size)[1] -= numArmy;
+                        subTurn++;
+                        if (playerMap.get(currTurn % playerMap.size)[1] == 0) {
+                            currTurn++;
+                            dispTurn();
+                            subTurn = 0;
+                            initComplete++;
+                            if (initComplete == playerMap.size) {
+                                initGame = true;
+                            }
+                        } else if (subTurn == 3) {
+                            currTurn++;
+                            dispTurn();
+                            subTurn = 0;
+                        }
+                        getData(territoryID);
+                        updateDispArmies();
+                    } else {
+                        alert("The selected territory does not belong to the current player.");
                     }
-                    getData(territoryID);
+                }
+
+                function updateDispArmies() {
+                    @for(i <- playerData.indices) {
+                    document.getElementById("player-data").rows[@(i+1)].cells[5].innerText = playerMap.get(@i)[1];
+                    }
                 }
 
                 window.onload = dispTurn;
