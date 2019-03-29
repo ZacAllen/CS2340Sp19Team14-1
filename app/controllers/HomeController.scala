@@ -175,6 +175,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
       map += a -> territories(a - 1)
       val p = players(i % players.length)
       territories(a - 1).setOwnerID(p.get("id"))
+      println(p.get("id").toString + "OOOOOO")
       territories(a - 1).setOwnerName(p.get("name"))
       territories(a - 1).addUnits(1)
       i += 1
