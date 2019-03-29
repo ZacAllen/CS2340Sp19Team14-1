@@ -786,6 +786,7 @@
                                     <!-- /.panel-body -->
                             </div>
                                 <!-- /.panel -->
+                            <button id="end-turn" class="btn btn-danger" style="display:none" onclick="endTurn()">End Turn</button>
                         </div>
                     </div>
                 </div>
@@ -821,6 +822,12 @@
                     }
                 ]);
 
+                var turnMap = new Map([
+                    @for(i <- playerData.indices) {
+                    [@playerData(i)("id"), @playerData(i)("turn")],
+                    }
+                ]);
+
                 var initGame = false;
 
                 var initComplete = 0;
@@ -850,27 +857,33 @@
                 }
 
                 function addArmies(numArmy, territoryID) {
-                    if (territoryMap.get(territoryID)[1] == playerMap.get(currTurn % playerMap.size)[2]) {
-                        territoryMap.get(territoryID)[0] += numArmy;
-                        playerMap.get(currTurn % playerMap.size)[1] -= numArmy;
-                        subTurn++;
-                        if (playerMap.get(currTurn % playerMap.size)[1] == 0) {
-                            currTurn++;
-                            dispTurn();
-                            subTurn = 0;
-                            initComplete++;
-                            if (initComplete == playerMap.size) {
-                                initGame = true;
+                    if (!initGame) {
+                        if (territoryMap.get(territoryID)[1] == playerMap.get(currTurn % playerMap.size)[2]) {
+                            territoryMap.get(territoryID)[0] += numArmy;
+                            playerMap.get(currTurn % playerMap.size)[1] -= numArmy;
+                            subTurn++;
+                            if (playerMap.get(currTurn % playerMap.size)[1] == 0) {
+                                initComplete++;
+                                if (initComplete == playerMap.size) {
+                                    initGame = true;
+                                    document.getElementById("end-turn").style.display = "block";
+                                } else {
+                                    currTurn++;
+                                    dispTurn();
+                                    subTurn = 0;
+                                }
+                            } else if (subTurn == 3) {
+                                currTurn++;
+                                dispTurn();
+                                subTurn = 0;
                             }
-                        } else if (subTurn == 3) {
-                            currTurn++;
-                            dispTurn();
-                            subTurn = 0;
+                            getData(territoryID);
+                            updateDispArmies();
+                        } else {
+                            alert("The selected territory does not belong to the current player.");
                         }
-                        getData(territoryID);
-                        updateDispArmies();
                     } else {
-                        alert("The selected territory does not belong to the current player.");
+
                     }
                 }
 
@@ -878,6 +891,39 @@
                     @for(i <- playerData.indices) {
                     document.getElementById("player-data").rows[@(i+1)].cells[5].innerText = playerMap.get(@i)[1];
                     }
+                }
+
+                function addNewArmies() {
+                    var REDBONUS = 5;
+                    var BROWNBONUS = 5;
+                    var BLUEBONUS = 5;
+                    var GREENBONUS = 5;
+                    var ORANGEBONUS = 5;
+                    var YELLOWBONUS = 5;
+
+                    var summaryMap = new Map([
+                        @for(i <- playerData.indices) {
+                            [@i, [0]],
+                        }
+                    ]);
+
+                    for(var i in territoryMap) {
+                        summaryMap.get(turnMap.get(territoryMap.get(i)[1]) - 1)[0] += 1;
+                    }
+
+                    for(var i in summaryMap) {
+                        playerMap.get(i)[1] = (summaryMap.get(i)[0] <= 2) ? summaryMap.get(i)[0] / 3 : 1;
+                    }
+                    updateDispArmies();
+                }
+
+                function endTurn() {
+                    if (currTurn % playerMap.size == 0) {
+                        addNewArmies();
+                    }
+                    currTurn++;
+                    dispTurn();
+                    document.getElementById("end-turn").style.display = "none";
                 }
 
                 window.onload = dispTurn;
