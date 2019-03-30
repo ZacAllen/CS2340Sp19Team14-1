@@ -1,27 +1,34 @@
 package models
 
-class Territory(id: Int, name: String, var owner: Player, var numUnits: Int, district: District, var canAttack: Boolean) {
+class Territory(id: Int, var ownerName: Any, var owner: Player, var ownerID: Any, var numUnits: Int, district: District, var canAttack: Boolean) {
 
   def getId: Int = this.id
 
-  def getName: String = this.name
+  def getOwnerName: Any = this.ownerName
+
+  def setOwnerName(name: Any) { this.ownerName = name}
 
   def getUnits: Int = this.numUnits
 
   //Adds units and returns new total # of units in the territory
   def addUnits(newUnits: Int): Int = {
-    numUnits += newUnits
+    this.numUnits += newUnits
     numUnits
   }
+
   def getOwner: Player = this.owner
 
-  def getDistrict = this.district
+  def getDistrict: District = this.district
 
-  def getCanAttack = this.canAttack
+  def getCanAttack: Boolean = this.canAttack
 
   def setCanAttack(canAttack: Boolean) {this.canAttack = canAttack}
 
   def setOwner(player: Player) {this.owner = player}
 
-  def ArmyChange(num: Int) {this.numUnits += num}
+  def setOwnerID(id : Any): Unit = this.ownerID = id
+
+  def getOwnerID: Any = this.ownerID
+
+  def armyChange(num: Int) {this.numUnits += num}
 }

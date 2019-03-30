@@ -10,7 +10,7 @@ class Game(players: List[Player], territories: List[Territory]) {
 
   def getTerritoryList(): List[Territory] = {
     val territory_list: List[Territory] = Nil
-    territories.foreach {_.getName :: territory_list}
+    territories.foreach {_.getId :: territory_list}
     territory_list
   }
 }

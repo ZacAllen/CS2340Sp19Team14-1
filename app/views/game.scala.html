@@ -1,0 +1,946 @@
+@(territoryData: Map[Int, Territory], playerData: List[Map[String, Any]])
+@defining(play.core.PlayVersion.current) { version =>
+
+    <html lang="en">
+
+        <head>
+
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <meta name="description" content="">
+            <meta name="author" content="">
+
+            <title>RiskGT</title>
+
+                <!-- Bootstrap Core CSS -->
+            <link href="@routes.Assets.versioned("static/main/vendor/bootstrap/css/bootstrap.min.css")" rel="stylesheet">
+
+                <!-- MetisMenu CSS -->
+            <link href="@routes.Assets.versioned("static/main/vendor/metisMenu/metisMenu.min.css")" rel="stylesheet">
+
+                <!-- Custom CSS -->
+            <link href="@routes.Assets.versioned("static/main/dist/css/sb-admin-2.css")" rel="stylesheet">
+
+                <!-- Custom Fonts -->
+            <link href="@routes.Assets.versioned("static/main/vendor/font-awesome/css/font-awesome.min.css")" rel="stylesheet" type="text/css">
+
+                <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+        </head>
+
+        <body>
+
+            <div id="wrapper">
+                    <!-- Navigation -->
+                <nav id="nav" class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0;
+                    z-index: 0">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="../../../">RiskGT</a>
+                    </div>
+                        <!-- /.navbar-header -->
+
+                    <ul class="nav navbar-top-links navbar-right">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                                </li>
+                                <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                                </li>
+                            </ul>
+                                <!-- /.dropdown-user -->
+                        </li>
+                            <!-- /.dropdown -->
+                    </ul>
+                        <!-- /.navbar-top-links -->
+
+                    <div class="navbar-default sidebar" role="navigation">
+                        <div class="sidebar-nav navbar-collapse">
+                            <ul class="nav" id="side-menu">
+                                <li>
+                                    <a href="#"><i class="fa fa-dashboard fa-fw"></i>
+                                        Dashboard</a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>
+                                        Sessions<span class="fa arrow"></span></a>
+                                    <ul class="nav nav-second-level">
+                                        <li>
+                                            <a href="#">All</a>
+                                        </li>
+                                    </ul>
+                                        <!-- /.nav-second-level -->
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-table fa-fw"></i> Account</a>
+                                </li>
+                            </ul>
+                        </div>
+                            <!-- /.sidebar-collapse -->
+                    </div>
+                        <!-- /.navbar-static-side -->
+                </nav>
+                    <!-- Page Content -->
+                <div id="page-wrapper">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <i class="fa fa-bar-chart-o fa-fw"></i> Players Active :
+                                </div>
+                                    <!-- /.panel-heading -->
+                                <div class="panel-body">
+                                    <div id = "MapImage">
+                                    <img src="@routes.Assets.versioned("images/map.png")" alt="Game Map" height = "500" width = "700" usemap="#Territories" style="position: relative; right: 120px"
+                                        class = "Map">
+                                    <map name = "Territories">
+                                        <area name = "1" shape = "poly" coords="268, 62, 321, 61,321, 80,296, 83, 296 156,264, 110, 268, 62"
+                                        onclick="getData(1);addArmies(1, 1)">
+                                        <area name = "2" shape = "poly" coords="324, 61, 324, 81, 365, 81, 348, 60, 324, 61"
+                                        onclick="getData(2);addArmies(1, 2)">
+                                        <area name = "3" shape = "poly" coords="302,88, 345, 88, 345, 110, 301, 110, 302, 88"
+                                        onclick="getData(3);addArmies(1, 3)">
+                                        <area name = "4" shape = "poly" coords="351, 87,367, 87, 388, 109, 352, 109, 351, 87"
+                                        onclick="getData(4);addArmies(1, 4)">
+                                        <area name = "5" shape = "poly" coords="301, 116, 345, 116, 345, 136, 300, 136, 301, 116"
+                                        onclick="getData(5);addArmies(1, 5)">
+                                        <area name = "6" shape = "poly" coords="300, 142, 343, 141, 344, 179, 323, 178, 323, 167, 302, 166, 300, 142"
+                                        onclick="getData(6);addArmies(1, 6)">
+                                        <area name = "7" shape = "poly" coords="349, 115, 349, 177, 394, 177, 420, 144, 391, 115, 349, 115"
+                                        onclick="getData(7);addArmies(1, 7)">
+                                        <area name = "8" shape = "poly" coords="353, 40, 382, 39, 294, 60, 398, 83, 372, 83, 353, 62, 353, 40"
+                                        onclick="getData(8);addArmies(1, 8)">
+                                        <area name = "9" shape = "poly" coords="401, 27, 455, 27, 455, 93, 434, 110, 410, 110, 403, 116, 373, 88, 402, 88, 401, 27"
+                                        onclick="getData(9);addArmies(1, 9)">
+                                        <area name = "10" shape = "poly" coords="402, 120, 414, 114, 455, 114, 457, 142, 424, 144, 402, 110"
+                                        onclick="getData(10);addArmies(1, 10)">
+                                        <area name = "11" shape = "poly" coords="459, 61, 475, 61, 475, 149, 460, 146, 459, 61"
+                                        onclick="getData(11);addArmies(1, 11)">
+                                        <area name = "12" shape = "poly" coords="480, 61, 512, 61, 514, 85, 480, 85, 480, 61"
+                                        onclick="getData(12);addArmies(1, 12)">
+                                        <area name = "13" shape = "poly" coords="483, 90, 513, 90, 513, 148, 482, 149, 483, 90"
+                                        onclick="getData(13);addArmies(1, 13)">
+                                        <area name = "14" shape = "poly" coords="530, 5, 530, 55, 556, 56, 554, 5, 530, 5"
+                                        onclick="getData(14);addArmies(1, 14)">
+                                        <area name = "15" shape = "poly" coords="561, 2,560, 56, 599, 57,599, 23, 589, 16, 587, 1, 561, 2"
+                                        onclick="getData(15);addArmies(1, 15)">
+                                        <area name = "16" shape = "poly" coords="519, 61, 618, 61, 618, 188,570, 170, 551, 152, 551, 126, 545, 112, 517, 112, 519, 61"
+                                        onclick="getData(16);addArmies(1, 16)">
+                                        <area name = "17" shape = "poly" coords="515, 116, 545, 116, 551, 127, 550, 153, 515, 150, 515, 116"
+                                        onclick="getData(17);addArmies(1, 17)">
+                                        <area name = "18" shape = "poly" coords="624, 60, 680, 60, 685, 188, 663, 188, 663, 153, 624, 151, 624, 60"
+                                        onclick="getData(18);addArmies(1, 18)">
+                                        <area name = "19" shape = "poly" coords="624, 157, 658, 157, 658, 187, 624, 188, 624, 157"
+                                        onclick="getData(19);addArmies(1, 19)">
+                                        <area name = "20" shape = "poly" coords="624, 192, 658, 192, 661, 233, 625, 216, 624, 192"
+                                        onclick="getData(20);addArmies(1, 20)">
+                                        <area name = "21" shape = "poly" coords="664, 193, 685, 194, 692, 230, 668, 230, 664, 193"
+                                        onclick="getData(21);addArmies(1, 21)">
+                                        <area name = "22" shape = "poly" coords="300, 169, 319, 172, 319, 182, 392, 182, 392, 265, 385, 274, 299, 197, 300, 169"
+                                        onclick="getData(22);addArmies(1, 22)">
+                                        <area name = "23" shape = "poly" coords="280, 219, 293, 207, 318, 230, 296, 252, 280, 219"
+                                        onclick="getData(23);addArmies(1, 23)">
+                                        <area name = "24" shape = "poly" coords="299, 255, 319, 237, 356, 269, 246, 285, 299, 255"
+                                        onclick="getData(24);addArmies(1, 24)">
+                                        <area name = "25" shape = "poly" coords="351, 286, 362, 272, 378, 282, 371, 295, 351, 286"
+                                        onclick="getData(25);addArmies(1, 25)">
+                                        <area name = "26" shape = "poly" coords="383, 283, 444, 301, 416, 320, 378, 296, 383, 283"
+                                        onclick="getData(26);addArmies(1, 26)">
+                                        <area name = "27" shape = "poly" coords="283, 336, 294, 324, 349, 342, 400, 347, 438, 367, 407, 380, 352, 379, 283, 336"
+                                        onclick="getData(27);addArmies(1, 27)">
+                                        <area name = "28" shape = "poly" coords="423, 323, 452, 302, 475, 306, 478, 349, 456, 358, 423, 323"
+                                        onclick="getData(28);addArmies(1, 28)">
+                                        <area name = "29" shape = "poly" coords="481, 305, 526, 318, 545, 344, 483, 346, 482, 303"
+                                        onclick="getData(29);addArmies(1, 29)">
+                                        <area name = "30" shape = "poly" coords="397, 178, 425, 150, 440, 146, 474, 164, 470, 167, 470, 207, 476, 212, 436, 216, 420, 186, 397, 178"
+                                        onclick="getData(30);addArmies(1, 30)">
+                                        <area name = "31" shape = "poly" coords="397, 180, 419, 190, 437, 218, 437, 225, 454, 249, 402, 250, 391, 238, 397, 180"
+                                        onclick="getData(31);addArmies(1, 31)">
+                                        <area name = "32" shape = "poly" coords="401, 251, 476, 258, 475, 291, 521, 303, 476, 297, 390, 275, 393, 258, 401, 251"
+                                        onclick="getData(32);addArmies(1, 32)">
+                                        <area name = "33" shape = "poly" coords="477, 153, 510, 154, 510, 234, 479, 256, 457, 249, 438, 219, 452, 213, 477, 213, 477, 153"
+                                        onclick="getData(33);addArmies(1, 33)">
+                                        <area name = "34" shape = "poly" coords="513, 238, 478, 260, 479, 288, 525, 301, 544, 318, 572, 318, 570, 276, 513, 273, 513, 238"
+                                        onclick="getData(34);addArmies(1, 34)">
+                                        <area name = "35" shape = "poly" coords="515, 154, 515, 234, 541, 245, 580, 229, 606, 217, 620, 215, 618, 191, 584, 192, 563, 168, 543, 153, 515, 154"
+                                        onclick="getData(35);addArmies(1, 35)">
+                                        <area name = "36" shape = "poly" coords="514, 240, 530, 241, 538, 248, 534, 255, 533, 271, 514, 271, 514, 240"
+                                        onclick="getData(36);addArmies(1, 36)">
+                                        <area name = "37" shape = "poly" coords="537, 269, 542, 249, 570, 239, 602, 222, 606, 231, 594, 236, 594, 251, 601, 272, 585, 274, 586, 298, 576, 298, 566, 271, 537, 269"
+                                        onclick="getData(37);addArmies(1, 37)">
+                                        <area name = "38" shape = "poly" coords="607, 221, 641, 225, 661, 246, 662, 274, 604, 272, 607, 221"
+                                        onclick="getData(38);addArmies(1, 38)">
+                                        <area name = "39" shape = "poly" coords="590, 277, 660, 278, 661, 349, 638, 349, 638, 369, 599, 369, 576, 344, 559, 347, 544, 323, 576, 323, 575, 308, 590, 298, 590, 277"
+                                        onclick="getData(39);addArmies(1, 39)">
+                                        <area name = "40" shape = "poly" coords="667, 233, 693, 234, 699, 275, 657, 273, 667, 233"
+                                        onclick="getData(40);addArmies(1, 40)">
+                                        <area name = "41" shape = "poly" coords="666, 279, 695, 280, 695, 346, 666, 346, 666, 279"
+                                        onclick="getData(41);addArmies(1, 41)">
+                                        <area name = "42" shape = "poly" coords="663, 353, 698, 353, 697, 430, 668, 431, 663, 421, 663, 353"
+                                        onclick="getData(42);addArmies(1, 42)">
+                                    </map>
+                                        <div id ="T1"></div> <div id ="T2"></div> <div id ="T3"></div> <div id ="T4"></div> <div id ="T5"></div>
+                                        <div id ="T6"></div> <div id ="T7"></div> <div id ="T8"></div> <div id ="T9"></div> <div id ="T10"></div>
+                                        <div id ="T11"></div> <div id ="T12"></div> <div id ="T13"></div> <div id ="T14"></div> <div id ="T15"></div>
+                                        <div id ="T16"></div> <div id ="T17"></div> <div id ="T18"></div> <div id ="T19"></div> <div id ="T20"></div>
+                                        <div id ="T21"></div> <div id ="T22"></div> <div id ="T23"></div> <div id ="T24"></div> <div id ="T25"></div>
+                                        <div id ="T26"></div> <div id ="T27"></div> <div id ="T28"></div> <div id ="T29"></div> <div id ="T30"></div>
+                                        <div id ="T31"></div> <div id ="T32"></div> <div id ="T33"></div> <div id ="T34"></div> <div id ="T35"></div>
+                                        <div id ="T36"></div> <div id ="T37"></div> <div id ="T38"></div> <div id ="T39"></div> <div id ="T40"></div>
+                                        <div id ="T41"></div> <div id ="T42"></div>
+
+                                    </div>
+                                    <script>
+                                            @for( i <- 1 to territoryData.size) {
+                                                @if(territoryData(i).getOwnerID.toString == "Some(1)") {
+                                                    var num = @i;
+                                                    var playerCol = '--player' + num.toString() + 'Color';
+                                                    document.documentElement.style.setProperty(playerCol, '#DF0000'); //red
+                                                } @if(territoryData(i).getOwnerID.toString == "Some(2)") {
+                                                    var num = @i;
+                                                    var playerCol = '--player' + num.toString() + 'Color';
+                                                    document.documentElement.style.setProperty(playerCol, '#0000FF'); //blue
+                                                } @if(territoryData(i).getOwnerID.toString == "Some(3)") {
+                                                    var num = @i;
+                                                    var playerCol = '--player' + num.toString() + 'Color';
+                                                    document.documentElement.style.setProperty(playerCol, '#008000'); //green
+                                                } @if(territoryData(i).getOwnerID.toString == "Some(4)") {
+                                                    var num = @i;
+                                                    var playerCol = '--player' + num.toString() + 'Color';
+                                                    document.documentElement.style.setProperty(playerCol, '#FFCC00'); //yellow
+                                                } @if(territoryData(i).getOwnerID.toString == "Some(5)") {
+                                                    var num = @i;
+                                                    var playerCol = '--player' + num.toString() + 'Color';
+                                                    document.documentElement.style.setProperty(playerCol, '#502d16'); //brown
+                                                } @if(territoryData(i).getOwnerID.toString == "Some(6)") {
+                                                    var num = @i;
+                                                    var playerCol = '--player' + num.toString() + 'Color';
+                                                    document.documentElement.style.setProperty(playerCol, '#FF6600'); //orange
+                                                }
+                                        }
+
+                                    </script>
+                                    <style>
+                                        :root {
+                                            --player1Color: green; --player2Color: green;  --player3Color: green;
+                                            --player4Color: green; --player5Color: green; --player6Color: green;  --player7Color: green;
+                                            --player8Color: green; --player9Color: green; --player10Color: green;  --player11Color: green;
+                                            --player12Color: green; --player13Color: green; --player14Color: green;  --player15Color: green;
+                                            --player16Color: green; --player17Color: green; --player18Color: green;  --player19Color: green;
+                                            --player20Color: green; --player21Color: green; --player22Color: green;  --player23Color: green;
+                                            --player24Color: green; --player25Color: green; --player26Color: green;  --player27Color: green;
+                                            --player28Color: green; --player29Color: green; --player30Color: green;  --player31Color: green;
+                                            --player32Color: green; --player33Color: green; --player34Color: green;  --player35Color: green;
+                                            --player36Color: green; --player37Color: green; --player38Color: green;  --player39Color: green;
+                                            --player40Color: green; --player41Color: green; --player42Color: green;
+                                        }
+
+                                        #MapImage {
+                                            position: relative;
+                                            height: 500px;
+                                            width: 700px;
+                                        }
+                                            #T1 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 155px;
+                                                top: 70px;
+                                                background-color: var(--player1Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T2 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 215px;
+                                                top: 65px;
+                                                background: var(--player2Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T3 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 195px;
+                                                top: 92px;
+                                                background: var(--player3Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T4 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 237px;
+                                                top: 91px;
+                                                background: var(--player4Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T5 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 188px;
+                                                top: 117px;
+                                                background: var(--player5Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T6 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 199px;
+                                                top: 149px;
+                                                background: var(--player6Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T7 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 255px;
+                                                top: 130px;
+                                                background: var(--player7Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T8 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 241px;
+                                                top: 47px;
+                                                background: var(--player8Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T9 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 285px;
+                                                top: 30px;
+                                                background: var(--player9Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T10 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 309px;
+                                                top: 114px;
+                                                background: var(--player10Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T11 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 343px;
+                                                top: 70px;
+                                                background: var(--player11Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T12 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 370px;
+                                                top: 65px;
+                                                background: var(--player12Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T13 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 372px;
+                                                top: 120px;
+                                                background: var(--player13Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T14 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 416px;
+                                                top: 38px;
+                                                background: var(--player14Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T15 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 452px;
+                                                top: 38px;
+                                                background: var(--player15Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T16 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 423px;
+                                                top: 82px;
+                                                background: var(--player16Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            }  #T17 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 404px;
+                                                top: 128px;
+                                                background: var(--player17Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T18 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 526px;
+                                                top: 84px;
+                                                background: var(--player18Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T19 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 517px;
+                                                top: 168px;
+                                                background: var(--player19Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T20 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 511px;
+                                                top: 199px;
+                                                background: var(--player20Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T21 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 551px;
+                                                top: 214px;
+                                                background: var(--player21Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T22 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 228px;
+                                                top: 206px;
+                                                background: var(--player22Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T23 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 170px;
+                                                top: 224px;
+                                                background: var(--player23Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T24 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 203px;
+                                                top: 256px;
+                                                background: var(--player24Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T25 {
+                                                width: 8px;
+                                                height: 8px;
+                                                position: absolute;
+                                                left: 240px;
+                                                top: 279px;
+                                                background: var(--player25Color);
+                                                -webkit-border-radius: 4px;
+                                                -moz-border-radius: 4px;
+                                                border-radius: 4px;
+                                                border: 1px solid black;
+                                            } #T26 {
+                                                width: 10px;
+                                                height: 10px;
+                                                position: absolute;
+                                                left: 286px;
+                                                top: 298px;
+                                                background: var(--player26Color);
+                                                -webkit-border-radius: 5px;
+                                                -moz-border-radius: 5px;
+                                                border-radius: 5px;
+                                                border: 1px solid black;
+                                            } #T27 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 246px;
+                                                top: 355px;
+                                                background: var(--player27Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T28 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 330px;
+                                                top: 326px;
+                                                background: var(--player28Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T29 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 383px;
+                                                top: 325px;
+                                                background: var(--player29Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T30 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 296px;
+                                                top: 160px;
+                                                background: var(--player30Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T31 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 287px;
+                                                top: 228px;
+                                                background: var(--player31Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T32 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 325px;
+                                                top: 265px;
+                                                background: var(--player32Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T33 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 370px;
+                                                top: 206px;
+                                                background: var(--player33Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T34 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 402px;
+                                                top: 282px;
+                                                background: var(--player34Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T35 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 433px;
+                                                top: 204px;
+                                                background: var(--player35Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T36 {
+                                                width: 8px;
+                                                height: 8px;
+                                                position: absolute;
+                                                left: 400px;
+                                                top: 255px;
+                                                background: var(--player36Color);
+                                                -webkit-border-radius: 4px;
+                                                -moz-border-radius: 4px;
+                                                border-radius: 4px;
+                                                border: 1px solid black;
+                                            } #T37 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 459px;
+                                                top: 255px;
+                                                background: var(--player37Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T38 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 502px;
+                                                top: 248px;
+                                                background: var(--player38Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T39 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 496px;
+                                                top: 318px;
+                                                background: var(--player39Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T40 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 556px;
+                                                top: 254px;
+                                                background: var(--player40Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T41 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 556px;
+                                                top: 310px;
+                                                background: var(--player41Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            } #T42 {
+                                                width: 12px;
+                                                height: 12px;
+                                                position: absolute;
+                                                left: 556px;
+                                                top: 387px;
+                                                background: var(--player42Color);
+                                                -webkit-border-radius: 6px;
+                                                -moz-border-radius: 6px;
+                                                border-radius: 6px;
+                                                border: 1px solid black;
+                                            }
+
+
+
+                                    </style>
+                                    <table id="player-data" class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">ID</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Turn</th>
+                                                <th scope="col">Color</th>
+                                                <th scope="col">Number of Armies</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        @for(player <- playerData) {
+                                            <tr>
+                                                <th scope="col">@player("id")</th>
+                                                <td scope="col">@player("name")</td>
+                                                <td scope="col">@player("email")</td>
+                                                <td scope="col">@player("turn")</td>
+                                                <td scope="col">@player("color")</td>
+                                                <td scope="col">@player("numArmies")</td>
+                                            </tr>
+                                        }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                            <!-- /.panel-body -->
+                        <div class="col-lg-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <i class="fa fa-bell fa-fw"></i> Territory Information
+                                </div>
+                                    <!-- /.panel-heading -->
+                                <div class="panel-body">
+                                    <div class="list-group">
+                                        <a href="#" class="list-group-item">
+                                            <i class="fa fa-calendar-check-o fa-fw"></i>
+                                            Current Turn:
+                                            <span class="pull-right text-muted small"><em id="turn">
+                                                Player ID 1</em>
+                                            </span>
+                                        </a>
+                                        <a href="#" class="list-group-item">
+                                            <i class="fa fa-calendar-check-o fa-fw"></i>
+                                            Number of Armies
+                                            <span class="pull-right text-muted small"><em id="num_armies">
+                                                N/A</em>
+                                            </span>
+                                        </a>
+                                        <a href="#" class="list-group-item">
+                                            <i class="fa fa-male fa-fw"></i> Owner
+                                            <span class="pull-right text-muted small"><em id="owner">
+                                                GT</em>
+                                            </span>
+                                        </a>
+                                    </div>
+                                        <!-- /.list-group -->
+                                </div>
+                                    <!-- /.panel-body -->
+                            </div>
+                                <!-- /.panel -->
+                            <button id="end-turn" class="btn btn-danger" style="display:none" onclick="endTurn()">End Turn</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+                <!-- /#page-wrapper -->
+
+            </div>
+                <!-- /#wrapper -->
+
+                <!-- jQuery -->
+            <script src="@routes.Assets.versioned("static/main/vendor/jquery/jquery.min.js")"></script>
+
+                <!-- Bootstrap Core JavaScript -->
+            <script src="@routes.Assets.versioned("static/main/vendor/bootstrap/js/bootstrap.min.js")"></script>
+
+                <!-- Metis Menu Plugin JavaScript -->
+            <script src="@routes.Assets.versioned("static/main/vendor/metisMenu/metisMenu.min.js")"></script>
+
+                <!-- Custom Theme JavaScript -->
+            <script src="@routes.Assets.versioned("static/main/dist/js/sb-admin-2.js")"></script>
+
+            <script>
+                var territoryMap = new Map([
+                    @for(i <- 1 to 42) {
+                        [@i, [@territoryData(i).getUnits, @territoryData(i).getOwnerID, "@territoryData(i).getOwnerName"]],
+                    }
+                ]);
+
+                var playerMap = new Map([
+                    @for(i <- playerData.indices) {
+                        [@i, [@playerData(i)("turn"), @playerData(i)("numArmies"), @playerData(i)("id"), "@playerData(i)("name")"]],
+                    }
+                ]);
+
+                var turnMap = new Map([
+                    @for(i <- playerData.indices) {
+                    [@playerData(i)("id"), @playerData(i)("turn")],
+                    }
+                ]);
+
+                var initGame = false;
+
+                var initComplete = 0;
+
+                var currTurn = 0;
+                var subTurn = 0;
+
+                function getData(num) {
+                    var na = document.getElementById("num_armies");
+                    var owner = document.getElementById("owner");
+                    switch (num) {
+                        @for(i <- 1 to 42) {
+                        case @i: {
+                            owner.innerText = territoryMap.get(@i)[2] + ", ID: " + territoryMap.get(@i)[1];
+                            na.innerText = territoryMap.get(@i)[0];
+                            break;
+                        }
+                            }
+                        default:
+                            owner.innerText = "GT";
+                    }
+                }
+
+                function dispTurn() {
+                    var playerName = playerMap.get(currTurn % playerMap.size)[3];
+                    document.getElementById("turn").innerText = playerName;
+                }
+
+                function addArmies(numArmy, territoryID) {
+                    if (!initGame) {
+                        if (territoryMap.get(territoryID)[1] == playerMap.get(currTurn % playerMap.size)[2]) {
+                            territoryMap.get(territoryID)[0] += numArmy;
+                            playerMap.get(currTurn % playerMap.size)[1] -= numArmy;
+                            subTurn++;
+                            if (playerMap.get(currTurn % playerMap.size)[1] == 0) {
+                                initComplete++;
+                                if (initComplete == playerMap.size) {
+                                    initGame = true;
+                                    document.getElementById("end-turn").style.display = "block";
+                                } else {
+                                    currTurn++;
+                                    dispTurn();
+                                    subTurn = 0;
+                                }
+                            } else if (subTurn == 3) {
+                                currTurn++;
+                                dispTurn();
+                                subTurn = 0;
+                            }
+                            getData(territoryID);
+                            updateDispArmies();
+                        } else {
+                            alert("The selected territory does not belong to the current player.");
+                        }
+                    } else {
+                        if (territoryMap.get(territoryID)[1] == playerMap.get(currTurn % playerMap.size)[2]) {
+                            territoryMap.get(territoryID)[0] += numArmy;
+                            playerMap.get(currTurn % playerMap.size)[1] -= numArmy;
+                            subTurn++;
+                            if (playerMap.get(currTurn % playerMap.size)[1] == 0) {
+                                document.getElementById("end-turn").style.display = "block";
+                            }
+                            getData(territoryID);
+                            updateDispArmies();
+                        } else {
+                            alert("The selected territory does not belong to the current player.");
+                        }
+
+                    }
+                }
+
+                function updateDispArmies() {
+                    @for(i <- playerData.indices) {
+                    document.getElementById("player-data").rows[@(i+1)].cells[5].innerText = playerMap.get(@i)[1];
+                    }
+                }
+
+                function addNewArmies() {
+                    var REDBONUS = 5;
+                    var BROWNBONUS = 5;
+                    var BLUEBONUS = 5;
+                    var GREENBONUS = 5;
+                    var ORANGEBONUS = 5;
+                    var YELLOWBONUS = 5;
+
+                    var summaryMap = new Map([
+                        @for(i <- playerData.indices) {
+                            [@i, [0]],
+                        }
+                    ]);
+
+                    for(var i = 1; i <= 42; i++) {
+                        summaryMap.get(turnMap.get(territoryMap.get(i)[1]) - 1)[0] += 1;
+                    }
+
+                    for(var i = 0; i < playerMap.size; i++) {
+                        playerMap.get(i)[1] = (summaryMap.get(i)[0] > 2) ? Math.floor(summaryMap.get(i)[0] / 3) : 1;
+                    }
+                    updateDispArmies();
+                }
+
+                function endTurn() {
+                    if ((currTurn + 1) % playerMap.size == 0) {
+                        addNewArmies();
+                        alert("New Armies Granted to Each Player");
+                    }
+                    currTurn++;
+                    dispTurn();
+                    document.getElementById("end-turn").style.display = "none";
+                }
+
+                window.onload = dispTurn;
+            </script>
+        </body>
+    </html>
+}

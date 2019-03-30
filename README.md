@@ -17,8 +17,7 @@ The next three players are optional but the information for these fields must be
 meaning that Player 4 must exist for Player 5 / Player 6 to exist and Player 5 must exist for Player 6 to exist.
 
 ## Design Documentation
-
-The design documentation is located at DesignDocumentation.docx
+The design documentation is located at Design Documentations.docx
 
 ## Checking Initial Assignments
 Checking initial assignments of the territory is easy.

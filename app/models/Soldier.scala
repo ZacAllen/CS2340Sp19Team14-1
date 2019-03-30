@@ -1,29 +1,36 @@
 package models
 
-abstract class Soldier(id: Int, name: String, territory: Territory, price: Int, mobility: Int, var canMove: Boolean) {
-  def getName = this.name
+abstract class Soldier(id: Int, name: String, var territory: Territory, price: Int, mobility: Int, var canMove: Boolean) extends Ordered[Soldier] {
 
-  def getId = this.id
+  def compare(that: Soldier): Int = this.price - that.getPrice
 
-  def getLocation = this.territory
+  def getName: String = this.name
 
-  def getPrice = this.price
+  def getId: Int = this.id
 
-  def getMobility = this.mobility
+  def getLocation: Territory = this.territory
 
-  def getCanMove = this.canMove
+  def getPrice: Int = this.price
+
+  def getMobility: Int = this.mobility
+
+  def getCanMove: Boolean = this.canMove
 
   def setCanMove(boolean: Boolean){this.canMove = boolean}
+
+  def setTerritory(territory: Territory) {this.territory = territory}
 }
 
-class Students(id: Int, territory: Territory) extends Soldier(id, "Student", territory,
+
+
+case class Student(id: Int, var territoryS: Territory) extends Soldier(id, "Student", territoryS,
   1, 1, true) {
 }
 
-class  TA(id: Int, territory: Territory) extends Soldier(id, "TA", territory,
+case class  TA(id: Int, var territoryT: Territory) extends Soldier(id, "TA", territoryT,
   2, 2, true) {
 }
 
-class Professors(id: Int, territory: Territory) extends Soldier(id, "Professor", territory,
+case class Professor(id: Int, territoryP: Territory) extends Soldier(id, "Professor", territoryP,
   3, 1, true) {
 }

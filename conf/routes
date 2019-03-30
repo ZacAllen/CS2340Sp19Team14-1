@@ -18,5 +18,3 @@ GET     /game/initiate              controllers.HomeController.gameInitiate
 
 # Testing POST request
 POST    /player/add                 controllers.HomeController.addPlayer
-POST    /player/multi-add           controllers.HomeController.gameInitiator
-      

@@ -1,7 +1,7 @@
 package models
 
 
-class Player(id: Int, name: String, email: String, var turn: Int, color: Int, numArmies: Int, armyList: List[Soldier]) {
+class Player(id: Int, name: String, email: String, var turn: Int, color: String, var numArmies: Int, territories: List[Territory]) {
 
   def getName: String = this.name
 
@@ -11,16 +11,22 @@ class Player(id: Int, name: String, email: String, var turn: Int, color: Int, nu
 
   def getTurn: Int = this.turn
 
-  def getColor: Int = this.color
+  def getColor: String = this.color
 
   def getNumArmies: Int = this.numArmies
 
-  def getArmyList: List[Soldier] = this.armyList
+  def addArmyUnits(num: Int): Int = {
+    this.numArmies += num
+    numArmies
+  }
+
+  def getTerritories: List[Territory] = this.territories
 
   def setTurn(turn: Int){this.turn = turn}
 }
 
 object Player {
 
-  def apply(id: Int, name: String, email: String, turn: Int, color: Int, numArmies: Int): Player = new Player(id, name, email, turn, color, numArmies)
+  def apply(id: Int, name: String, email: String, turn: Int, color: String, numArmies: Int, territories: List[Territory]):
+    Player = new Player(id, name, email, turn, color, numArmies, territories)
 }
