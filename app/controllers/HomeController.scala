@@ -160,7 +160,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     var territoryList: List[Territory] = Nil
     var name = "1"
     for (inc <- 1 to 42 ) {
-      var territory: Territory = new Territory(inc, name, null,0, 0, null, true)
+      var territory: Territory = new Territory(inc, name, Player(0, "", "", 0, "", 0, Nil),0, 0, District(0, "", Nil), true)
       territoryList = territory :: territoryList
       var nameTemp = name.toInt
       nameTemp = 1 + nameTemp
@@ -179,11 +179,9 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     var map:Map[Int, Territory] = Map()
     var i = 0
     for (a <- 1 to territories.length) {
-      //map += territories(a) -> players(i % players.length)
       map += a -> territories(a - 1)
       val p = players(i % players.length)
       territories(a - 1).setOwnerID(p.get("id"))
-      //println(p.get("id").toString + "OOOOOO")
       territories(a - 1).setOwnerName(p.get("name"))
       territories(a - 1).addUnits(1)
       i += 1
@@ -225,6 +223,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
       setPlayerTurn(players.tail, turnList.tail)
     }
   }
+/*
 
   //Bonus for occupying the whole district
   val REDBONUS = 5
@@ -254,4 +253,5 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
       }
     }
   }
+*/
 }
