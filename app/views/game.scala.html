@@ -1177,12 +1177,12 @@
 
             <script>
                 function showAttack() {
-                     if(!initGame) {
-                         alert("Cannot attack before initial army placements!");
-                    } else {
+                     //if(!initGame) {
+                       //  alert("Cannot attack before initial army placements!");
+                    //} else {
                         var attackWindow = document.getElementById("selectAttack");
                         attackWindow.style.display = "inline";
-                    }
+                    //}
 
                 }
                 function hideAttack() {
@@ -1211,8 +1211,14 @@
                     defendingTerr.innerText = territoryNum.innerText;
                 }
                 function cancelAttack() {
+                    var input = document.getElementById("armyInput");
+                    input.options[input.selectedIndex].text = 1;
                     document.getElementById("attackingTerr").innerText = "N/A";
                     document.getElementById("defendingTerr").innerText = "N/A";
+                    document.getElementById("defending").style.display = "none";
+                    document.getElementById("input").style.display = "none";
+                    document.getElementById("cancel").style.display = "none";
+                    document.getElementById("proceed").style.display = "none";
                     document.getElementById("selectAttack").style.display = "none";
                 }
                 function attack() {
