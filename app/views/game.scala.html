@@ -1177,12 +1177,12 @@
 
             <script>
                 function showAttack() {
-                     //if(!initGame) {
-                       //  alert("Cannot attack before initial army placements!");
-                    //} else {
+                     if(!initGame) {
+                         alert("Cannot attack before initial army placements!");
+                    } else {
                         var attackWindow = document.getElementById("selectAttack");
                         attackWindow.style.display = "inline";
-                    //}
+                    }
 
                 }
                 function hideAttack() {
