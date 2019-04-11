@@ -1,4 +1,4 @@
-@(territoryData: Map[Int, Territory], playerData: List[Map[String, Any]])
+@(territoryData: Map[Int, Territory], playerData: List[Map[String, Any]], adjacentMap: Map[Int, List[Int]])
 @defining(play.core.PlayVersion.current) { version =>
 
     <html lang="en">
@@ -94,6 +94,27 @@
                             </ul>
                         </div>
                             <!-- /.sidebar-collapse -->
+                        <div class="panel-heading" style="display:none" id="attackRoll">
+                             Attacker's Dice Rolls: <span class="pull-right"><em id="attackRollNum">
+                                 N/A</em>
+                             </span>
+                        </div>
+                        <div class="panel-heading" style="display:none" id="defendRoll">
+                            Defender's Dice Rolls: <span class="pull-right"><em id="defendRollNum">
+                                N/A</em>
+                            </span>
+                        </div>
+
+                        <div class="buttoncontainer2" style="text-align: center; position: relative; top: 20px">
+                            <button id="cancel2" style="display:none" onclick="cancelAttack()">Cancel Attack</button>
+                            <button id="proceed2" style="display:none" onclick="attack(parseInt(document.getElementById('attackingTerr').innerText),
+                                    parseInt(document.getElementById('defendingTerr').innerText),
+                                    parseInt(document.getElementById('atkInput').options[document.getElementById('atkInput').selectedIndex].text),
+                                    parseInt(document.getElementById('atkInput').options[document.getElementById('defInput').selectedIndex].text))">Continue Attack?
+                            </button>
+                        </div>
+
+
                     </div>
                         <!-- /.navbar-static-side -->
                 </nav>
@@ -109,39 +130,11 @@
                                 <div class="panel-body">
                                     <script>
 
-                                            function reloadSpots() {
-                                                @for( i <- 1 to territoryData.size) {
-                                                @if(territoryData(i).getOwnerID.toString == "Some(1)") {
-                                                var num = @i;
-                                                var playerCol = '--player' + num.toString() + 'Color';
-                                                document.documentElement.style.setProperty(playerCol, '#DF0000'); //red
-                                                } @if(territoryData(i).getOwnerID.toString == "Some(2)") {
-                                                var num = @i;
-                                                var playerCol = '--player' + num.toString() + 'Color';
-                                                document.documentElement.style.setProperty(playerCol, '#0000FF'); //blue
-                                                } @if(territoryData(i).getOwnerID.toString == "Some(3)") {
-                                                var num = @i;
-                                                var playerCol = '--player' + num.toString() + 'Color';
-                                                document.documentElement.style.setProperty(playerCol, '#008000'); //green
-                                                } @if(territoryData(i).getOwnerID.toString == "Some(4)") {
-                                                var num = @i;
-                                                var playerCol = '--player' + num.toString() + 'Color';
-                                                document.documentElement.style.setProperty(playerCol, '#FFCC00'); //yellow
-                                                } @if(territoryData(i).getOwnerID.toString == "Some(5)") {
-                                                var num = @i;
-                                                var playerCol = '--player' + num.toString() + 'Color';
-                                                document.documentElement.style.setProperty(playerCol, '#502d16'); //brown
-                                                } @if(territoryData(i).getOwnerID.toString == "Some(6)") {
-                                                var num = @i;
-                                                var playerCol = '--player' + num.toString() + 'Color';
-                                                document.documentElement.style.setProperty(playerCol, '#FF6600'); //orange
-                                                }
-                                                }
-                                            }
+
                                     </script>
                                     <div id = "MapImage">
                                     <img src="@routes.Assets.versioned("images/map.png")" alt="Game Map" height = "500" width = "700" usemap="#Territories" style="position: relative; right: 120px"
-                                        class = "Map" onload="reloadSpots();">
+                                        class = "Map" onload="reloadSpots()">
                                     <map name = "Territories">
                                         <area name = "1" shape = "poly" coords="268, 62, 321, 61,321, 80,296, 83, 296 156,264, 110, 268, 62"
                                         onclick="getData(1); showBorder(1)" id="t1">
@@ -259,8 +252,8 @@
                                         </script>
 
                                         @*Selected outlines*@
-                                        <div id ="B1"><img src="@routes.Assets.versioned("images/1.png")" height="100" width="60px" id="1" onload=" hideBorders();"></div>
-                                        <div id ="B2"><img src="@routes.Assets.versioned("images/2.png")" height="25" width="44px" id="2"></div>
+                                        <div id ="B1"><img src="@routes.Assets.versioned("images/1.png")" height="100" width="60px" id="1" onload="hideBorders();"></div>
+                                        <div id ="B2"><img src="@routes.Assets.versioned("images/2.png")" height="25" width="44px" id="2" onload="reloadSpots()"></div>
                                         <div id ="B3"><img src="@routes.Assets.versioned("images/3.png")" height="25" width="49px" id="3"></div>
                                         <div id ="B4"><img src="@routes.Assets.versioned("images/4.png")" height="25" width="40px" id="4"></div>
                                         <div id ="B5"><img src="@routes.Assets.versioned("images/5.png")" height="27" width="49px" id="5"></div>
@@ -300,7 +293,7 @@
                                         <div id ="B39"><img src="@routes.Assets.versioned("images/39.png")" height="94" width="121" id="39"></div>
                                         <div id ="B40"><img src="@routes.Assets.versioned("images/40.png")" height="43" width="33" id="40"></div>
                                         <div id ="B41"><img src="@routes.Assets.versioned("images/41.png")" height="71" width="32" id="41"></div>
-                                        <div id ="B42"><img src="@routes.Assets.versioned("images/42.png")" height="80" width="37" id="42"></div>
+                                        <div id ="B42"><img src="@routes.Assets.versioned("images/42.png")" height="80" width="37" id="42" onload="reloadSpots();"></div>
 
 
                                     </div>
@@ -1137,16 +1130,25 @@
                                     </a>
                                     <div class="form-inline" style="text-align: left; position: relative; top: 5px; display: none;"
                                         id = "input">
-                                        <label for="armyInput">Number of Attacking Armies: </label>
-                                        <select type="text" href="#" class="form-group" id = "armyInput">
+                                        <label for="atkInput">(Attacker's Choice) Number of Attacking Armies: </label>
+                                        <select type="text" href="#" class="form-group" id = "atkInput">
                                             <option value="oneArmy">1</option>
                                             <option value="twoArmy">2</option>
                                             <option value="threeArmy">3</option>
                                         </select>
+                                        <label for="defInput">(Defender's Choice) Number of Defending Armies: </label>
+                                        <select type="text" href="#" class="form-group" id = "defInput">
+                                            <option value="oneArmy">1</option>
+                                            <option value="twoArmy">2</option>
+                                        </select>
                                     </div>
                                     <div class="buttoncontainer" style="text-align: center; position: relative; top: 20px">
                                         <button id="cancel" style="display:none" onclick="cancelAttack()">Cancel Attack</button>
-                                        <button id="proceed" style="display:none" onclick="attack()">Attack!</button>
+                                        <button id="proceed" style="display:none" onclick="attack(parseInt(document.getElementById('attackingTerr').innerText),
+                                                parseInt(document.getElementById('defendingTerr').innerText),
+                                                parseInt(document.getElementById('atkInput').options[document.getElementById('atkInput').selectedIndex].text),
+                                                parseInt(document.getElementById('atkInput').options[document.getElementById('defInput').selectedIndex].text))">Attack!
+                                        </button>
                                     </div>
                                 </div>
                                 </div>
@@ -1211,7 +1213,6 @@
                     defendingTerr.innerText = territoryNum.innerText;
                 }
                 function cancelAttack() {
-                    var input = document.getElementById("armyInput");
                     document.getElementById("attackingTerr").innerText = "N/A";
                     document.getElementById("defendingTerr").innerText = "N/A";
                     document.getElementById("defending").style.display = "none";
@@ -1219,11 +1220,113 @@
                     document.getElementById("cancel").style.display = "none";
                     document.getElementById("proceed").style.display = "none";
                     document.getElementById("selectAttack").style.display = "none";
+                    document.getElementById("cancel2").style.display = "none";
+                    document.getElementById("proceed2").style.display = "none";
+                    document.getElementById("attackRoll").style.display = "none";
+                    document.getElementById("defendRoll").style.display = "none";
                 }
-                function attack() {
-                    //attack function, probably modify to take two territory numbers and the select form input
-                    //as parameters depending on haowei and sameh's implementation
+                function attack(attacker, defender, atkDice, defDice) {
+                    var adjacentMap = new Map([
+                        @for(i <- 1 to 42) {
+                        [@i, "@adjacentMap(i).toString()"],
+                        }
+                    ]);
+                    console.log(adjacentMap);
+
+                    if (territoryMap.get(attacker)[1] != playerMap.get(currTurn % playerMap.size)[2]) {
+                        alert("You cannot attack from a territory you do not own!");
+                    } else if (attacker == defender) {
+                        alert("The same territory cannot attack itself!" +
+                                " Please select two different territories!");
+                    }  else if (territoryMap.get(attacker)[2] == territoryMap.get(defender)[2]) {
+                        alert("You cannot attack yourself! Select a territory you do not " +
+                                "own to attack.");
+                    } else if (atkDice > territoryMap.get(attacker)[0]) {
+                        alert("You cannot attack with more armies than " +
+                                "are currently in the territory!");
+                    } else if (defDice > territoryMap.get(defender)[0]) {
+                        alert("You cannot defend with more armies than " +
+                                "are currently in the territory!");
+                    } else if (atkDice == territoryMap.get(attacker)[0]) {
+                        alert("You must leave at least 1 army inside your territory before attacking!")
+                    } else if (adjacentMap.get(attacker).includes(defender.toString() + ',')
+                            || adjacentMap.get(attacker).includes(defender.toString() + ')')) {
+
+                        var attackerDice = [];
+                        var defenderDice = [];
+                        for (var i = 0; i < atkDice; i++) {
+                            var dice = rollDice();
+                            attackerDice.push(dice);
+                        }
+                        for (var j = 0; j < defDice; j++) {
+                            var dice = rollDice();
+                            defenderDice.push(dice);
+                        }
+                        document.getElementById("attackRoll").style.display = "inline-block";
+                        document.getElementById("defendRoll").style.display = "inline-block";
+
+                        attackerDice = attackerDice.sort();
+                        attackerDice = attackerDice.reverse();
+                        defenderDice = defenderDice.sort();
+                        defenderDice = defenderDice.reverse();
+                        document.getElementById("attackRollNum").innerText = "[" + attackerDice.toString() + "]";
+                        document.getElementById("defendRollNum").innerText = "[" + defenderDice.toString() + "]";
+
+                        var attackWin = 0;
+                        var defendWin = 0;
+                        console.log(attackerDice);
+                        console.log(defenderDice);
+
+                        for (var k = 0; k < Math.min(attackerDice.length, defenderDice.length); k++) {
+                            if (attackerDice[k] > defenderDice[k]) {
+                                territoryMap.get(defender)[0] -= 1;
+                                attackWin++;
+                            } else if (attackerDice[k] <= defenderDice[k]) {
+                                territoryMap.get(attacker)[0] -= 1;
+                                defendWin++;
+                            }
+                        }
+
+                        var victory = "The attack resulted in a draw.";
+                        if (attackWin > defendWin) {
+                            victory = territoryMap.get(attacker)[2] + " won the attack!";
+                            alert(victory);
+                        } else if (defendWin > attackWin) {
+                            victory = territoryMap.get(defender)[2] + " successfully defended their territory!";
+                            alert(victory);
+                        }
+
+                        if (territoryMap.get(defender)[0] <= 0) {
+                            territoryMap.get(defender)[1] = territoryMap.get(attacker)[1];
+                            territoryMap.get(defender)[2] = territoryMap.get(attacker)[2];
+                            var occupyArmies = prompt(territoryMap.get(attacker)[2] + " conquered a territory!" +
+                                    " Enter the # of armies you wish to occupy this territory with: ", atkDice);
+                            while (occupyArmies < atkDice || occupyArmies >= territoryMap.get(attacker)[0]) {
+                                alert("You cannot occupy a territory with less armies than you attacked with, " +
+                                        "or the same number/more armies than you currently posses in a territory.");
+                                occupyArmies = prompt(territoryMap.get(attacker)[2] + " conquered a territory!" +
+                                        " Enter the # of armies you wish to occupy this territory with: ", atkDice);
+                            }
+                            territoryMap.get(defender)[0] += parseInt(occupyArmies);
+                            territoryMap.get(attacker)[0] -= parseInt(occupyArmies);
+                        } else {
+                           var cont = document.getElementById("proceed2");
+                           var canc = document.getElementById("cancel2");
+                           cont.style.display = "inline-block";
+                           canc.style.display = "inline-block";
+                        }
+
+                        reloadSpots();
+                    } else {
+                        alert("Those territories are not adjacent! " +
+                                "Please select two adjacent territories.");
+                    }
                 }
+
+                function rollDice() {
+                    return Math.floor(Math.random() * 6) + 1;
+                }
+
                 var territoryMap = new Map([
                     @for(i <- 1 to 42) {
                         [@i, [@territoryData(i).getUnits, @territoryData(i).getOwnerID, "@territoryData(i).getOwnerName"]],
@@ -1270,6 +1373,34 @@
                 function dispTurn() {
                     var playerName = playerMap.get(currTurn % playerMap.size)[3];
                     document.getElementById("turn").innerText = playerName;
+                    alert(playerName + "'s Turn!");
+                    for(var i = 1; i < 43; i++) {
+                        if(territoryMap.get(i)[1] == 1) {
+                            var num = i;
+                            var playerCol = '--player' + num.toString() + 'Color';
+                            document.documentElement.style.setProperty(playerCol, '#DF0000'); //red
+                        }   if(territoryMap.get(i)[1] == 2) {
+                            var num = i;
+                            var playerCol = '--player' + num.toString() + 'Color';
+                            document.documentElement.style.setProperty(playerCol, '#0000FF'); //blue
+                        }   if(territoryMap.get(i)[1] == 3) {
+                            var num = i;
+                            var playerCol = '--player' + num.toString() + 'Color';
+                            document.documentElement.style.setProperty(playerCol, '#008000'); //green
+                        }   if(territoryMap.get(i)[1] == 4) {
+                            var num = i;
+                            var playerCol = '--player' + num.toString() + 'Color';
+                            document.documentElement.style.setProperty(playerCol, '#FFCC00'); //yellow
+                        }   if(territoryMap.get(i)[1] == 5) {
+                            var num = i;
+                            var playerCol = '--player' + num.toString() + 'Color';
+                            document.documentElement.style.setProperty(playerCol, '#502d16'); //brown
+                        }   if(territoryMap.get(i)[1] == 6) {
+                            var num = i;
+                            var playerCol = '--player' + num.toString() + 'Color';
+                            document.documentElement.style.setProperty(playerCol, '#FF6600'); //orange
+                        }
+                    }
                 }
 
                 function addArmies(numArmy, territoryID) {
@@ -1304,13 +1435,17 @@
                         } else {
                             if (territoryMap.get(territoryID)[1] == playerMap.get(currTurn % playerMap.size)[2]) {
                                 territoryMap.get(territoryID)[0] += numArmy;
-                                playerMap.get(currTurn % playerMap.size)[1] -= numArmy;
-                                subTurn++;
                                 if (playerMap.get(currTurn % playerMap.size)[1] == 0) {
-                                    document.getElementById("end-turn").style.display = "block";
+                                    alert("You no longer have any more armies to add!");
+                                } else {
+                                    playerMap.get(currTurn % playerMap.size)[1] -= numArmy;
+                                    subTurn++;
+                                    if (playerMap.get(currTurn % playerMap.size)[1] == 0) {
+                                        document.getElementById("end-turn").style.display = "block";
+                                    }
+                                    getData(territoryID);
+                                    updateDispArmies();
                                 }
-                                getData(territoryID);
-                                updateDispArmies();
                             } else {
                                 alert("The selected territory does not belong to the current player.");
                             }
@@ -1360,6 +1495,38 @@
                 }
 
                 window.onload = dispTurn;
+
+            </script>
+            <script>
+                    function reloadSpots() {
+                        for(var i = 1; i < 43; i++) {
+                            if(territoryMap.get(i)[1] == 1) {
+                                var num = i;
+                                var playerCol = '--player' + num.toString() + 'Color';
+                                document.documentElement.style.setProperty(playerCol, '#DF0000'); //red
+                            }   if(territoryMap.get(i)[1] == 2) {
+                                var num = i;
+                                var playerCol = '--player' + num.toString() + 'Color';
+                                document.documentElement.style.setProperty(playerCol, '#0000FF'); //blue
+                            }   if(territoryMap.get(i)[1] == 3) {
+                                var num = i;
+                                var playerCol = '--player' + num.toString() + 'Color';
+                                document.documentElement.style.setProperty(playerCol, '#008000'); //green
+                            }   if(territoryMap.get(i)[1] == 4) {
+                                var num = i;
+                                var playerCol = '--player' + num.toString() + 'Color';
+                                document.documentElement.style.setProperty(playerCol, '#FFCC00'); //yellow
+                            }   if(territoryMap.get(i)[1] == 5) {
+                                var num = i;
+                                var playerCol = '--player' + num.toString() + 'Color';
+                                document.documentElement.style.setProperty(playerCol, '#502d16'); //brown
+                            }   if(territoryMap.get(i)[1] == 6) {
+                                var num = i;
+                                var playerCol = '--player' + num.toString() + 'Color';
+                                document.documentElement.style.setProperty(playerCol, '#FF6600'); //orange
+                            }
+                        }
+                    }
             </script>
         </body>
     </html>
