@@ -80,7 +80,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
         val playerInitData = gameInitiator(list)
         val sortedPlayers = sortPlayersByTurn(playerInitData)
         val territoryInitData = randomizeTerritories(createTerritories(), sortedPlayers)
-        Ok(views.html.game(territoryInitData, sortedPlayers)).withSession(
+        Ok(views.html.game(territoryInitData, sortedPlayers, adjacentMap)).withSession(
           "player_data" -> JsonConverter.toJson(sortedPlayers),
           "territory_data" -> JsonConverter.toJson(territoryInitData)
         )
@@ -253,5 +253,13 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
       }
     }
   }
-*/
+  //The adjacent Map of the game
+  val adjacentMap = Map((1,List(2,3,5,6)),(2,List(1,3,4,8)),(3,List(1,2,4,5,7)),(4,List(2,3,5,7)),(5,List(1,3,4,6,7)),
+    (6,List(1,5,7,22)),(7,List(3,4,5,6,22,30)),(8,List(2,9)),(9,List(8,10,11,14)),(10,List(9,11)),(11,List(9,10,12,13)),
+    (12,List(11,13,16)),(13,List(17,16,12,11,33,35)),(14,List(9,15,16)),(15,List(14,16,18)),(16,List(14,15,18,19,17,35,20,12,13)),
+    (17,List(13,16,33,35)),(18,List(15,16,19,20,21)),(19,List(16,18,20,21)),(20,List(19,21,35,38)),(21,List(18,19,20,40)),
+    (22,List(6,7,23)),(23,List(22,24)),(24,List(23,25)),(25,List(24,26)),(26,List(25,28)),(27,List(28)),(28,List(26,27,32,29)),
+    (29,List(34,39,28)),(30,List(7,31,33)),(31,List(30,33,32)),(32,List(31,33,34,28)),(33,List(30,31,32,34,35)),(34,List(32,33,36,37,39,29)),
+    (35,List(37,33,36,20,19,16,17)),(36,List(34,35)),(37,List(35,34,38,39)),(38,List(37,40,39,41)),(39,List(37,38,40,41,42,34)),
+    (40,List(21,20,38,39,41)),(41,List(39,38,40)),(42,List(39)))
 }
