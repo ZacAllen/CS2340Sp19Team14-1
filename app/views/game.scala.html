@@ -1228,7 +1228,7 @@
                 function attack(attacker, defender, atkDice, defDice) {
                     var adjacentMap = new Map([
                         @for(i <- 1 to 42) {
-                        [@i, "@adjacentMap(i).toString()"],
+                        [@i, [@for(j <- adjacentMap(i)) {@j,}]],
                         }
                     ]);
                     console.log(adjacentMap);
@@ -1249,8 +1249,8 @@
                                 "are currently in the territory!");
                     } else if (atkDice == territoryMap.get(attacker)[0]) {
                         alert("You must leave at least 1 army inside your territory before attacking!")
-                    } else if (adjacentMap.get(attacker).includes(defender.toString() + ',')
-                            || adjacentMap.get(attacker).includes(defender.toString() + ')')) {
+                    } else if (adjacentMap.get(attacker).includes(defender)
+                            || adjacentMap.get(attacker).includes(defender)) {
 
                         var attackerDice = [];
                         var defenderDice = [];

@@ -302,7 +302,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
 
     List(attacker, defender)
   }
-
+*/
 
   //The adjacent Map of the game
   val adjacentMap = Map((1,List(2,3,5,6)),(2,List(1,3,4,8)),(3,List(1,2,4,5,7)),(4,List(2,3,5,7)),(5,List(1,3,4,6,7)),
