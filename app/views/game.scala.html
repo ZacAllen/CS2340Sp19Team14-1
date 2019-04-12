@@ -1291,7 +1291,7 @@
                         if (attackWin > defendWin) {
                             victory = territoryMap.get(attacker)[2] + " won the attack!";
                             alert(victory);
-                        } else if (defendWin > attackWin) {
+                        } else if (defendWin >= attackWin) {
                             victory = territoryMap.get(defender)[2] + " successfully defended their territory!";
                             alert(victory);
                         }
