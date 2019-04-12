@@ -77,33 +77,39 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
           }
         }
 
-        gameInitiator(list)
         val playerInitData = gameInitiator(list)
-        val territoryInitData = randomizeTerritories(1 to 42 toList, 1 to list.length toList)
-        Ok(views.html.game(territoryInitData, playerInitData)).withSession(
-          "player_data" -> JsonConverter.toJson(playerInitData),
+        val sortedPlayers = sortPlayersByTurn(playerInitData)
+        val territoryInitData = randomizeTerritories(createTerritories(), sortedPlayers)
+        Ok(views.html.game(territoryInitData, sortedPlayers, adjacentMap)).withSession(
+          "player_data" -> JsonConverter.toJson(sortedPlayers),
           "territory_data" -> JsonConverter.toJson(territoryInitData)
         )
       }
     )
   }
 
-  def addPlayer: Action[JsValue] = Action(parse.json) { implicit request =>
-    val np = Player((request.body \ "id").as[Int], (request.body \ "name").as[String], "", 0, 0, 0,List())
-    Ok(toJson(Map("id" -> np.getId)))
+  def sortPlayersByTurn(players: List[Map[String, Any]]): List[Map[String, Any]] = {
+    var sortedPlayers: List[Map[String, Any]] = Nil
+    sortedPlayers = players.sortBy(_("turn").toString)
+    sortedPlayers
   }
 
+  def addPlayer: Action[JsValue] = Action(parse.json) { implicit request =>
+    val np = Player((request.body \ "id").as[Int], (request.body \ "name").as[String], "", 0, "", 0, List())
+    Ok(toJson(Map("id" -> np.getId)))
+  }
 
   def gameInitiator(input: List[Map[String, Any]]): List[Map[String, Any]] = {
     val turnOrder: List[Int] = randomizeTurns(input.length)
     var players: List[Map[String, Any]] = Nil
     var num: Int = 0
+    val colors: List[String] = List("Red", "Blue", "Green", "Yellow", "Brown", "Orange")
     val num_armies: Int = initArmiesUnits(input.length)
     for (player_data <- input) {
-      val id = player_data("id").asInstanceOf[Int]
+      val id = turnOrder(num)
       val name = player_data("name").asInstanceOf[String]
       val email = player_data("email").asInstanceOf[String]
-      val color = turnOrder(num)
+      val color = colors(turnOrder(num) - 1)
       val turn = turnOrder(num)
       val territories = List()
       val player = Player(id, name, email, turn, color, num_armies, territories)
@@ -149,12 +155,12 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
   We may or may not use the Territory class in the future. We could perhaps modify
   the randomizeTerritories method to map these territories' int ids to each player's
    */
-/*
+
   def createTerritories(): List[Territory] = {
     var territoryList: List[Territory] = Nil
     var name = "1"
     for (inc <- 1 to 42 ) {
-      var territory: Territory = new Territory(inc, name, null, 0, null, true)
+      var territory: Territory = new Territory(inc, name, Player(0, "", "", 0, "", 0, Nil),0, 0, District(0, "", Nil), true)
       territoryList = territory :: territoryList
       var nameTemp = name.toInt
       nameTemp = 1 + nameTemp
@@ -162,31 +168,34 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     }
     territoryList
   }
-*/
 
-  //Creates a map that contains all the territory ID's as keys, and the player ID's as values
-  //Ex: territoryID: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], playerID: [1, 2]
-  //Returns [3: 2, 6: 1, 10: 2, 9: 1, 8: 2, 1: 1, 4: 2, ...]
-  def randomizeTerritories(territoryID: List[Int], playerID: List[Int]): Map[Int, Int] = {
+  //Modified to return a map of id keys mapped to actual Territory objects.
+  //Creates a map that contains all the territory ID's (i.e. numbers) as keys, and the Territory objects as values.
+  //Each territory object has an owner id that matches to the id of the player that owns it.
+  def randomizeTerritories(territoryID: List[Territory], playerID: List[Map[String, Any]]): Map[Int, Territory] = {
     val territories = util.Random.shuffle(territoryID)
     val players = util.Random.shuffle(playerID)
 
-    var map:Map[Int,Int] = Map()
+    var map:Map[Int, Territory] = Map()
     var i = 0
-    for (a <- territories.indices) {
-      map += territories(a) -> players(i % players.length)
+    for (a <- 1 to territories.length) {
+      map += a -> territories(a - 1)
+      val p = players(i % players.length)
+      territories(a - 1).setOwnerID(p.get("id"))
+      territories(a - 1).setOwnerName(p.get("name"))
+      territories(a - 1).addUnits(1)
       i += 1
     }
     map
   }
 
   //Returns the # of armies the player is allowed to place at the start of their turn
-  def newArmies(playerID: Int, territories: Map[Int, Int]): Int = {
+  def newArmies(playerID: Int, territories: Map[Int, Territory]): Int = {
     //Based on the Rules on the Google doc, the # of new armies is the # of territories / 3. If < 3 territories they
     //Get 1 army
     var numTerritories = 0
     for ((_, value) <- territories) {
-      if (value == playerID) numTerritories += 1
+      if (value.getOwnerID == playerID) numTerritories += 1
     }
     if (numTerritories < 3) {
       1
@@ -214,6 +223,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
       setPlayerTurn(players.tail, turnList.tail)
     }
   }
+/*
 
   //Bonus for occupying the whole district
   val REDBONUS = 5
@@ -223,7 +233,6 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
   val ORANGEBONUS = 5
   val YELLOWBONUS = 5
 
-  //Give players additional army units at the beginning of their turns
   def addArmies(player: Player) {
     if (player.getTerritories.length <= 2) {
       player.addArmyUnits(1)
@@ -245,7 +254,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     }
   }
 
-  //Add a new Soldier to a territory.
+//Add a new Soldier to a territory.
   def placeNewArmies(player: Player, soldier: Soldier, territory: Territory, numArmies: Int): Unit = {
       for (i <- 1 to numArmies) {
         territory.addSoldier(soldier)
