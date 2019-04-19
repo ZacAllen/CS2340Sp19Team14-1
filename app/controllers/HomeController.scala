@@ -41,6 +41,10 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     ) (GameData.apply)(GameData.unapply)
   )
 
+  def victory: Action[AnyContent] = Action { implicit request =>
+    Ok(views.html.welcome("Message"))
+  }
+
   def index: Action[AnyContent] = Action { implicit request =>
     Ok(views.html.start_game(gForm))
   }
