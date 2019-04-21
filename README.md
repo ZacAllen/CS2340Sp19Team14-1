@@ -6,6 +6,7 @@ The game is currently not complete but has working features such as:
 - Getting assigned armies, territories, and random turns
 - Board is setup with a map including the territories and the armies it includes
 - Allowing players to place new armies
+- Allowing players to attack adjacent territories
 
 The rest of the game and features are soon to come. The final game will include all the features and such of a regular RISK game and will be completely playable through running the program in this repo.
 
