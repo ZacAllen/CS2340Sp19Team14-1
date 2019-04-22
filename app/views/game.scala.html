@@ -1506,6 +1506,16 @@
                 }
 
                 function addArmies(numArmy, territoryID) {
+                    var noTerritories = true;
+                    for (var j = 1; j < 43; j++) {
+                        if(territoryMap.get(j)[1] == playerMap.get(currTurn % playerMap.size)[2]) {
+                            noTerritories = false;
+                        }
+                    }
+                    if (noTerritories) {
+                        playerMap.get(currTurn % playerMap.size)[1] = 0;
+                        endTurn();
+                    }
                     if (territoryMap.get(territoryID)[1] != playerMap.get(currTurn % playerMap.size)[2]) {
                         alert("You cannot add armies to territories you do not own!");
                     } else {
