@@ -228,6 +228,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
       setPlayerTurn(players.tail, turnList.tail)
     }
   }
+
 /*
 
   //Bonus for occupying the whole district
