@@ -270,26 +270,31 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
 //  }
 
   def addArimies: Action[JsValue] = Action(parse.json) { implicit request =>
-    var playerID: Int = (request.body \ "playerID").as[Int]
-    var gameID: Int = (request.body \ "gameID").as[Int]
-    if (SQLDriver.getPlayerTerritories(gameID, playerID).length <= 2) {
-      SQLDriver.updatePlayer(playerID, 1)
+    val playerID: Int = (request.body \ "playerID").as[Int]
+    val gameID: Int = (request.body \ "gameID").as[Int]
+    var numArmies: Int = 0
+    var playerTerritoryList = SQLDriver.getPlayerTerritories(gameID, playerID)
+    if (playerTerritoryList.length <= 2) {
+      numArmies = 1
     } else {
-      SQLDriver.updatePlayer(playerID, SQLDriver.getPlayerDetails(playerID)[3] / 3)
-      if (SQLDriver.getPlayerTerritories(gameID, playerID).count(_ <= 7) == 7) {
-        SQLDriver.updatePlayer(playerID, REDBONUS)
-      } else if (SQLDriver.getPlayerTerritories(gameID, playerID).count(x => x >= 8 && x <= 13) == 6) {
-        SQLDriver.updatePlayer(playerID, BROWNBONUS)
-      } else if (SQLDriver.getPlayerTerritories(gameID, playerID).count(x => x >= 14 && x <= 21) == 8) {
-        SQLDriver.updatePlayer(playerID, BLUEBONUS)
-      } else if (SQLDriver.getPlayerTerritories(gameID, playerID).count(x => x >= 22 && x <= 29) == 8) {
-        SQLDriver.updatePlayer(playerID, GREENBONUS)
-      } else if (SQLDriver.getPlayerTerritories(gameID, playerID).count(x => x >= 30 && x <= 36) == 7) {
-        SQLDriver.updatePlayer(playerID, ORANGEBONUS)
-      } else if (SQLDriver.getPlayerTerritories(gameID, playerID).count(x => x >= 37 && x <= 42) == 6) {
-        SQLDriver.updatePlayer(playerID, YELLOWBONUS)
-      }
+      var playerDetails = SQLDriver.getPlayerDetails(playerID)
+      numArmies = playerDetails(playerID)._4 / 3
     }
+    if (playerTerritoryList.count(_ <= 7) == 7) {
+      numArmies += REDBONUS
+    } else if (playerTerritoryList.count(x => x >= 8 && x <= 13) == 6) {
+      numArmies += BROWNBONUS
+    } else if (playerTerritoryList.count(x => x >= 14 && x <= 21) == 8) {
+      numArmies += BLUEBONUS
+    } else if (playerTerritoryList.count(x => x >= 22 && x <= 29) == 8) {
+      numArmies += GREENBONUS
+    } else if (playerTerritoryList.count(x => x >= 30 && x <= 36) == 7) {
+      numArmies += ORANGEBONUS
+    } else if (playerTerritoryList.count(x => x >= 37 && x <= 42) == 6) {
+      numArmies += YELLOWBONUS
+    }
+    SQLDriver.updatePlayerArmies(gameID, playerID, numArmies)
+    Ok(toJson(Map("armies_added" -> numArmies)))
   }
 
 //Add a new Soldier to a territory.
@@ -301,6 +306,16 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
 //        player.addArmyUnits(-soldier.getPrice)
 //      }
 //  }
+
+  def placeNewArmies: Action[JsValue] = Action(parse.json) { implicit request =>
+    val playerID: Int = (request.body \ "playerID").as[Int]
+    val gameID: Int = (request.body \ "gameID").as[Int]
+    val territoryID: Int = (request.body \ "territoryID").as[Int]
+    val numArmies: Int = (request.body \ "numArmies").as[Int]
+    SQLDriver.updateTerritory(territoryID, playerID, numArmies)
+    SQLDriver.updatePlayerArmies(gameID, playerID, -numArmies)
+    Ok(toJson(Map("armies placed" -> numArmies)))
+  }
 
   //roll a dice and return the number
   def rollDice(): Int = {

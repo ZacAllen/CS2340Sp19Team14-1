@@ -92,9 +92,9 @@ object SQLDriver {
     val checkerResult = myStatement.executeQuery(statement)
     val playerMap: Map[Int, (String, String, Int, Int)] = Map.empty[Int, (String, String, Int, Int)]
     while (checkerResult.next()) {
-      playerMap(checkerResult.getInt("turn")) = (checkerResult.getString("name"),
+      playerMap(checkerResult.getInt("id")) = (checkerResult.getString("name"),
         checkerResult.getString("email"),
-        checkerResult.getString("id"),
+        checkerResult.getString("turn"),
         checkerResult.getInt("num_armies"))
     }
     checkerResult.close()
