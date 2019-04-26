@@ -237,7 +237,8 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
       setPlayerTurn(players.tail, turnList.tail)
     }
   }
-/*
+
+
 
   //Bonus for occupying the whole district
   val REDBONUS = 5
@@ -247,36 +248,59 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
   val ORANGEBONUS = 5
   val YELLOWBONUS = 5
 
-  def addArmies(player: Player) {
-    if (player.getTerritories.length <= 2) {
-      player.addArmyUnits(1)
-    }  else {
-      player.addArmyUnits(player.getTerritories.length/3)
-      if (player.getTerritories.count(_.getId <= 7) == 7) {
-        player.addArmyUnits(REDBONUS)
-      } else if (player.getTerritories.count(x => x.getId >= 8 && x.getId <= 13) == 6) {
-        player.addArmyUnits(BROWNBONUS)
-      } else if (player.getTerritories.count(x => x.getId >= 14 && x.getId <= 21) == 8) {
-        player.addArmyUnits(BLUEBONUS)
-      } else if (player.getTerritories.count(x => x.getId >= 22 && x.getId <= 29) == 8) {
-        player.addArmyUnits(GREENBONUS)
-      } else if (player.getTerritories.count(x => x.getId >= 30 && x.getId <= 36) == 7) {
-        player.addArmyUnits(ORANGEBONUS)
-      } else if (player.getTerritories.count(x => x.getId >= 37 && x.getId <= 42) == 6) {
-        player.addArmyUnits(YELLOWBONUS)
+//  def addArmies(player: Player) {
+//    if (player.getTerritories.length <= 2) {
+//      player.addArmyUnits(1)
+//    }  else {
+//      player.addArmyUnits(player.getTerritories.length/3)
+//      if (player.getTerritories.count(_.getId <= 7) == 7) {
+//        player.addArmyUnits(REDBONUS)
+//      } else if (player.getTerritories.count(x => x.getId >= 8 && x.getId <= 13) == 6) {
+//        player.addArmyUnits(BROWNBONUS)
+//      } else if (player.getTerritories.count(x => x.getId >= 14 && x.getId <= 21) == 8) {
+//        player.addArmyUnits(BLUEBONUS)
+//      } else if (player.getTerritories.count(x => x.getId >= 22 && x.getId <= 29) == 8) {
+//        player.addArmyUnits(GREENBONUS)
+//      } else if (player.getTerritories.count(x => x.getId >= 30 && x.getId <= 36) == 7) {
+//        player.addArmyUnits(ORANGEBONUS)
+//      } else if (player.getTerritories.count(x => x.getId >= 37 && x.getId <= 42) == 6) {
+//        player.addArmyUnits(YELLOWBONUS)
+//      }
+//    }
+//  }
+
+  def addArimies: Action[JsValue] = Action(parse.json) { implicit request =>
+    var playerID: Int = (request.body \ "playerID").as[Int]
+    var gameID: Int = (request.body \ "gameID").as[Int]
+    if (SQLDriver.getPlayerTerritories(gameID, playerID).length <= 2) {
+      SQLDriver.updatePlayer(playerID, 1)
+    } else {
+      SQLDriver.updatePlayer(playerID, SQLDriver.getPlayerDetails(playerID)[3] / 3)
+      if (SQLDriver.getPlayerTerritories(gameID, playerID).count(_ <= 7) == 7) {
+        SQLDriver.updatePlayer(playerID, REDBONUS)
+      } else if (SQLDriver.getPlayerTerritories(gameID, playerID).count(x => x >= 8 && x <= 13) == 6) {
+        SQLDriver.updatePlayer(playerID, BROWNBONUS)
+      } else if (SQLDriver.getPlayerTerritories(gameID, playerID).count(x => x >= 14 && x <= 21) == 8) {
+        SQLDriver.updatePlayer(playerID, BLUEBONUS)
+      } else if (SQLDriver.getPlayerTerritories(gameID, playerID).count(x => x >= 22 && x <= 29) == 8) {
+        SQLDriver.updatePlayer(playerID, GREENBONUS)
+      } else if (SQLDriver.getPlayerTerritories(gameID, playerID).count(x => x >= 30 && x <= 36) == 7) {
+        SQLDriver.updatePlayer(playerID, ORANGEBONUS)
+      } else if (SQLDriver.getPlayerTerritories(gameID, playerID).count(x => x >= 37 && x <= 42) == 6) {
+        SQLDriver.updatePlayer(playerID, YELLOWBONUS)
       }
     }
   }
 
 //Add a new Soldier to a territory.
-  def placeNewArmies(player: Player, soldier: Soldier, territory: Territory, numArmies: Int): Unit = {
-      for (i <- 1 to numArmies) {
-        territory.addSoldier(soldier)
-        territory.setSoldiers(territory.getSoldiers.sorted)
-        soldier.setTerritory(territory)
-        player.addArmyUnits(-soldier.getPrice)
-      }
-  }
+//  def placeNewArmies(player: Player, soldier: Soldier, territory: Territory, numArmies: Int): Unit = {
+//      for (i <- 1 to numArmies) {
+//        territory.addSoldier(soldier)
+//        territory.setSoldiers(territory.getSoldiers.sorted)
+//        soldier.setTerritory(territory)
+//        player.addArmyUnits(-soldier.getPrice)
+//      }
+//  }
 
   //roll a dice and return the number
   def rollDice(): Int = {
@@ -285,38 +309,38 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
   }
 
   //allow one Territory to attack another and return the attacker and the defender territories as a List
-  def attack(attacker: Territory, defender: Territory): List[Territory] = {
-    var attackerDices = List[Int]()
-    var defenderDices = List[Int]()
+//  def attack(attacker: Territory, defender: Territory): List[Territory] = {
+//    var attackerDices = List[Int]()
+//    var defenderDices = List[Int]()
+//
+//    for (i <- 1 until attacker.getUnits) {
+//      rollDice() :: attackerDices
+//    }
+//
+//    for (j <- 1 to defender.getUnits) {
+//      rollDice() :: defenderDices
+//    }
+//
+//    attackerDices = attackerDices.sorted.reverse
+//    defenderDices = defenderDices.sorted.reverse
+//
+//    for (k <- 1 to math.min(attackerDices.length, defenderDices.length)) {
+//      if (attackerDices.head > defenderDices.head) {
+//        defender.eliminateSoldier
+//        defender.addUnits(-1)
+//      } else if (attackerDices.head < defenderDices.head) {
+//        attacker.eliminateSoldier
+//        attacker.addUnits(-1)
+//      }
+//      attackerDices = attackerDices.tail
+//      defenderDices = defenderDices.tail
+//    }
+//
+//    attacker.setCanAttack(false)
+//
+//    List(attacker, defender)
+//  }
 
-    for (i <- 1 until attacker.getUnits) {
-      rollDice() :: attackerDices
-    }
-
-    for (j <- 1 to defender.getUnits) {
-      rollDice() :: defenderDices
-    }
-
-    attackerDices = attackerDices.sorted.reverse
-    defenderDices = defenderDices.sorted.reverse
-
-    for (k <- 1 to math.min(attackerDices.length, defenderDices.length)) {
-      if (attackerDices.head > defenderDices.head) {
-        defender.eliminateSoldier
-        defender.addUnits(-1)
-      } else if (attackerDices.head < defenderDices.head) {
-        attacker.eliminateSoldier
-        attacker.addUnits(-1)
-      }
-      attackerDices = attackerDices.tail
-      defenderDices = defenderDices.tail
-    }
-
-    attacker.setCanAttack(false)
-
-    List(attacker, defender)
-  }
-*/
 
   //The adjacent Map of the game
   val adjacentMap = Map((1,List(2,3,5,6)),(2,List(1,3,4,8)),(3,List(1,2,4,5,7)),(4,List(2,3,5,7)),(5,List(1,3,4,6,7)),
