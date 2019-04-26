@@ -1110,6 +1110,9 @@
                                 <a href="#" class="list-group-item" onclick = "showAttack()">
                                     Attack
                                 </a>
+                                <a href="#" class="list-group-item" onclick = "showFortify()">
+                                    Fortify
+                                </a>
 
                             </div>
                             <div class="panel-heading" id="selectAttack" style="display: none;">
@@ -1153,6 +1156,41 @@
                                 </div>
                                 </div>
                             </div>
+                            <div class="panel-heading" id="selectFortify" style="display: none;">
+                                Select Territory to Fortify
+                                <div class="panel-body">
+                                    <div class=list-group">
+                                        <a href="#" class="list-group-item" id="fortifyFrom" onclick="fortifyFrom()">
+                                            Fortify From This Territory: #
+                                            <span class="pull-right text-muted small"><em id="reinforcingTerr">
+                                                N/A</em>
+                                            </span>
+                                        </a>
+                                        <a href="#" class="list-group-item" id = "fortifyTo" style="display: none;" onclick="fortifyTo()">
+                                            Fortify This Territory: #
+                                            <span class="pull-right text-muted small"><em id="reinforceeTerr">
+                                                N/A</em>
+                                            </span>
+                                        </a>
+                                        <div class="form-inline" style="text-align: left; position: relative; top: 5px; display: none;"
+                                        id = "inputFort">
+                                            <form>
+                                                Number of Armies Reinforcing:
+                                                <label>
+                                                    <input type ="text" name ="reinforceCount" id="fortifyNum">
+                                                </label>
+                                            </form>
+                                        </div>
+                                        <div class="buttoncontainerFort" style="text-align: center; position: relative; top: 20px">
+                                            <button id="cancelFort" style="display:none" onclick="cancelFortify()">Cancel Fortification</button>
+                                            <button id="proceedFort" style="display:none" onclick="fortify(parseInt(document.getElementById('reinforcingTerr').innerText),
+                                                    parseInt(document.getElementById('reinforceeTerr').innerText),
+                                                    parseInt(document.getElementById('fortifyNum').value))">Fortify
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                                 <!-- /.panel -->
                             <button id="end-turn" class="btn btn-danger" style="display:none" onclick="endTurn()">End Turn</button>
                         </div>
@@ -1179,17 +1217,58 @@
 
             <script>
                 function showAttack() {
-                     if(!initGame) {
-                         alert("Cannot attack before initial army placements!");
+                  if(!initGame) {
+                          alert("Cannot attack before initial army placements!");
                     } else {
                         var attackWindow = document.getElementById("selectAttack");
                         attackWindow.style.display = "inline";
+                        hideFortify();
                     }
 
+                }
+                function showFortify() {
+                    if (!initGame) {
+                        alert("Cannot fortify before initial army placements!");
+                    } else {
+                        var fortifyWindow = document.getElementById("selectFortify");
+                        fortifyWindow.style.display = "inline";
+                        hideAttack();
+                    }
+                }
+                function hideFortify() {
+                    var fortifyWindow = document.getElementById("selectFortify");
+                    fortifyWindow.style.display = "none";
                 }
                 function hideAttack() {
                     var attackWindow = document.getElementById("selectAttack");
                     attackWindow.style.display = "none";
+                }
+                function fortifyFrom() {
+                    var fortifyingTerr = document.getElementById("reinforcingTerr");
+                    var territoryNum = document.getElementById("terr_number");
+                    fortifyingTerr.innerText = territoryNum.innerText;
+
+                    var reinforcee = document.getElementById('fortifyTo');
+                    reinforcee.style.display = "block";
+                }
+                function fortifyTo() {
+                    var fortifyingTerr = document.getElementById("reinforceeTerr");
+                    var territoryNum = document.getElementById("terr_number");
+                    fortifyingTerr.innerText = territoryNum.innerText;
+
+                    var input = document.getElementById("inputFort");
+                    input.style.display = "inline";
+                    var cancel = document.getElementById("cancelFort");
+                    cancel.style.display = "inline-block";
+
+                    var proceed = document.getElementById("proceedFort");
+                    proceed.style.display = "inline-block";
+                }
+                function cancelFortify() {
+                    document.getElementById("reinforcingTerr").innerText = "N/A";
+                    document.getElementById("reinforceeTerr").innerText = "N/A";
+                    document.getElementById("fortifyNum").value = 1;
+                    hideFortify();
                 }
                 function attackFrom() {
                     var defending = document.getElementById("defending");
@@ -1225,10 +1304,33 @@
                     document.getElementById("attackRoll").style.display = "none";
                     document.getElementById("defendRoll").style.display = "none";
                 }
+                var canFortify = true;
+                function fortify(reinforcer, reinforcee, fortCount) {
+                    if (canFortify == false) {
+                        alert("You may only fortify once each turn!");
+                    } else if (territoryMap.get(reinforcer)[1] != playerMap.get(currTurn % playerMap.size)[2]) {
+                        alert("You cannot fortify from a territory you do not own!");
+                    } else if (territoryMap.get(reinforcee)[1] != playerMap.get(currTurn % playerMap.size)[2]) {
+                        alert("You cannot fortify a territory you do not own!");
+                    } else if (reinforcee == reinforcer) {
+                        alert("The same territory cannot fortify itself!");
+                    } else if (fortCount > territoryMap.get(reinforcer)[0]) {
+                        alert("You cannot fortify using more armies than you have in a territory!");
+                    } else if (territoryMap.get(reinforcer)[0] - fortCount <= 0) {
+                        alert("You must leave at least one army in your territories at all times!");
+                    } else {
+                        canFortify = false;
+                        territoryMap.get(reinforcer)[0] -= fortCount;
+                        territoryMap.get(reinforcee)[0] += fortCount;
+                        alert(playerMap.get(currTurn % playerMap.size)[3] + " fortified territory #" +
+                            reinforcee + " with " + fortCount + " armies!");
+                    }
+                }
                 function attack(attacker, defender, atkDice, defDice) {
                     var adjacentMap = new Map([
                         @for(i <- 1 to 42) {
-                        [@i, [@for(j <- adjacentMap(i)) {@j,}]],
+                        [@i, [@for(j <- adjacentMap(i)) {
+                            @j,}]],
                         }
                     ]);
                     console.log(adjacentMap);
@@ -1484,13 +1586,39 @@
                     updateDispArmies();
                 }
 
+                //For debugging purposes!
+                // function cheatWin() {
+                //     for (var j = 1; j < 43; j++) {
+                //         territoryMap.get(j)[1] = playerMap.get(1)[2];
+                //     }
+                //     reloadSpots();
+                // }
                 function endTurn() {
+                    var winner = true;
+                    for (var i = 1; i <= playerMap.size; i++) {
+                        for (var j = 1; j < 43; j++) {
+                            if (territoryMap.get(j)[1] != i) {
+                                winner = false;
+                            }
+                        }
+                        if (winner == true) {
+                            var playAgain = confirm(playerMap.get(i)[3] + " controls all territories! "
+                                    + playerMap.get(i)[3] + " wins! Play Again?");
+                            if(playAgain == true) {
+                                document.location.reload();
+                            } else {
+
+                            }
+                        }
+                        winner = true;
+                    }
                     if ((currTurn + 1) % playerMap.size == 0) {
                         addNewArmies();
                         alert("New Armies Granted to Each Player");
                     }
                     currTurn++;
                     dispTurn();
+                    canFortify = true;
                     document.getElementById("end-turn").style.display = "none";
                 }
 
