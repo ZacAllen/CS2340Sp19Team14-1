@@ -109,4 +109,16 @@ object SQLDriver {
     myStatement.executeUpdate(statement)
     checkerResult.close()
   }
+
+  def getPlayerTerritories(gameID: Int, playerID: Int): List[Int] = {
+    statement = "SELECT * FROM territory " +
+      String.format(" WHERE game_id = %d AND player_id = %d", gameID, playerID)
+    val checkerResult = myStatement.executeQuery(statement)
+    var territoryList: List[Int] = Nil
+    while (checkerResult.next()) {
+      territoryList = checkerResult.getInt("territory_act_id") :: territoryList
+    }
+    checkerResult.close()
+    territoryList
+  }
 }
