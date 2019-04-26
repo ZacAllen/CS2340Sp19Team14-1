@@ -25,11 +25,11 @@ object SQLDriver {
     checkerResult.getInt(0)
   }
 
-  def createPlayer(gameID: Int, playerName: String, playerEmail: String): Int = {
+  def createPlayer(gameID: Int, playerName: String, playerEmail: String, turnNum: Int): Int = {
     val currDateTime: String = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").
       format(Calendar.getInstance().getTime)
-    statement = "INSERT INTO player " + " (name, email, game_id, timestamp) " +
-      String.format(" VALUES ('%s', '%s', %d, '%s')", playerName, playerEmail, gameID, currDateTime)
+    statement = "INSERT INTO player " + " (name, email, turn, game_id, timestamp) " +
+      String.format(" VALUES ('%s', '%s', %d, %d, '%s')", playerName, playerEmail, turnNum, gameID, currDateTime)
     myStatement.executeUpdate(statement)
     val checkerStatement = "SELECT MAX(id) FROM player"
     val checkerResult = myStatement.executeQuery(checkerStatement)
@@ -50,5 +50,63 @@ object SQLDriver {
       String.format(" SET player_id = %d, army = %d ", playerID, numArmy) +
       String.format(" WHERE id = %d", territoryID)
     myStatement.executeUpdate(statement)
+  }
+
+  def getTerritories(gameID: Int): Map[Int, (Int, Int)] = {
+    statement = "SELECT * FROM territory " +
+      String.format(" WHERE game_id = %d", gameID)
+    val checkerResult = myStatement.executeQuery(statement)
+    val territoryMap: Map[Int, (Int, Int)] = Map.empty[Int, (Int, Int)]
+    while (checkerResult.next()) {
+      territoryMap(checkerResult.getInt("territory_act_id")) = (checkerResult.getInt("player_id"), checkerResult.getInt("army"))
+    }
+    checkerResult.close()
+    territoryMap
+  }
+
+  def getPlayers(gameID: Int): Map[Int, (String, String, Int)] = {
+    statement = "SELECT * FROM player " +
+      String.format(" WHERE game_id = %d", gameID)
+    val checkerResult = myStatement.executeQuery(statement)
+    val playerMap: Map[Int, (String, String, Int)] = Map.empty[Int, (String, String, Int)]
+    while (checkerResult.next()) {
+      playerMap(checkerResult.getInt("turn")) = (checkerResult.getString("name"), checkerResult.getString("email"), checkerResult.getString("id"))
+    }
+    checkerResult.close()
+    playerMap
+  }
+
+  def getPlayerDetails(id: Int): Map[Int, (String, String, Int)] = {
+    statement = "SELECT * FROM player " +
+      String.format(" WHERE id = %d", id)
+    val checkerResult = myStatement.executeQuery(statement)
+    val playerMap: Map[Int, (String, String, Int)] = Map.empty[Int, (String, String, Int)]
+    while (checkerResult.next()) {
+      playerMap(checkerResult.getInt("turn")) = (checkerResult.getString("name"), checkerResult.getString("email"), checkerResult.getString("id"))
+    }
+    checkerResult.close()
+    playerMap
+  }
+
+  def getTerritoryDetails(gameID: Int, territoryActID: Int): Map[Int, (Int, Int)] = {
+    statement = "SELECT * FROM territory " +
+      String.format(" WHERE game_id = %d AND territory_act_id = %d", gameID, territoryActID)
+    val checkerResult = myStatement.executeQuery(statement)
+    val territoryMap: Map[Int, (Int, Int)] = Map.empty[Int, (Int, Int)]
+    while (checkerResult.next()) {
+      territoryMap(checkerResult.getInt("territory_act_id")) = (checkerResult.getInt("player_id"), checkerResult.getInt("army"))
+    }
+    checkerResult.close()
+    territoryMap
+  }
+
+  def increaseTurns(gameID: Int): Unit = {
+    statement = "SELECT num_turns FROM game " + String.format(" WHERE id=%d", gameID)
+    val checkerResult = myStatement.executeQuery(statement)
+    statement = "UPDATE game " +
+      String.format(" SET num_turns = %d ", checkerResult.getInt("num_turns") + 1) +
+      String.format(" WHERE id=%d", gameID)
+    myStatement.executeUpdate(statement)
+    checkerResult.close()
   }
 }

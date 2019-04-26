@@ -96,8 +96,17 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
   }
 
   def addPlayer: Action[JsValue] = Action(parse.json) { implicit request =>
-    val np = Player((request.body \ "id").as[Int], (request.body \ "name").as[String], "", 0, "", 0, List())
-    Ok(toJson(Map("id" -> np.getId)))
+    var newPlayerID = -1
+    if ((request.body \ "newGame").as[Boolean]) {
+      val gameID = SQLDriver.createGame()
+      newPlayerID = SQLDriver.createPlayer(gameID,
+        (request.body \ "name").as[String],
+        (request.body \ "email").as[String],
+        (request.body \ "turn").as[Int])
+    } else {
+      newPlayerID = SQLDriver.createPlayer((request.body \ "game").as[Int], np.getName, np.getEmail, np.getTurn)
+    }
+    Ok(toJson(Map("playerID" -> newPlayerID)))
   }
 
   def gameInitiator(input: List[Map[String, Any]]): List[Map[String, Any]] = {
