@@ -108,7 +108,10 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
         (request.body \ "email").as[String],
         (request.body \ "turn").as[Int])
     } else {
-      newPlayerID = SQLDriver.createPlayer((request.body \ "game").as[Int], np.getName, np.getEmail, np.getTurn)
+      newPlayerID = SQLDriver.createPlayer((request.body \ "game").as[Int],
+        (request.body \ "name").as[String],
+        (request.body \ "email").as[String],
+        (request.body \ "turn").as[Int])
     }
     Ok(toJson(Map("playerID" -> newPlayerID)))
   }
@@ -320,7 +323,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
   //roll a dice and return the number
   def rollDice(): Int = {
     val random = new Random()
-    1+random.nextInt(6)
+    1 + random.nextInt(6)
   }
 
   //allow one Territory to attack another and return the attacker and the defender territories as a List
